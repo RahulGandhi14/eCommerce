@@ -1,7 +1,7 @@
-import React from 'react';
-import "./auth.css";
+import React, { useState } from 'react';
+import "./auth.scss";
 import Grid from '@material-ui/core/Grid';
-import { createStyles, InputBase, makeStyles, TextField } from '@material-ui/core';
+import { Button, createStyles, InputBase, makeStyles, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles'
 import signupCart from "../../assets/sign-up-cart.svg"
 
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: "rgba(76,177,255,0.1)",
             paddingLeft: theme.spacing(7),
             paddingRight: theme.spacing(7),
-            paddingTop: theme.spacing(9),
-            paddingBottom: theme.spacing(9),
+            paddingTop: theme.spacing(12),
+            paddingBottom: theme.spacing(12),
         },
         signupCart: {
             width: "276px",
@@ -43,12 +43,33 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         subHeading: {
             fontWeight: "300",
+        },
+        btnHeight: {
+            height: "56px",
+            borderRadius: "12px",
+            backgroundColor: "#FF7F2D",
+            color: "#1D256E",
+            fontWeight: "900",
+            textTransform: "none"
         }
     })
 );
 
 const Signup = () => {
     const classes = useStyles();
+
+    const [signupInputs, setSignupInputs] = useState({
+        email: "",
+        fullName: "",
+        password: ""
+    })
+
+    const handleInputChange = (e) => {
+        setSignupInputs({
+            ...signupInputs,
+            [e.target.name]: e.target.value
+        })
+    }
 
     return (
         <div className="mainDiv">
@@ -64,7 +85,38 @@ const Signup = () => {
                         </Grid>
                     </Grid>
                     <Grid container direction="row" justify="center" item xs={6}>
-                        <Grid container item xs={8}>
+                        <Grid container item xs={8} direction="column" justify="space-between">
+                            <TextField 
+                                variant="filled" 
+                                label="Email" 
+                                className="auth-inputs"
+                                name="email"
+                                value={signupInputs.email} 
+                                onChange={handleInputChange}
+                                fullWidth />
+                            <TextField 
+                                variant="filled" 
+                                label="Full Name" 
+                                className="auth-inputs"
+                                name="fullName"
+                                value={signupInputs.fullName} 
+                                onChange={handleInputChange}
+                                fullWidth />
+                            <TextField 
+                                variant="filled" 
+                                type="password" 
+                                label="Password" 
+                                className="auth-inputs"
+                                name="password"
+                                value={signupInputs.password} 
+                                onChange={handleInputChange}
+                                fullWidth />
+                            <Button 
+                                variant="contained" 
+                                className={classes.btnHeight} 
+                                onClick={()=>console.log("-------INPUTS",signupInputs)}
+                                fullWidth 
+                            >Create Account</Button>
                         </Grid>
                     </Grid>
                 </Grid>

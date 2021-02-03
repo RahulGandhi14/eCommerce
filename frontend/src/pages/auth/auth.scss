@@ -1,0 +1,30 @@
+$secondaryColor: #c4c4c4;
+$primaryColor: #1D256E;
+
+.mainDiv {
+    background-color: #1D256E;
+    color: #F2F2F2;
+    height: 100vh;
+}
+
+/************** AUTH INPUTS **************/
+.auth-inputs .MuiFilledInput-root {
+    border-radius: 12px !important;
+    background-color: $secondaryColor !important;
+}
+
+.auth-inputs .MuiFilledInput-underline:after {
+    display: none;
+}
+
+.auth-inputs .MuiFilledInput-underline:before {
+    display: none;
+}
+
+.auth-inputs .MuiInputLabel-filled {
+    color: $primaryColor !important;
+}
+
+.auth-inputs input {
+    color: $primaryColor !important;
+}
