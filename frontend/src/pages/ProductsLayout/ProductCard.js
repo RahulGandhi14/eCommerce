@@ -18,7 +18,7 @@ const ProductCard = () => {
             <div className="product-info">
                 <div className="brand-info">
                     <h4>
-                        Nike
+                        Wrogn
                         {/* <span>4.5&#9733;</span> */}
                     </h4>
                     <span>Men slip fit casual shirt</span>

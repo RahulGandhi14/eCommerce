@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { Badge, Button, Container, createStyles, IconButton, makeStyles, TextField, withStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles((theme: Theme)=>
+export const useStyles = makeStyles((theme: Theme)=>
     createStyles({
         iconSize: {
             height: "32px",
@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme)=>
             cursor: "pointer"
         },
         btnStyle: {
-            // borderRadius: "6px",
             textTransform: "none",
             backgroundColor: "#FF7F2D",
             color: "#1D256E",

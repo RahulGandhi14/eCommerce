@@ -17,8 +17,10 @@ button {
 
 .absolute {
     position: absolute;
-    outline: none;
-    /* border-radius: 6px; */
+}
+
+.cursorPointer {
+    cursor: pointer !important;
 }
 
 .formInput {
@@ -38,4 +40,41 @@ button {
 h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     color: #1D256E;
+    cursor: default;
+}
+
+.justifiedFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.textWrap {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
+    overflow: hidden;
+}
+
+.mb8 {
+    margin-bottom: 8px;
+}
+
+.my10 {
+    margin: 14px 0;
+}
+
+.horizontalDivider {
+    border-top: 1px solid rgba(29, 37, 110, 0.3);
+    margin: 10px 0;
+}
+
+/**************** Break Points ****************/
+@media (max-width: 575.98px) {
+    .justifiedFlex {
+        flex-direction: column;
+    }
+
+    .rowDir {
+        flex-direction: row !important;
+    }
 }
