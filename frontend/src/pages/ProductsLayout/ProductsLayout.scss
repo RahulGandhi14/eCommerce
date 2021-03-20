@@ -1,0 +1,119 @@
+$primaryColor: #1D256E;
+$complimentaryColor: #ff7d2de0;
+
+.products {
+    display: grid !important;
+    margin: 24px 0;
+    grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    gap: 2rem;
+}
+
+/********************* PRODUCT CARD *********************/
+.product-card {
+    // border: 1px solid red;
+    height: 370px;
+    max-width: 220px;
+    margin: auto;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+// 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+// 0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+// 0 12.5px 10px rgba(0, 0, 0, 0.06),
+// 0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+// 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+// 0 100px 80px rgba(0, 0, 0, 0.12)
+
+.product-card:hover {
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    // 0 22.3px 20.9px rgba(0, 0, 0, 0.072),
+    0 22.8px 22.7px rgba(0, 0, 0, 0.086);
+}
+
+.product-info {
+    height: 22%;
+    line-height: 1.2 !important;
+    color: $primaryColor;
+}
+
+.brand-info {
+    padding: 8px 6px 4px 6px;
+}
+
+.img-container {
+    height: 78%;
+    overflow: hidden;
+    // border-bottom: 1px solid $complimentaryColor;
+}
+
+.img-container img{
+    width: 100%;
+    height: 100%;
+}
+
+.brand-info > h4 {
+    letter-spacing: 2px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // padding: 8px 6px 4px 6px;
+}
+
+.brand-info > h4 > span {
+    font-size: 12px;
+    padding: 2px 8px;
+    border: 0.5px solid $complimentaryColor;
+    border-radius: 10px;
+}
+
+.brand-info span {
+    font-size: 14px;
+}
+
+.price-info {
+    margin-top: 6px;
+}
+
+.price-info h4,h6 {
+    margin: 0;
+    display: inline;
+}
+
+price-info, h6 {
+    font-weight: 400;
+    text-decoration: line-through;
+}
+
+/********************* SLIDE UP DIV *********************/
+.hide-div {
+    width: 100%;
+    bottom: -41px;
+    background-color: white;
+    transition: all .2s ease-out;
+}
+
+.hide-div .MuiButton-outlined {
+    padding: 3px 15px;
+    border-radius: 0;
+}
+
+.product-card:hover .hide-div {
+    bottom: 0;
+}
+
+/********************* SLIDE UP DIV *********************/
+// @media(max-width:1276px){
+//     .products{
+//         gap: 30px;
+//     }
+// }
+
+// @media(max-width:1268px){
+//     .products{
+//         gap: 28px;
+//     }
+// }

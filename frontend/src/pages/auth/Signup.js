@@ -10,17 +10,17 @@ const useStyles = makeStyles((theme: Theme) =>
         container: {
             height: "100vh",
         },
-        signUpDiv: {
-            height: "80vh",
-            borderRadius: "20px",
-            backgroundColor: "rgba(76,177,255,0.1)",
-            paddingLeft: theme.spacing(7),
-            paddingRight: theme.spacing(7),
-            paddingTop: theme.spacing(12),
-            paddingBottom: theme.spacing(12),
-        },
+        // signUpDiv: {
+        //     height: "80vh",
+        //     borderRadius: "20px",
+        //     backgroundColor: "rgba(76,177,255,0.1)",
+        //     paddingLeft: theme.spacing(7),
+        //     paddingRight: theme.spacing(7),
+        //     paddingTop: theme.spacing(12),
+        //     paddingBottom: theme.spacing(12),
+        // },
         signupCart: {
-            width: "276px",
+            width: "100%",
             height: "auto"
         },
         formBox: {
@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
         heroText: {
             fontSize: "24px",
             lineHeight: "2.4rem",
-            margin: "0"
+            margin: "0",
+            color: "white"
         },
         heading: {
             fontWeight: "500",
@@ -50,7 +51,11 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: "#FF7F2D",
             color: "#1D256E",
             fontWeight: "900",
-            textTransform: "none"
+            textTransform: "none",
+            fontSize: 'large'
+        },
+        paddingTop: {
+            paddingTop: theme.spacing(2)
         }
     })
 );
@@ -74,8 +79,8 @@ const Signup = () => {
     return (
         <div className="mainDiv">
             <Grid className={classes.container} container direction="row" justify="center" alignItems="center">
-                <Grid container className={classes.signUpDiv} item xs={10}>
-                    <Grid container direction="row" justify="center" alignItems="flex-end" item xs={6}>
+                <Grid container className="signUpDiv" item xs={10}>
+                    <Grid className="hideContent" container direction="row" justify="center" alignItems="flex-end" item xs={6}>
                         <Grid item className={classes.heroDiv}>
                             <p className={classes.heroText}>
                                 <span className={classes.heading}>Looks like you're <br/> new here!</span><br/>
@@ -84,10 +89,11 @@ const Signup = () => {
                             <img className={classes.signupCart} src={signupCart} alt="hero"/>
                         </Grid>
                     </Grid>
-                    <Grid container direction="row" justify="center" item xs={6}>
-                        <Grid container item xs={8} direction="column" justify="space-between">
+                    <Grid container direction="row" justify="center" item xs={12} sm={6 }>
+                        <Grid container item md={8} direction="column" justify="space-between">
                             <TextField 
-                                variant="filled" 
+                                variant="filled"
+                                autoComplete="off" 
                                 label="Email" 
                                 className="auth-inputs"
                                 name="email"
@@ -95,7 +101,8 @@ const Signup = () => {
                                 onChange={handleInputChange}
                                 fullWidth />
                             <TextField 
-                                variant="filled" 
+                                variant="filled"
+                                autoComplete="off" 
                                 label="Full Name" 
                                 className="auth-inputs"
                                 name="fullName"
@@ -103,7 +110,8 @@ const Signup = () => {
                                 onChange={handleInputChange}
                                 fullWidth />
                             <TextField 
-                                variant="filled" 
+                                variant="filled"
+                                autoComplete="off" 
                                 type="password" 
                                 label="Password" 
                                 className="auth-inputs"
@@ -111,12 +119,14 @@ const Signup = () => {
                                 value={signupInputs.password} 
                                 onChange={handleInputChange}
                                 fullWidth />
-                            <Button 
-                                variant="contained" 
-                                className={classes.btnHeight} 
-                                onClick={()=>console.log("-------INPUTS",signupInputs)}
-                                fullWidth 
-                            >Create Account</Button>
+                            <Grid container direction="row" justify="center">
+                                <Button 
+                                    variant="contained" 
+                                    className={classes.btnHeight}
+                                    fullWidth 
+                                >Create Account</Button>
+                                <span className={classes.paddingTop}>Already have an account?</span>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

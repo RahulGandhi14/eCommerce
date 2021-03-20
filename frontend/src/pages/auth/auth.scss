@@ -1,10 +1,21 @@
 $secondaryColor: #c4c4c4;
 $primaryColor: #1D256E;
+$complimentaryColor: #ff7d2de0;
 
 .mainDiv {
-    background-color: #1D256E;
+    background-color: $primaryColor;
     color: #F2F2F2;
     height: 100vh;
+}
+
+.signUpDiv {
+    height: 80vh;
+    border-radius: 20px;
+    padding-left: 56px;
+    padding-right: 56px;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    background-color: rgba(76,177,255,0.1);
 }
 
 /************** AUTH INPUTS **************/
@@ -27,4 +38,29 @@ $primaryColor: #1D256E;
 
 .auth-inputs input {
     color: $primaryColor !important;
+}
+
+.MuiButton-contained:hover {
+    background-color: $complimentaryColor !important;
+}
+
+@media (max-width:700px){
+    .hideContent {
+        display: none !important;
+        border: 1px solid red;
+    }
+    .MuiGrid-grid-sm-6 {
+        max-width: 100% !important;
+        flex-basis: 100% !important;
+    }
+}
+
+@media (max-width:500px){
+    .signUpDiv {
+        max-height: 450px !important;
+        padding-top: 56px;
+        padding-bottom: 56px;
+        padding-left: 32px;
+        padding-right: 32px;
+    }
 }

@@ -1,0 +1,15 @@
+$secondaryColor: #c4c4c4;
+$primaryColor: #1D256E;
+$fontColor: #F2F2F2;
+$contras: #FF7F2D;
+
+.navBar {
+    height: 60.64px;
+    background-color: $primaryColor;
+    color: $fontColor;
+}
+
+.verticalAlign .MuiBadge-colorSecondary {
+    color: $primaryColor;
+    background-color: $contras;
+}
