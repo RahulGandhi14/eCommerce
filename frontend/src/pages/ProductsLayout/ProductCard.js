@@ -6,7 +6,7 @@ import { Box, Button } from '@material-ui/core';
 
 const ProductCard = () => {
     return (
-        <div className="product-card">
+        <div className="product-card cursorPointer">
             <div className="img-container relative">
                 <img src={shirtImg}/>
                 <div className="hide-div absolute">

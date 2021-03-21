@@ -41,15 +41,17 @@ const NavBar = () => {
            <Container style={{height:"100%"}}>
                <Grid container xs={12} justify="space-between" style={{height:"100%"}}>
                    <Grid item style={{height:"100%"}} style={{display:"flex",alignItems:"center"}}>
-                       <h3 style={{color:"white"}}>E-Commerce</h3>
+                       <h3 style={{color:"white",cursor:"pointer"}}>E-Commerce</h3>
                    </Grid>
                    <Grid item className="verticalAlign" container justify="space-between" alignItems="center" xs={6} sm={4} md={2}>
                         {/* <input className="formInput" type="text"/> */}
-                        <IconButton aria-label="cart">
-                            <StyledBadge badgeContent={4} color="secondary">
-                                <img className={classes.iconSize} src={cartIcon} alt="cart-icon"/>
-                            </StyledBadge>
-                        </IconButton>
+                        <Link to='/checkout/cart'>
+                            <IconButton aria-label="cart">
+                                <StyledBadge badgeContent={4} color="secondary">
+                                    <img className={classes.iconSize} src={cartIcon} alt="cart-icon"/>
+                                </StyledBadge>
+                            </IconButton>
+                        </Link>
                         <Link to='/sign-up' style={{textDecoration:"none"}}>
                             <Button variant="contained" className={classes.btnStyle}>Login</Button>
                         </Link>

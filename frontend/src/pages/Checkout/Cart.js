@@ -21,6 +21,8 @@ const Cart = () => {
                     </div>
                     <p>Men slip fit casual shirt</p>
                     <p className="faded">Sold by: RetailNet</p>
+                    <Button variant="outlined" className="cartUtilityButtons">Size: 6</Button>&nbsp;&nbsp;
+                    <Button variant="outlined" className="cartUtilityButtons">Qty: 1</Button>
                 </div>
             </div>
             <div className="cart-action">
@@ -68,9 +70,9 @@ const Cart = () => {
         <>
             <NavBar />
             <Container>
-                <Grid lg={10} className="marginAuto">
+                <Grid lg={10} xs={12} className="marginAuto">
                     <Box mt={5}>
-                        <Grid container item spacing={6}>
+                        <Grid container spacing={6}>
                             <Grid item lg={8} md={8} sm={7} xs={12}>
                                 <Grid container justify="space-between">
                                     <h4>My Cart</h4>
