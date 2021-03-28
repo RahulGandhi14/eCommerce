@@ -12,6 +12,10 @@ button {
 }
 
 /************** Utility Classes **************/
+.inline {
+    display: inline;
+}
+
 .relative {
     position: relative;
 } 
@@ -63,6 +67,9 @@ h1, h2, h3, h4, h5, h6, p {
 .my10 {
     margin: 14px 0;
 }
+
+
+.my20 { margin: 20px 0; }
 
 .horizontalDivider {
     border-top: 1px solid rgba(29, 37, 110, 0.3);

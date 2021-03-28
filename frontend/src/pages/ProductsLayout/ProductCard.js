@@ -24,7 +24,7 @@ const ProductCard = () => {
                     <span>Men slip fit casual shirt</span>
                     <div className="price-info">
                         <h4>Rs. 517</h4>&nbsp;
-                        <h6>Rs. 1299</h6>
+                        <h6 className="originalPrice">Rs. 1299</h6>
                     </div>
                 </div>
             </div>

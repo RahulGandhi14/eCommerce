@@ -83,19 +83,24 @@ $complimentaryColor: #ff7d2de0;
     display: inline;
 }
 
-price-info, h6 {
+.originalPrice {
     font-weight: 400;
     text-decoration: line-through;
 }
 
+.discount {
+    color: $complimentaryColor;
+}
+
 .product-imgs {
     height: 80vh;
+    min-height: 400px;
 }
 
 .otherImgs {
     width: 15%;
     height: inherit;
-    margin-right: 8px;
+    margin-right: 1%;
     overflow: auto;
 }
 
@@ -124,6 +129,68 @@ price-info, h6 {
     width: 100%;
 }
 
+.faded {
+    opacity: 0.8;
+}
+
+.horizontal-divider {
+    border-top: 1px solid rgba(29, 37, 110, 0.3);
+    margin: 10px 0;
+}
+
+.purchase-buttons {
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    padding: 10px 0;
+    display: block;
+    background: white;
+}
+
+.addToCart {
+    width: 58% !important;
+    margin-right: 2% !important;
+    padding: 14px !important;
+    font-size: 18px !important;
+    background: #FF7F2D !important;
+    color: #1D256E !important;
+    font-weight: 600 !important;
+}
+.addToWishlist {
+    width: 40% !important;
+    padding: 14px !important;
+    font-size: 18px !important;
+    color: #1D256E !important;
+    border: 1px solid rgba(29, 37, 110, 0.3) !important;
+}
+
+/********************* RADIO BUTTON *********************/
+.size-select input[type="radio"] {
+    display: none;
+}
+
+.size-buttons {
+    display: flex;
+}
+
+.size-buttons label {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(29, 37, 110, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: $primaryColor;
+    transition: border 0.3s;
+}
+
+.size-buttons label:hover {
+    border: 1px solid rgba(29, 37, 110, 1);
+}
+
 /********************* SLIDE UP DIV *********************/
 .hide-div {
     width: 100%;
@@ -139,6 +206,35 @@ price-info, h6 {
 
 .product-card:hover .hide-div {
     bottom: 0;
+}
+
+.wishlist button {
+    border: 1px solid rgba(29, 37, 110, 1);
+    color: $primaryColor;
+}
+
+/********************* Break Points *********************/
+@media(max-width: 640px) {
+    .product-imgs,.otherImgs,.mainImg-container {
+        height: 100%;
+        max-height: 380px;
+    }
+
+    .otherImgs {
+        width: 20%;
+    }
+
+    .mainImg-container {
+        width: 79%;
+    }
+
+    .product-details {
+        // margin-top: 20px;
+    }
+
+    .MuiBox-root-4 {
+        margin-bottom: 0 !important;
+    }
 }
 
 

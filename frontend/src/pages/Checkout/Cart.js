@@ -55,12 +55,12 @@ const Cart = () => {
             </div>
             <div className="justifiedFlex rowDir">
                 <p>Coupon discount</p>
-                <p className="cursorPointer">Apply coupon</p>
+                <p className="cursorPointer" style={{fontWeight:"500"}}>Apply coupon</p>
             </div>
             <div className="horizontalDivider"></div>
             <div className="justifiedFlex rowDir my10">
                 <h5>Total Amount</h5>
-                <p>$ 49</p>
+                <p>$ 39</p>
             </div>
             <Button variant="contained" className={classes.btnStyle} fullWidth>Place order</Button>
         </div>
@@ -69,7 +69,7 @@ const Cart = () => {
     return (
         <>
             <NavBar />
-            <Container>
+            <Container style={{overflow:"hidden"}}>
                 <Grid lg={10} xs={12} className="marginAuto">
                     <Box mt={5}>
                         <Grid container spacing={6}>

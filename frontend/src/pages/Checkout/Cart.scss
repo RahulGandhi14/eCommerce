@@ -28,9 +28,10 @@ $complimentaryColor: #ff7d2de0;
 }
 
 .productImg {
-    margin: 10px;
-    height: -webkit-fill-available;
-    display: -webkit-box;
+    padding: 10px;
+    height: 87%;
+    // height: -webkit-fill-available;
+    // display: -webkit-box;
 }
 
 .productImg img {
@@ -85,6 +86,7 @@ $complimentaryColor: #ff7d2de0;
     border-radius: 4px;
     padding: 10px;
     margin-top: 10px;
+    margin-bottom: 24px;
 }
 
 .priceDetails p {
