@@ -41,7 +41,11 @@ const NavBar = () => {
            <Container style={{height:"100%"}}>
                <Grid container xs={12} justify="space-between" style={{height:"100%"}}>
                    <Grid item style={{height:"100%"}} style={{display:"flex",alignItems:"center"}}>
-                       <h3 style={{color:"white",cursor:"pointer"}}>E-Commerce</h3>
+                        <Link to="/" style={{textDecoration:"none"}}>
+                            <h3 style={{color:"white",cursor:"pointer"}}>
+                                E-Commerce
+                            </h3>
+                        </Link>
                    </Grid>
                    <Grid item className="verticalAlign" container justify="space-between" alignItems="center" xs={6} sm={4} md={2}>
                         {/* <input className="formInput" type="text"/> */}

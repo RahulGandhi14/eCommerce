@@ -5,17 +5,43 @@ $complimentaryColor: #ff7d2de0;
 .mainDiv {
     background-color: $primaryColor;
     color: #F2F2F2;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .signUpDiv {
     height: 80vh;
     border-radius: 20px;
-    padding-left: 56px;
-    padding-right: 56px;
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding: 56px 96px;
     background-color: rgba(76,177,255,0.1);
+}
+
+.auth-titles {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.auth-titles h3 {
+    cursor: pointer;
+}
+
+.main-container {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#signup-div div, #login-div div{
+    margin-bottom: 10px;
+}
+
+#signup-div,#login-div {
+    position: absolute;
+    transition: transform 0.8s;   
+}
+
+#login-div {
+    transform: translateX(-110%);
 }
 
 /************** AUTH INPUTS **************/
@@ -57,10 +83,6 @@ $complimentaryColor: #ff7d2de0;
 
 @media (max-width:500px){
     .signUpDiv {
-        max-height: 450px !important;
-        padding-top: 56px;
-        padding-bottom: 56px;
-        padding-left: 32px;
-        padding-right: 32px;
+        padding: 56px 32px;
     }
 }
