@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const Signup = () => {
+const Auth = () => {
     const classes = useStyles();
 
     const [signupInputs, setSignupInputs] = useState({
@@ -70,15 +70,23 @@ const Signup = () => {
     const focusLogin = () => {
         let loginForm = document.getElementById('login-div');
         let signupForm = document.getElementById('signup-div');
+        let loginTitle = document.getElementById('logIn');
+        let signInTitle = document.getElementById('signIn');
         loginForm.style.transform = "translateX(0%)";
         signupForm.style.transform = "translateX(110%)";
+        loginTitle.style.opacity = '1';
+        signInTitle.style.opacity = '0.5';
     }
 
     const focusSignup = () => {
         let loginForm = document.getElementById('login-div');
         let signupForm = document.getElementById('signup-div');
+        let loginTitle = document.getElementById('logIn');
+        let signInTitle = document.getElementById('signIn');
         loginForm.style.transform = "translateX(-110%)";
         signupForm.style.transform = "translateX(0%)";
+        signInTitle.style.opacity = '1';
+        loginTitle.style.opacity = '0.5';
     }
 
     return (
@@ -97,11 +105,11 @@ const Signup = () => {
                     <Grid container direction="row" justify="center" item xs={12} sm={6}>
                         <Grid item md={8} className="main-container">
                             <div className="auth-titles">
-                                <h3 className="textWhite" onClick={focusLogin}>Login</h3>
-                                <h3 className="textWhite" onClick={focusSignup}>Sign up</h3>
+                                <h3 id="logIn" className="textWhite" onClick={focusLogin}>Login</h3>
+                                <h3 id="signIn" className="textWhite" onClick={focusSignup}>Sign up</h3>
                             </div>
                             <div id="signup-div">
-                                <TextField 
+                                <TextField
                                     variant="filled"
                                     autoComplete="off" 
                                     label="Email" 
@@ -174,4 +182,4 @@ const Signup = () => {
     )
 }
 
-export default Signup;
+export default Auth;

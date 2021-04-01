@@ -56,7 +56,7 @@ const NavBar = () => {
                                 </StyledBadge>
                             </IconButton>
                         </Link>
-                        <Link to='/sign-up' style={{textDecoration:"none"}}>
+                        <Link to='/auth' style={{textDecoration:"none"}}>
                             <Button variant="contained" className={classes.btnStyle}>Login</Button>
                         </Link>
                    </Grid>
