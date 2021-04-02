@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const validate = require('express-validator');
+const { validate } = require('express-validation');
 const { authParamsValidation } = require('../helpers/joi.validation');
 const authCtrl = require('../controllers/auth.controller');
 
