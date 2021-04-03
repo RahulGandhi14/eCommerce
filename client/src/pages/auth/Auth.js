@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./auth.scss";
 import Grid from '@material-ui/core/Grid';
-import { Button, createStyles, InputBase, makeStyles, TextField } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles'
-import signupCart from "../../assets/sign-up-cart.svg"
+import { Button, createStyles, makeStyles, TextField } from '@material-ui/core';
+import signupCart from "../../assets/sign-up-cart.svg";
+import CheckIcon from '@material-ui/icons/Check';
+import { Instance } from '../../axios';
+import request from '../../request';
+import CryptoJS from 'crypto-js';
+import dotEnv from 'dotenv';
+import { useHistory } from 'react-router';
+
+dotEnv.config();
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -54,20 +61,95 @@ const useStyles = makeStyles((theme: Theme) =>
 const Auth = () => {
     const classes = useStyles();
 
+    const history = useHistory();
+    const [currentTab, setCurrentTab] = useState('signup');
     const [signupInputs, setSignupInputs] = useState({
         email: "",
         fullName: "",
-        password: ""
-    })
+        password: "",
+        confirmPassword: "",
+    });
+    const [validInputs, setValidInputs] = useState({
+        isEmailValid: false,
+        isFullNameValid: false,
+        isPasswordValid: false,
+        isConfirmPasswordValid: false,
+        valid: false,
+    });
+    const [loading, setLoading] = useState(false);
+
+    const clearStates = () => {
+        setSignupInputs({
+            ...signupInputs,
+            email: "",
+            fullName: "",
+            password: "",
+            confirmPassword: "",
+        });
+
+        setValidInputs({
+            ...validInputs,
+            isEmailValid: false,
+            isFullNameValid: false,
+            isPasswordValid: false,
+            isConfirmPasswordValid: false,
+            valid: false,
+        });
+
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        clearStates();
+    }, [currentTab])
+
+    useEffect(() => {
+        validateInputs();
+    }, [signupInputs]);
+
+    const validateInputs = () => {
+        let { email, fullName, password, confirmPassword } = signupInputs;
+        let validEmail, validName, validPassword, validConfirmPassword, allValid;
+
+        if(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(re.test(email)) validEmail = true;
+        }
+
+        if(password && password.length>=3) validPassword = true;
+
+        if(validEmail && validPassword) allValid = true;
+
+        if(currentTab === 'signup') {
+            allValid = false;
+
+            if(fullName) validName = true;
+    
+            if(validPassword && password === confirmPassword) validConfirmPassword = true;
+    
+            if(validEmail && validName && validPassword && validConfirmPassword) allValid = true;
+        }
+        
+        setValidInputs({
+            ...validInputs,
+            isEmailValid: validEmail ? validEmail : false,
+            isFullNameValid: validName ? validName : false,
+            isPasswordValid: validPassword ? validPassword : false,
+            isConfirmPasswordValid: validConfirmPassword ? validConfirmPassword : false,
+            valid: allValid ? allValid : false,
+        });
+
+    }
 
     const handleInputChange = (e) => {
         setSignupInputs({
             ...signupInputs,
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     const focusLogin = () => {
+        setCurrentTab('login');
         let loginForm = document.getElementById('login-div');
         let signupForm = document.getElementById('signup-div');
         let loginTitle = document.getElementById('logIn');
@@ -79,6 +161,7 @@ const Auth = () => {
     }
 
     const focusSignup = () => {
+        setCurrentTab('signup');
         let loginForm = document.getElementById('login-div');
         let signupForm = document.getElementById('signup-div');
         let loginTitle = document.getElementById('logIn');
@@ -87,6 +170,48 @@ const Auth = () => {
         signupForm.style.transform = "translateX(0%)";
         signInTitle.style.opacity = '1';
         loginTitle.style.opacity = '0.5';
+    }
+
+    const registerUser = async () => {
+        if(validInputs.valid){
+            setLoading(true);
+            let encryptedPassword = CryptoJS.AES.encrypt(signupInputs.password, process.env.REACT_APP_SECRET).toString();
+            let result = await Instance.post(request.register, {
+                email: signupInputs.email,
+                name: signupInputs.fullName,
+                password: encryptedPassword
+            }).catch(error => {
+                if(error.response){
+                    setLoading(false);
+                    console.log("--->Error",error)
+                }
+            });
+            if(result && result.data) {
+                clearStates();
+                focusLogin();
+            }
+        }
+    }
+
+    const loginUser = async () => {
+        if(validInputs.valid){
+            setLoading(true);
+            let encryptedPassword = CryptoJS.AES.encrypt(signupInputs.password, process.env.REACT_APP_SECRET).toString();
+            let result = await Instance.post(request.loginUser, {
+                email: signupInputs.email,
+                password: encryptedPassword
+            }).catch(error => {
+                if(error.response){
+                    setLoading(false);
+                    console.log("--->Error",error)
+                }
+            });
+            if(result && result.data) {
+                clearStates();
+                localStorage.setItem('user', JSON.stringify(result.data.data));
+                history.push('/');
+            }
+        }
     }
 
     return (
@@ -109,68 +234,99 @@ const Auth = () => {
                                 <h3 id="signIn" className="textWhite" onClick={focusSignup}>Sign up</h3>
                             </div>
                             <div id="signup-div">
-                                <TextField
-                                    variant="filled"
-                                    autoComplete="off" 
-                                    label="Email" 
-                                    className="auth-inputs"
-                                    name="email"
-                                    value={signupInputs.email} 
-                                    onChange={handleInputChange}
-                                    fullWidth />
-                                <TextField 
-                                    variant="filled"
-                                    autoComplete="off" 
-                                    label="Full Name" 
-                                    className="auth-inputs"
-                                    name="fullName"
-                                    value={signupInputs.fullName} 
-                                    onChange={handleInputChange}
-                                    fullWidth />
-                                <TextField 
-                                    variant="filled"
-                                    autoComplete="off" 
-                                    type="password" 
-                                    label="Password" 
-                                    className="auth-inputs"
-                                    name="password"
-                                    value={signupInputs.password} 
-                                    onChange={handleInputChange}
-                                    fullWidth />
+                                <div className="relative mb14">
+                                    <TextField
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        label="Email" 
+                                        className="auth-inputs"
+                                        name="email"
+                                        value={signupInputs.email} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isEmailValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
+                                <div className="relative mb14">
+                                    <TextField 
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        label="Full Name" 
+                                        className="auth-inputs"
+                                        name="fullName"
+                                        value={signupInputs.fullName} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isFullNameValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
+                                <div className="relative mb14">
+                                    <TextField 
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        type="password" 
+                                        label="Password" 
+                                        className="auth-inputs"
+                                        name="password"
+                                        value={signupInputs.password} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isPasswordValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
+                                <div className="relative mb14">
+                                    <TextField 
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        type="password" 
+                                        label="Confirm Password" 
+                                        className="auth-inputs"
+                                        name="confirmPassword"
+                                        value={signupInputs.confirmPassword} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isConfirmPasswordValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
                                 <Grid container direction="row" justify="center">
                                     <Button 
                                         variant="contained" 
                                         className={classes.btnHeight}
-                                        fullWidth 
+                                        fullWidth
+                                        disabled={loading}
+                                        onClick={registerUser} 
                                     >Create Account</Button>
-                                    <span className={classes.paddingTop}>Already have an account?</span>
                                 </Grid>
                             </div>
                             <div id="login-div">
-                                <TextField 
-                                    variant="filled"
-                                    autoComplete="off" 
-                                    label="Email" 
-                                    className="auth-inputs"
-                                    name="email"
-                                    value={signupInputs.email} 
-                                    onChange={handleInputChange}
-                                    fullWidth />
-                                <TextField 
-                                    variant="filled"
-                                    autoComplete="off" 
-                                    type="password" 
-                                    label="Password" 
-                                    className="auth-inputs"
-                                    name="password"
-                                    value={signupInputs.password} 
-                                    onChange={handleInputChange}
-                                    fullWidth />
+                                <div className="relative mb14">
+                                    <TextField 
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        label="Email" 
+                                        className="auth-inputs"
+                                        name="email"
+                                        value={signupInputs.email} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isEmailValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
+                                <div className="relative mb14">
+                                    <TextField 
+                                        variant="filled"
+                                        autoComplete="off" 
+                                        type="password" 
+                                        label="Password" 
+                                        className="auth-inputs"
+                                        name="password"
+                                        value={signupInputs.password} 
+                                        onChange={handleInputChange}
+                                        fullWidth />
+                                    <CheckIcon className={`checkIcon ${validInputs.isPasswordValid ? 'displayContent' : 'displayNone'}`}/>
+                                </div>
                                 <Grid container direction="row" justify="center">
                                     <Button 
                                         variant="contained" 
+                                        disabled={loading}
                                         className={classes.btnHeight}
-                                        fullWidth 
+                                        fullWidth
+                                        onClick={loginUser} 
                                     >Login</Button>
                                 </Grid>
                             </div>

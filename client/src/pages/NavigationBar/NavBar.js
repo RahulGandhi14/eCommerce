@@ -4,6 +4,7 @@ import cartIcon from "../../assets/Cart-Icon.svg"
 import Grid from '@material-ui/core/Grid';
 import { Badge, Button, Container, createStyles, IconButton, makeStyles, TextField, withStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { isAuthenticated } from '../auth/AuthHelpers';
 
 export const useStyles = makeStyles((theme: Theme)=>
     createStyles({
@@ -35,6 +36,7 @@ const StyledBadge = withStyles((theme: Theme) =>
 
 const NavBar = () => {
     const classes = useStyles();
+    const user = isAuthenticated();
 
     return (
         <Grid className="navBar" container xs={12}>
@@ -56,9 +58,15 @@ const NavBar = () => {
                                 </StyledBadge>
                             </IconButton>
                         </Link>
-                        <Link to='/auth' style={{textDecoration:"none"}}>
-                            <Button variant="contained" className={classes.btnStyle}>Login</Button>
-                        </Link>
+                        {user ? (
+                            <>
+                                <span className="userName">{user.name}</span>
+                            </>
+                        ) : (
+                            <Link to='/auth' style={{textDecoration:"none"}}>
+                                <Button variant="contained" className={classes.btnStyle}>Login</Button>
+                            </Link>
+                        )}
                    </Grid>
                </Grid>
            </Container>

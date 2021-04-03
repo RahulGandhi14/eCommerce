@@ -2,6 +2,10 @@ $secondaryColor: #c4c4c4;
 $primaryColor: #1D256E;
 $complimentaryColor: #ff7d2de0;
 
+.mb14 {
+    margin-bottom: 14px;
+}
+
 .mainDiv {
     background-color: $primaryColor;
     color: #F2F2F2;
@@ -31,11 +35,8 @@ $complimentaryColor: #ff7d2de0;
     position: relative;
 }
 
-#signup-div div, #login-div div{
-    margin-bottom: 10px;
-}
-
 #signup-div,#login-div {
+    width: 100%;
     position: absolute;
     transition: transform 0.8s;   
 }
@@ -49,6 +50,22 @@ $complimentaryColor: #ff7d2de0;
 }
 
 #logIn { opacity: 0.5; }
+
+.checkIcon {
+    position: absolute;
+    color: $primaryColor;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.displayNone {
+    display: none !important;
+}
+
+.displayContent {
+    display: block !important;
+}
 
 /************** AUTH INPUTS **************/
 .auth-inputs .MuiFilledInput-root {

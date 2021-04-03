@@ -13,3 +13,11 @@ $contras: #FF7F2D;
     color: $primaryColor;
     background-color: $contras;
 }
+
+.userName {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 70px;
+    cursor: pointer;
+}

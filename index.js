@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const expressValidation = require('express-validation');
 const routes = require('./routes');
 const APIError = require("./helpers/APIError");
+const httpStatus = require("http-status");
 
 dotenv.config();
 
@@ -33,13 +34,29 @@ app.use('/api', routes);
 
 // validation
 app.use((err, req, res, next) => {
-    if(err instanceof expressValidation.ValidationError){
-        // validation error contains error which is an array of errors each containing message []
-        const unifiedErrorMessage = err.errors.map(error => error.message.join('. ')).join(' and ');
+    if (err instanceof expressValidation.ValidationError) {
+        // validation error contains errors which is an array of error each containing message[]
+        const unifiedErrorMessage = err.details.body[0].message;
         const error = new APIError(unifiedErrorMessage, err.status, true);
         return next(error);
+    } else if (!(err instanceof APIError)) {
+        const apiError = new APIError(err.message, err.status, err.name === 'UnauthorizedError' ? true : err.isPublic);
+        return next(apiError);
     }
     return next(err);
+});
+
+app.use((req, res, next) => {
+    const err = new APIError('API not found', httpStatus.NOT_FOUND, true);
+    return next(err);
+});
+
+app.use((err, req, res, next) => {
+    res.status(err.status).json({
+        error: {
+            message: err.isPublic ? err.message : httpStatus[err.status]
+        }
+    });
 })
 
 const PORT = process.env.PORT || 3001;
