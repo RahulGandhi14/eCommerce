@@ -59,9 +59,9 @@ const NavBar = () => {
                             </IconButton>
                         </Link>
                         {user ? (
-                            <>
-                                <span className="userName">{user.name}</span>
-                            </>
+                            <Link to='/account' className="userName">
+                                <span>{user.name}</span>
+                            </Link>
                         ) : (
                             <Link to='/auth' style={{textDecoration:"none"}}>
                                 <Button variant="contained" className={classes.btnStyle}>Login</Button>

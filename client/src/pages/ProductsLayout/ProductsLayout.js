@@ -1,4 +1,4 @@
-import { Container, Grid, Paper } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import React from 'react';
 import NavBar from '../NavigationBar/NavBar';
 import ProductCard from './ProductCard';

@@ -32,6 +32,10 @@ button {
     color: white;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .formInput {
     padding: 12px 8px;
     font-size: 14px;
@@ -55,6 +59,11 @@ h1, h2, h3, h4, h5, h6, p {
 .justifiedFlex {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.w100 {
+    width: 100%;
 }
 
 .textWrap {
@@ -65,19 +74,29 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .mb8 {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
+}
+
+.mb10 {
+    margin-bottom: 10px !important;
 }
 
 .my10 {
     margin: 14px 0;
 }
 
-
 .my20 { margin: 20px 0; }
 
 .horizontalDivider {
     border-top: 1px solid rgba(29, 37, 110, 0.3);
     margin: 10px 0;
+}
+
+
+/**************** Outlined Button ****************/
+.MuiButton-outlined {
+    border: 1px solid rgba(29, 37, 110, 0.3) !important;
+    color: #1D256E !important;
 }
 
 /**************** Break Points ****************/

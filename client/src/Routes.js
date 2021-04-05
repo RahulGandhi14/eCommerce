@@ -6,19 +6,7 @@ import Cart from './pages/Checkout/Cart';
 import ProductDetails from './pages/ProductsLayout/ProductDetails';
 import Auth from './pages/auth/Auth';
 import { isAuthenticated } from './pages/auth/AuthHelpers';
-
-const Routes = () => {
-    return (
-        <HashRouter>
-            <Switch>
-                <Route path="/" exact component={ProductsLayout} />
-                <Route path="/auth" exact component={Auth} />
-                <Route path="/product" exact component={ProductDetails} />
-                <Route path="/checkout/cart" exact component={Cart} />
-            </Switch>
-        </HashRouter>
-    )
-}
+import Account from './pages/Account/Account';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
@@ -37,6 +25,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
                 )
             }
         />
+    )
+}
+
+
+const Routes = () => {
+    return (
+        <HashRouter>
+            <Switch>
+                <Route path="/" exact component={ProductsLayout} />
+                <Route path="/auth" exact component={Auth} />
+                <Route path="/product" exact component={ProductDetails} />
+                <Route path="/checkout/cart" exact component={Cart} />
+                <PrivateRoute path="/account" exact component={Account} />
+            </Switch>
+        </HashRouter>
     )
 }
 

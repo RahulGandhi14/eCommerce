@@ -6,7 +6,8 @@ import img1 from "../../assets/product-imgs/shirt.jpeg";
 
 const ProductDetails = () => {
 
-    const [mainImg, setMainImg] = useState(shirtImg)
+    const [mainImg, setMainImg] = useState(shirtImg);
+    const [selectedSize, setSelectedSize] = useState('');
 
     const productImageSection = () => (
         <>
@@ -28,7 +29,7 @@ const ProductDetails = () => {
             <NavBar />
             <Grid container xs={12}>
                 <Container>
-                    <Box my={5}>
+                    <Box my={5} className="marginButtonDisable">
                         <Grid container xs={12}>
                             <Grid item lg={6} md={6} sm={12} xs={12} container className="product-imgs">
                                 {productImageSection()}
@@ -46,15 +47,15 @@ const ProductDetails = () => {
                                     <div className="sizes my20">
                                         <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Select size</h4>
                                         <div className="size-select">
-                                            <input type="radio" name="size" id="size1" value="size1" onChange={(e)=>console.log("-->",e.target.value)}/>
-                                            <input type="radio" name="size" id="size2" value="size2" onChange={(e)=>console.log("-->",e.target.value)}/>
-                                            <input type="radio" name="size" id="size3" value="size3" onChange={(e)=>console.log("-->",e.target.value)}/>
-                                            <input type="radio" name="size" id="size4" value="size4" onChange={(e)=>console.log("-->",e.target.value)}/>
+                                            <input type="radio" id="size1" checked={selectedSize === 'size1'} onChange={(e)=>setSelectedSize(e.target.id)}/>
+                                            <input type="radio" id="size2" checked={selectedSize === 'size2'} onChange={(e)=>setSelectedSize(e.target.id)}/>
+                                            <input type="radio" id="size3" checked={selectedSize === 'size3'} onChange={(e)=>setSelectedSize(e.target.id)}/>
+                                            <input type="radio" id="size4" checked={selectedSize === 'size4'} onChange={(e)=>setSelectedSize(e.target.id)}/>
                                             <div className="size-buttons">
-                                                <label htmlFor="size1">1</label>
-                                                <label htmlFor="size2">2</label>
-                                                <label htmlFor="size3">3</label>
-                                                <label htmlFor="size4">4</label>
+                                                <label className={selectedSize==='size1' ? 'selected' : ''} htmlFor="size1">1</label>
+                                                <label className={selectedSize==='size2' ? 'selected' : ''} htmlFor="size2">2</label>
+                                                <label className={selectedSize==='size3' ? 'selected' : ''} htmlFor="size3">3</label>
+                                                <label className={selectedSize==='size4' ? 'selected' : ''} htmlFor="size4">4</label>
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +67,6 @@ const ProductDetails = () => {
                                     <Button className="addToCart" variant="contained">Add to cart</Button>
                                     <Button className="addToWishlist" variant="outlined">Wishlist</Button>
                                 </div>
-
                             </Grid>
                         </Grid>
                     </Box>
