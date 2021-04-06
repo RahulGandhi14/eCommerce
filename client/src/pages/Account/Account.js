@@ -42,7 +42,7 @@ const Account = () => {
                                             <p
                                                 className={`cursorPointer ${currentTab==='address' ? 'activeLink' : ''}`}
                                                 onClick={()=>setCurrentTab("address")} 
-                                            >Address</p>
+                                            >Addresses</p>
                                         </div>
                                     </div>
                                 </Box>

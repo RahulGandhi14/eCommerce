@@ -56,6 +56,10 @@ h1, h2, h3, h4, h5, h6, p {
     cursor: default;
 }
 
+.displayFlex {
+    display: flex;
+}
+
 .justifiedFlex {
     display: flex;
     justify-content: space-between;
@@ -92,11 +96,44 @@ h1, h2, h3, h4, h5, h6, p {
     margin: 10px 0;
 }
 
+.bottomBorder {
+    border-bottom: 1px solid rgba(29, 37, 110, 0.3);
+}
 
-/**************** Outlined Button ****************/
+
+/**************** Input fields ****************/
+.MuiFormLabel-root, .MuiInputBase-input, .MuiTypography-body1, .MuiCheckbox-colorPrimary.Mui-checked {
+    color: #1D256E !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid rgba(29, 37, 110) !important;
+}
+
+.MuiInput-underline:before {
+    border-bottom: 1px solid rgba(29, 37, 110) !important;
+}
+
+.MuiInput-underline:after {
+    border-bottom: 0 !important;
+}
+
+/**************** Buttons ****************/
 .MuiButton-outlined {
     border: 1px solid rgba(29, 37, 110, 0.3) !important;
     color: #1D256E !important;
+}
+
+.MuiButton-root {
+    color: #1D256E !important;
+}
+
+.borderRadiusNone {
+    border-radius: 0 !important;
+}
+
+.cancelBtn:hover {
+    background-color: none !important;
 }
 
 /**************** Break Points ****************/
