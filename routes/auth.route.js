@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { validate } = require('express-validation');
 const { authParamsValidation } = require('../helpers/joi.validation');
 const authCtrl = require('../controllers/auth.controller');
-const { isAuthenticated } = require('../middlewares/auth');
 
 router.route('/userRegister')
     //POST /api/auth/userRegister

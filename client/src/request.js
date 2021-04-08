@@ -1,6 +1,13 @@
-const request = {
+const authRequests = {
     loginUser: "/auth/login",
     register: "/auth/userRegister",
 }
 
-export default request;
+const userDetailRequests = {
+    address: "/address",
+}
+
+module.exports = {
+    authRequests,
+    userDetailRequests
+}

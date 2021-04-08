@@ -5,7 +5,7 @@ import { Button, createStyles, makeStyles, TextField } from '@material-ui/core';
 import signupCart from "../../assets/sign-up-cart.svg";
 import CheckIcon from '@material-ui/icons/Check';
 import { Instance } from '../../axios';
-import request from '../../request';
+import { authRequests } from '../../request';
 import CryptoJS from 'crypto-js';
 import dotEnv from 'dotenv';
 import { useHistory } from 'react-router';
@@ -176,7 +176,7 @@ const Auth = () => {
         if(validInputs.valid){
             setLoading(true);
             let encryptedPassword = CryptoJS.AES.encrypt(signupInputs.password, process.env.REACT_APP_SECRET).toString();
-            let result = await Instance.post(request.register, {
+            let result = await Instance.post(authRequests.register, {
                 email: signupInputs.email,
                 name: signupInputs.fullName,
                 password: encryptedPassword
@@ -197,7 +197,7 @@ const Auth = () => {
         if(validInputs.valid){
             setLoading(true);
             let encryptedPassword = CryptoJS.AES.encrypt(signupInputs.password, process.env.REACT_APP_SECRET).toString();
-            let result = await Instance.post(request.loginUser, {
+            let result = await Instance.post(authRequests.loginUser, {
                 email: signupInputs.email,
                 password: encryptedPassword
             }).catch(error => {

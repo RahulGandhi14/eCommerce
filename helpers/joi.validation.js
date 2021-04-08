@@ -20,13 +20,13 @@ const addressParamsValidation = {
     addAddress: {
         body: Joi.object({
             name: Joi.string().required(),
-            mobileNumber: Joi.number().min(10).max(10).required(),
-            pinCode: Joi.number().min(6).max(6).required(),
+            mobileNumber: Joi.string().length(10).required(),
+            pinCode: Joi.string().length(6).required(),
             town: Joi.string().required(),
             address: Joi.string().required(),
             city: Joi.string().required(),
             state: Joi.string().required(),
-            userId: Joi.string().required(),
+            userID: Joi.string().required(),
             default: Joi.boolean().required(),
         })
     }

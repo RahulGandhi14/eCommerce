@@ -1,6 +1,6 @@
 require('dotenv').config();
 const httpStatus = require("http-status");
-const  jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const APIError = require("../helpers/APIError");
 
 const isAuthenticated = (req, res, next) => {

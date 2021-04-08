@@ -1,10 +1,14 @@
 import { Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { Instance } from '../../axios';
+import { userDetailRequests } from '../../request';
+import { isAuthenticated } from '../auth/AuthHelpers';
 
 const Addresses = () => {
 
+    const user = isAuthenticated();
     const [open, setOpen] = useState(false);
-    const [listOfAddresses, SetListOfAddresses] = useState([]);
+    const [listOfAddresses, setListOfAddresses] = useState([]);
     const [address, setAddress] = useState({
         name: '',
         mobileNumber: '',
@@ -15,6 +19,10 @@ const Addresses = () => {
         state: '',
         default: false,
     });
+
+    useEffect(() => {
+        getAllAddresses();
+    }, [])
 
     const clearInputs = () => {
         setAddress({
@@ -37,10 +45,37 @@ const Addresses = () => {
         })
     }
 
-    const addAddress = () => {
+    const getAllAddresses = async () => {
+        let result = await Instance.get(`${userDetailRequests.address}/${user._id}`,{
+            headers: {
+                "Authorization": user.token,
+            }
+        }).catch(error => {
+            if(error.response){
+                console.log("--->Error",error)
+            }
+        })
+
+        if(result && result.data){
+            setListOfAddresses(result.data.data);
+        }
+    }
+
+    const addAddress = async () => {
         setOpen(false);
-        SetListOfAddresses([...listOfAddresses, address]);
-        clearInputs();
+        let result = await Instance.post(userDetailRequests.address, {
+            ...address,
+            userID: user._id,
+        }).catch(error => {
+            if(error.response){
+                console.log("--->Error",error)
+            }
+        });
+
+        if(result && result.data) {
+            setListOfAddresses([...listOfAddresses, address]);
+            clearInputs();
+        }
     }
 
     return (
