@@ -14,7 +14,6 @@ export const isAuthenticated = () => {
             localStorage.removeItem('user');
             return false;
         }
-
     };
     return false;
 }

@@ -1,9 +1,9 @@
-import { Container, Grid, Box } from '@material-ui/core'
-import React, { useState } from 'react'
-import AddEditProduct from '../Admin/AddEditProduct'
-import { isAuthenticated } from '../auth/AuthHelpers'
-import NavBar from '../NavigationBar/NavBar'
-import "./Account.scss"
+import { Container, Grid, Box } from '@material-ui/core';
+import React, { useState } from 'react';
+import AddEditProduct from '../Admin/AddEditProduct';
+import { isAuthenticated } from '../auth/AuthHelpers';
+import NavBar from '../NavigationBar/NavBar';
+import "./Account.scss";
 import Addresses from './Addresses'
 import MyOrders from './MyOrders'
 import Profile from './Profile'
@@ -43,6 +43,10 @@ const Account = () => {
                                                 className={`cursorPointer ${currentTab==='address' ? 'activeLink' : ''}`}
                                                 onClick={()=>setCurrentTab("address")} 
                                             >Addresses</p>
+                                            <p
+                                                className={`cursorPointer ${currentTab==='addProduct' ? 'activeLink' : ''}`}
+                                                onClick={()=>setCurrentTab("addProduct")} 
+                                            >Add Product</p>
                                         </div>
                                     </div>
                                 </Box>
@@ -51,7 +55,8 @@ const Account = () => {
                                 {
                                     currentTab==='profile' ? <Profile /> :
                                     currentTab==='orders' ? <MyOrders /> :
-                                    currentTab==='address' ? <Addresses /> : null
+                                    currentTab==='address' ? <Addresses /> : 
+                                    currentTab==='addProduct' ? <AddEditProduct /> : null
                                 }
                             </Grid>
                         </Grid>
