@@ -7,7 +7,12 @@ const userDetailRequests = {
     address: "/address",
 }
 
+const productRequests = {
+    product: "/product",
+}
+
 module.exports = {
     authRequests,
-    userDetailRequests
+    userDetailRequests,
+    productRequests,
 }

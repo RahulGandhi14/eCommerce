@@ -55,6 +55,10 @@ const productSchema = mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
+    deleted: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

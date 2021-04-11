@@ -6,6 +6,7 @@ const APIError = require('../helpers/APIError');
 const { successPattern, errorPattern } = require('../helpers/resPattern');
 const User = require('../models/user.model');
 const CryptoJS = require("crypto-js");
+const fs = require('fs')
 
 const userRegister = async (req,res,next) => {
     try {
@@ -41,7 +42,7 @@ const login = async (req, res, next) => {
         const token = jwt.sign({
             _id: user._id,
         }, process.env.JWT_SECRET, {
-            expiresIn: "1d"
+            expiresIn: "1d",
         })
 
         let userObj = {

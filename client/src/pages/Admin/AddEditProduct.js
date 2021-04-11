@@ -5,11 +5,13 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CloseIcon from '@material-ui/icons/Close';
 import { useStyles } from '../NavigationBar/NavBar';
 import { Instance } from '../../axios';
-import { authRequests } from '../../request';
+import { productRequests } from '../../request';
+import { isAuthenticated } from '../auth/AuthHelpers';
 
 const AddEditProduct = () => {
 
     const classes = useStyles();
+    const user = isAuthenticated();
 
     const img1 = useRef(null);
     const img2 = useRef(null);
@@ -85,11 +87,19 @@ const AddEditProduct = () => {
         Object.keys(productDetails).map((key)=>formData.set(key, productDetails[key]));
         Object.keys(images).map((key)=>formData.set(key, images[key]));
         formData.set('sizes', JSON.stringify(availableSizes));
-        let result = await Instance.post(authRequests.register, formData).catch(error => {
+        let result = await Instance.post(productRequests.product, formData, {
+            headers: {
+                'Authorization': user.token
+            }
+        }).catch(error => {
             if(error.response){
                 console.log("--->Error",error)
             }
         });
+
+        if(result && result.data) {
+            //
+        }
     }
 
     return (
@@ -236,8 +246,8 @@ const AddEditProduct = () => {
                     </Grid>
                 </Grid>
                 <div className="marginTopBottom">
-                    <h4>Available Sizes</h4>
-                    <Button variant="outlined" className="my10" onClick={addSize}>Add Size</Button>
+                    <h4 className="mb10">Available Sizes</h4>
+                    <Button variant="outlined" className="" onClick={addSize}>Add Size</Button>
                     <Grid container direction="row" justify="space-between">
                         {availableSizes.map((availableSize, index)=>(
                             <Grid key={`size-${index}`} container direction="row" justify="space-between" xs={5}>

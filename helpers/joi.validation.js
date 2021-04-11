@@ -34,5 +34,5 @@ const addressParamsValidation = {
 
 module.exports = {
     authParamsValidation,
-    addressParamsValidation
+    addressParamsValidation,
 }

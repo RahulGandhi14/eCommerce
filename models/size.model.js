@@ -12,6 +12,7 @@ const sizeSchema = mongoose.Schema({
     },
     sold: {
         type: Number,
+        default: 0,
         required: true,
     }
 }, { timestamps: true });

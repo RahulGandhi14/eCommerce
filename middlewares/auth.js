@@ -10,6 +10,7 @@ const isAuthenticated = (req, res, next) => {
 
     try {
         const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verifyToken;
         if(verifyToken) next();
     } catch (e) {
         console.log("isAuthenticated -->", e);
