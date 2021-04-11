@@ -7,12 +7,21 @@ const productSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
+    productName: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     description: {
         type: String,
         required: true,
         trim: true,
     },
-    price: {
+    sellingPrice: {
+        type: Number,
+        required: true,
+    },
+    mrp: {
         type: Number,
         required: true,
     },
