@@ -5,14 +5,14 @@ import shirtImg from "../../assets/product-imgs/shirt.jpeg";
 import { Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({productDetails}) => {
+export const arrayBufferToBase64 = (buffer) => {
+    let binary = '';
+    let bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return 'data:image/jpeg;base64,' + window.btoa(binary);
+};
 
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return 'data:image/jpeg;base64,' + window.btoa(binary);
-    };
+const ProductCard = ({productDetails}) => {
 
     return (
         <Link to={`/product/${productDetails._id}`}>

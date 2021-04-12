@@ -6,10 +6,10 @@ router.route('/')
     //POST /api/product
     .post(isAuthenticated, productCtrl.saveProduct)
     //GET /api/product
-    .get(isAuthenticated, productCtrl.getAllProducts)
+    .get(productCtrl.getAllProducts)
 
 router.route('/:productId')
     //POST /api/product/:productId
-    .get(isAuthenticated, productCtrl.getProductById)
+    .get(productCtrl.getProductById)
 
 module.exports = router;

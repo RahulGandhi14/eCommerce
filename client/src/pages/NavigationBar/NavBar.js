@@ -45,7 +45,7 @@ const NavBar = () => {
                    <Grid item style={{height:"100%"}} style={{display:"flex",alignItems:"center"}}>
                         <Link to="/" style={{textDecoration:"none"}}>
                             <h3 style={{color:"white",cursor:"pointer"}}>
-                                E-Commerce
+                                ECom
                             </h3>
                         </Link>
                    </Grid>
