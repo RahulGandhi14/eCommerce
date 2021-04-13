@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { Badge, Button, Container, createStyles, IconButton, makeStyles, TextField, withStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../auth/AuthHelpers';
+import { useSelector } from 'react-redux';
 
 export const useStyles = makeStyles((theme: Theme)=>
     createStyles({
@@ -38,6 +39,9 @@ const NavBar = () => {
     const classes = useStyles();
     const user = isAuthenticated();
 
+    //REDUX states
+    const cartProducts = useSelector(state => state.cart.cartProducts);
+
     return (
         <Grid className="navBar" container xs={12}>
            <Container style={{height:"100%"}}>
@@ -53,7 +57,7 @@ const NavBar = () => {
                         {/* <input className="formInput" type="text"/> */}
                         <Link to='/checkout/cart'>
                             <IconButton aria-label="cart">
-                                <StyledBadge badgeContent={4} color="secondary">
+                                <StyledBadge badgeContent={cartProducts?.length} color="secondary">
                                     <img className={classes.iconSize} src={cartIcon} alt="cart-icon"/>
                                 </StyledBadge>
                             </IconButton>

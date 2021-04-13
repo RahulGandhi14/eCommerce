@@ -100,6 +100,10 @@ h1, h2, h3, h4, h5, h6, p {
     border-bottom: 1px solid rgba(29, 37, 110, 0.3);
 }
 
+.text-red {
+    color: red;
+}
+
 
 /**************** Input fields ****************/
 .MuiFormLabel-root, .MuiInputBase-input, .MuiTypography-body1, .MuiCheckbox-colorPrimary.Mui-checked {

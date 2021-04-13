@@ -14,12 +14,15 @@ const ProductDetails = ({match}) => {
     const dispatch = useDispatch();
     let productId = match.params.productId;
 
+    //REDUX states
     const cartProducts = useSelector(state => state.cart.cartProducts);
 
+    //REACT states
     const [mainImg, setMainImg] = useState('');
     const [images, setImages] = useState([]);
     const [selectedSize, setSelectedSize] = useState('');
     const [productDetails, setProductDetails] = useState({});
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         getProduct();
@@ -36,13 +39,16 @@ const ProductDetails = ({match}) => {
             }
         });
         if(result && result.data){
-            setProductDetails(result.data.data);
             setMainImg(arrayBufferToBase64(result.data.data.img1.data.data));
             let arr = [];
             let keys = [1,2,3,4,5];
             keys.map((key)=>{
-                if(result.data.data[`img${key}`]) arr = [...arr, arrayBufferToBase64(result.data.data[`img${key}`].data.data)]
+                if(result.data.data[`img${key}`]){
+                    arr = [...arr, arrayBufferToBase64(result.data.data[`img${key}`].data.data)];
+                    result.data.data[`img${key}`] = arrayBufferToBase64(result.data.data[`img${key}`].data.data);
+                }
             });
+            setProductDetails(result.data.data);
             setImages(arr);
         }
     }
@@ -51,7 +57,7 @@ const ProductDetails = ({match}) => {
         <>
             <div className="otherImgs">
                 {images.map((img)=>(
-                    <img src={img} alt="img" onMouseEnter={()=>setMainImg(img)}/>
+                    <img src={img} alt="img" onMouseOver={()=>setMainImg(img)}/>
                 ))}
             </div>
             <div className="mainImg-container">
@@ -61,7 +67,31 @@ const ProductDetails = ({match}) => {
     )
 
     const addToCart = () => {
-        dispatch(addProduct([...cartProducts, productDetails]));
+        console.log("---->SELECTED SIZE", selectedSize);
+        if(!selectedSize) {
+            setShowError(true);
+            return;
+        }
+        let updatedArr = []
+        if(cartProducts.length){
+            updatedArr = cartProducts.map((product)=>{
+                if(product._id === productDetails._id) {
+                    product['qty'] += 1;
+                    product['selectedSize'] = selectedSize;
+                }
+                return product;
+            });
+        } else {
+            updatedArr = [
+                {
+                    ...productDetails,
+                    selectedSize,
+                    qty: 1
+                }
+            ]
+        }
+        console.log("0-->", updatedArr);
+        dispatch(addProduct(updatedArr))
     }
 
     return (
@@ -69,7 +99,7 @@ const ProductDetails = ({match}) => {
             <NavBar />
             <Grid container xs={12}>
                 <Container>
-                    <Box my={5} className="marginButtonDisable">{console.log("---->selectedSize", selectedSize)}
+                    <Box my={5} className="marginButtonDisable">
                         {Object.keys(productDetails).length ? (
                             <Grid container xs={12}>
                                 <Grid item lg={6} md={6} sm={12} xs={12} container className="product-imgs">
@@ -90,12 +120,13 @@ const ProductDetails = ({match}) => {
                                         <div className="sizes my20">
                                             <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Select size</h4>
                                             <div className="size-select">
+                                                {showError && <p className="mb8 text-red">Please select a size</p>}
                                                 {productDetails?.sizes?.map((size)=>(
-                                                    <input type="radio" id={size._id} checked={selectedSize === size._id} onChange={(e)=>setSelectedSize(e.target.id)}/>
+                                                    <input type="radio" id={size.size} checked={selectedSize === size.size} onChange={(e)=>{setSelectedSize(e.target.id)}}/>
                                                 ))}
                                                 <div className="size-buttons">
                                                     {productDetails?.sizes.map((size)=>(
-                                                        <label className={selectedSize===size._id ? 'selected' : ''} htmlFor={size._id}>
+                                                        <label className={selectedSize===size.size ? 'selected' : ''} htmlFor={size.size}>
                                                             {size.size}
                                                         </label>
                                                     ))}
