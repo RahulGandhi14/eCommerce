@@ -1,11 +1,10 @@
-import { Box, Button, Container, Grid } from '@material-ui/core';
 import React from 'react';
+import { Box, Button, Container, Grid } from '@material-ui/core';
 import NavBar from '../NavigationBar/NavBar';
 import "./Cart.scss";
 import { useStyles } from "../NavigationBar/NavBar";
 import CartProductCard from './CartProductCard';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import { useHistory } from 'react-router';
 
@@ -17,8 +16,10 @@ const Cart = () => {
     //REDUX states
     const cartProducts = useSelector(state => state.cart.cartProducts);
 
+    //REACT states
+
     let totalMRP = 0, totalSellingPrice = 0;
-    cartProducts.map((product)=> {totalMRP += product.mrp*product.qty; totalSellingPrice += product.sellingPrice*product.qty});
+    cartProducts.map((product) => {totalMRP += product.mrp*product.qty; totalSellingPrice += product.sellingPrice*product.qty});
 
     const placeOrder = async () => {
         if(!user) history.push('/auth');
@@ -66,7 +67,7 @@ const Cart = () => {
                                         <h4>My Cart</h4>
                                         <h4>( {cartProducts.length} ) Items</h4>
                                     </Grid>
-                                    {cartProducts.map((cartProduct)=><CartProductCard data={cartProduct}/>)}
+                                    {cartProducts.map((cartProduct)=><CartProductCard data={cartProduct} />)}
                                 </Grid>
                                 <Grid item lg={4} md={4} sm={5} xs={12}>
                                     <h4>Price Details:</h4>

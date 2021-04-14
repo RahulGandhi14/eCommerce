@@ -33,6 +33,15 @@ const orderSchema = mongoose.Schema({
         type: ObjectId,
         ref: 'Address',
         required: true,
+    },
+    size: {
+        type: ObjectId,
+        ref: 'Size',
+        required: true,
+    },
+    qty: {
+        type: Number,
+        required: true, 
     }
 },{ timestamps: true });
 
