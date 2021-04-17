@@ -79,22 +79,29 @@ const Addresses = () => {
     }
 
     return (
-        <Box p={3}>
+        <>
             <div className="justifiedFlex">
-                <h4>Saved Addresses</h4>
+                <h4>{window.location.hash.includes('cart') ? 'Select Delivery Address' : 'Saved Addresses'}</h4>
                 <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>
             </div>
             {listOfAddresses.map((address, index)=>(
-                <div id={index+"address"} className="cart-item address-card">
-                    <Box p={2}>
-                        <p><strong>{address.name}</strong></p>
-                        <p>{address.address}</p>
-                        <p>{address.town}</p>
-                        <p>{address.city} - {address.pinCode}</p>
-                        <p>{address.state}</p>
-                        <p>Mobile Number: {address.mobileNumber}</p>
-                    </Box>
-                </div>
+                <>
+                    {(window.location.hash.includes('cart') && address.default) || window.location.hash.includes('account') ? (
+                        <>
+                            {address.default && <h6>Default Address</h6>}
+                            <div id={index+"address"} className="cart-item address-card" style={{width:"100%"}}>
+                                <Box p={2}>
+                                    <p><strong>{address.name}</strong></p>
+                                    <p>{address.address}</p>
+                                    <p>{address.town}</p>
+                                    <p>{address.city} - {address.pinCode}</p>
+                                    <p>{address.state}</p>
+                                    <p>Mobile Number: {address.mobileNumber}</p>
+                                </Box>
+                            </div>
+                        </>
+                    ) : null}
+                </>
             ))}
             <Box mt={3}></Box>
 
@@ -175,13 +182,12 @@ const Addresses = () => {
                         label="Make this as my default address"
                     />
                 </DialogContent>
-                {console.log("----ALL ADDRESS",listOfAddresses)}
                 <div className="displayFlex">
                     <Button onClick={()=>setOpen(false)} className="borderRadiusNone cancelBtn" variant="contained" fullWidth>Cancel</Button>
                     <Button onClick={addAddress} className="borderRadiusNone" variant="contained" fullWidth>Save</Button>
                 </div>
             </Dialog>
-        </Box>
+        </>
     )
 }
 

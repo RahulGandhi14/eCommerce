@@ -52,12 +52,14 @@ const Account = () => {
                                 </Box>
                             </Grid>
                             <Grid item lg={10}>
-                                {
-                                    currentTab==='profile' ? <Profile /> :
-                                    currentTab==='orders' ? <MyOrders /> :
-                                    currentTab==='address' ? <Addresses /> : 
-                                    currentTab==='addProduct' ? <AddEditProduct /> : null
-                                }
+                                <Box p={3}>
+                                    {
+                                        currentTab==='profile' ? <Profile /> :
+                                        currentTab==='orders' ? <MyOrders /> :
+                                        currentTab==='address' ? <Addresses /> : 
+                                        currentTab==='addProduct' ? <AddEditProduct /> : null
+                                    }
+                                </Box>
                             </Grid>
                         </Grid>
                     </Box>

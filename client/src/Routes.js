@@ -7,6 +7,7 @@ import ProductDetails from './pages/ProductsLayout/ProductDetails';
 import Auth from './pages/auth/Auth';
 import { isAuthenticated } from './pages/auth/AuthHelpers';
 import Account from './pages/Account/Account';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     return (

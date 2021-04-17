@@ -1,5 +1,5 @@
 import { Box, Button, Container, Grid } from '@material-ui/core';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavigationBar/NavBar';
 import { productRequests } from '../../request';
 import { Instance } from '../../axios';
@@ -7,6 +7,13 @@ import { isAuthenticated } from '../auth/AuthHelpers';
 import { arrayBufferToBase64 } from './ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/actions';
+import { toast } from 'react-toastify';
+
+const MessageComponent = ({image}) => (
+    <div>
+        <img style={{height:"60px"}} src={image} alt="notification"/>
+    </div>
+)
 
 const ProductDetails = ({match}) => {
 
@@ -67,31 +74,33 @@ const ProductDetails = ({match}) => {
     )
 
     const addToCart = () => {
-        console.log("---->SELECTED SIZE", selectedSize);
         if(!selectedSize) {
+            toast.dark(<MessageComponent image={productDetails.img1}/>, { position:'top-right' });
             setShowError(true);
             return;
         }
-        let updatedArr = []
-        if(cartProducts.length){
-            updatedArr = cartProducts.map((product)=>{
-                if(product._id === productDetails._id) {
-                    product['qty'] += 1;
-                    product['selectedSize'] = selectedSize;
-                }
-                return product;
-            });
-        } else {
+        let updatedArr = [];
+        let alreadyInCart = false;
+        updatedArr = cartProducts.map((product)=>{
+            if(product._id === productDetails._id) {
+                product['qty'] += 1;
+                product['selectedSize'] = selectedSize;
+                alreadyInCart = true;
+            }
+            return product;
+        });
+
+        if(!alreadyInCart) {
             updatedArr = [
+                ...cartProducts,
                 {
                     ...productDetails,
                     selectedSize,
                     qty: 1
                 }
-            ]
+            ];
         }
-        console.log("0-->", updatedArr);
-        dispatch(addProduct(updatedArr))
+        dispatch(addProduct(updatedArr));
     }
 
     return (

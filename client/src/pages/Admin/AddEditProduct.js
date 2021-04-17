@@ -103,7 +103,7 @@ const AddEditProduct = () => {
     }
 
     return (
-        <Box p={3}>
+        <>
             <h4>Add Product</h4>
             <div>
                 <Grid container direction="row" justify="space-between">
@@ -284,7 +284,7 @@ const AddEditProduct = () => {
                     </Grid>
                 </div>
             </div>
-        </Box>
+        </>
     )
 }
 

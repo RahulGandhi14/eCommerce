@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container, Grid } from '@material-ui/core';
 import NavBar from '../NavigationBar/NavBar';
 import "./Cart.scss";
@@ -7,6 +7,8 @@ import CartProductCard from './CartProductCard';
 import { useSelector } from 'react-redux';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import { useHistory } from 'react-router';
+import Bag from './Bag';
+import Addresses from  '../Account/Addresses'
 
 const Cart = () => {
     const classes = useStyles();
@@ -17,12 +19,14 @@ const Cart = () => {
     const cartProducts = useSelector(state => state.cart.cartProducts);
 
     //REACT states
+    const [currentTab, setCurrentTab] = useState(1);
 
     let totalMRP = 0, totalSellingPrice = 0;
     cartProducts.map((product) => {totalMRP += product.mrp*product.qty; totalSellingPrice += product.sellingPrice*product.qty});
 
     const placeOrder = async () => {
         if(!user) history.push('/auth');
+        setCurrentTab(prevState => prevState + 1);
     }
 
     const priceDetailsUI = () => (
@@ -57,17 +61,32 @@ const Cart = () => {
     return (
         <>
             <NavBar />
+            <Grid container justify="center" className="my20">
+                <p style={{fontSize: "14px", "letterSpacing": "2px"}}>
+                    <span 
+                        className={`${currentTab===1 ? 'fw600' : ''} ${currentTab>1 ? 'cursorPointer' : ''}`} 
+                        onClick={()=>setCurrentTab(1)}
+                    >BAG</span>&nbsp;-------&nbsp; 
+                    <span 
+                        className={`${currentTab===2 ? 'fw600' : ''} ${currentTab>2 ? 'cursorPointer' : ''}`} 
+                        onClick={()=>setCurrentTab(2)}
+                    >ADDRESS</span>&nbsp;-------&nbsp; 
+                    <span 
+                        className={`${currentTab===3 ? 'fw600' : ''}`} 
+                        onClick={()=>setCurrentTab(3)}
+                    >PAYMENT</span>
+                </p>
+            </Grid>
             <Container style={{overflow:"hidden"}}>
                 <Grid lg={10} xs={12} className="marginAuto">
                     <Box mt={5}>
                         {cartProducts.length ? (
                             <Grid container spacing={6}>
                                 <Grid item lg={8} md={8} sm={7} xs={12}>
-                                    <Grid container justify="space-between">
-                                        <h4>My Cart</h4>
-                                        <h4>( {cartProducts.length} ) Items</h4>
-                                    </Grid>
-                                    {cartProducts.map((cartProduct)=><CartProductCard data={cartProduct} />)}
+                                    {
+                                        currentTab === 1 ? <Bag />
+                                            : currentTab === 2 ? <Addresses /> : null
+                                    }
                                 </Grid>
                                 <Grid item lg={4} md={4} sm={5} xs={12}>
                                     <h4>Price Details:</h4>

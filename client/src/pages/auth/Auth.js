@@ -9,6 +9,8 @@ import { authRequests } from '../../request';
 import CryptoJS from 'crypto-js';
 import dotEnv from 'dotenv';
 import { useHistory } from 'react-router';
+import { toast, ToastContainer, Zoom } from 'react-toastify';
+import { isAuthenticated } from './AuthHelpers';
 
 dotEnv.config();
 
@@ -60,8 +62,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Auth = () => {
     const classes = useStyles();
-
     const history = useHistory();
+    const user = isAuthenticated();
+
+
     const [currentTab, setCurrentTab] = useState('signup');
     const [signupInputs, setSignupInputs] = useState({
         email: "",
@@ -98,6 +102,10 @@ const Auth = () => {
 
         setLoading(false);
     }
+
+    useEffect(() => {
+        if(user) history.goBack('/');
+    }, [])
 
     useEffect(() => {
         clearStates();
@@ -183,7 +191,7 @@ const Auth = () => {
             }).catch(error => {
                 if(error.response){
                     setLoading(false);
-                    console.log("--->Error",error)
+                    toast.error(error.response.data.error.message);
                 }
             });
             if(result && result.data) {
@@ -203,13 +211,17 @@ const Auth = () => {
             }).catch(error => {
                 if(error.response){
                     setLoading(false);
-                    console.log("--->Error",error)
+                    toast.error(error.response.data.error.message);
                 }
             });
             if(result && result.data) {
                 clearStates();
                 localStorage.setItem('user', JSON.stringify(result.data.data));
-                history.push('/');
+                if(history.action === 'PUSH') {
+                    history.goBack();
+                } else {
+                    history.push('/');
+                }
             }
         }
     }
@@ -334,6 +346,13 @@ const Auth = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <ToastContainer 
+                transition={Zoom}
+                autoClose={3000}
+                closeButton={true}
+                hideProgressBar={true}
+                pauseOnHover={true}
+            />
         </div>
     )
 }

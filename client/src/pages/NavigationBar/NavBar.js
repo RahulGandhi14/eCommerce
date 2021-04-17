@@ -6,6 +6,7 @@ import { Badge, Button, Container, createStyles, IconButton, makeStyles, TextFie
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import { useSelector } from 'react-redux';
+import { ToastContainer, Zoom } from 'react-toastify';
 
 export const useStyles = makeStyles((theme: Theme)=>
     createStyles({
@@ -74,6 +75,13 @@ const NavBar = () => {
                    </Grid>
                </Grid>
            </Container>
+           <ToastContainer 
+                transition={Zoom}
+                autoClose={3000}
+                closeButton={true}
+                hideProgressBar={true}
+                pauseOnHover={true}
+            />
         </Grid>
     )
 }
