@@ -11,8 +11,18 @@ const productRequests = {
     product: "/product",
 }
 
+const paymentRequests = {
+    createPayment: "/stripe/create-payment-intent",
+}
+
+const orderRequests = {
+    Order: "/order",
+}
+
 module.exports = {
     authRequests,
     userDetailRequests,
     productRequests,
+    paymentRequests,
+    orderRequests
 }

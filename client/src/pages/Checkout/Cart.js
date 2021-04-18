@@ -9,6 +9,7 @@ import { isAuthenticated } from '../auth/AuthHelpers';
 import { useHistory } from 'react-router';
 import Bag from './Bag';
 import Addresses from  '../Account/Addresses'
+import Stripe from '../Stripe/Stripe';
 
 const Cart = () => {
     const classes = useStyles();
@@ -52,9 +53,15 @@ const Cart = () => {
                 <h5>Total Amount</h5>
                 <p>&#8377; {totalSellingPrice}</p>
             </div>
-            <Button variant="contained" className={classes.btnStyle} onClick={placeOrder} fullWidth>
-                {user ? 'Place order' : 'Login to place order'}
-            </Button>
+            {currentTab !== 3 && (
+                <Button variant="contained" className={classes.btnStyle} onClick={placeOrder} fullWidth>
+                    {
+                        user ?
+                            currentTab === 1 ? 'Place order' : 'Continue' 
+                            : 'Login to place order'
+                    }
+                </Button>
+            )}
         </div>
     )
 
@@ -85,7 +92,8 @@ const Cart = () => {
                                 <Grid item lg={8} md={8} sm={7} xs={12}>
                                     {
                                         currentTab === 1 ? <Bag />
-                                            : currentTab === 2 ? <Addresses /> : null
+                                            : currentTab === 2 ? <Addresses /> 
+                                            : currentTab === 3 ? <Stripe amount={totalSellingPrice}/> : null
                                     }
                                 </Grid>
                                 <Grid item lg={4} md={4} sm={5} xs={12}>
