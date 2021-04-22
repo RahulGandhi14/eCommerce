@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, Menu, MenuItem } from '@material-ui/core';
 import "./Cart.scss";
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/actions';
+import { arrayBufferToBase64 } from '../util';
 
-export const CartProductCard = ({data}) => {
+export const CartProductCard = ({data, displayFor=''}) => {
 
     const dispatch = useDispatch();
 

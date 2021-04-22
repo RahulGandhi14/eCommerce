@@ -43,7 +43,6 @@ const CheckoutForm = ({amount}) => {
         });
 
         if(result && result.data){
-            console.log("---->RESULT", result.data.data.clientSecret)
             setClientSecret(result.data.data.clientSecret);
         }
     }
@@ -83,6 +82,7 @@ const CheckoutForm = ({amount}) => {
             let size = product.sizes.filter((size)=>size.size === product.selectedSize);
             return ({ productID: product._id, size: size[0]._id, qty: product.qty })
         });
+
         const payload = await stripe.confirmCardPayment(clientSecret, {
             payment_method:{
                 card: elements.getElement(CardElement)
@@ -93,14 +93,13 @@ const CheckoutForm = ({amount}) => {
             setError(`Payment failed ${payload.error.message}`);
             setProcessing(false);
         } else {
-
             let reqBody = {
                 products: selectedSizes,
                 totalAmount: amount,
-                transactionId: payload.id,
+                transactionId: payload.paymentIntent.id,
             }
 
-            let result = await Instance.post(orderRequests, reqBody, {
+            let result = await Instance.post(orderRequests.Order, reqBody, {
                 headers: {
                     'Authorization': user.token,
                 }

@@ -9,6 +9,7 @@ const sizeSchema = mongoose.Schema({
     inventory: {
         type: Number,
         required: true,
+        min: 0,
     },
     sold: {
         type: Number,

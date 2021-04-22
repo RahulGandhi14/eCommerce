@@ -4,10 +4,10 @@ import NavBar from '../NavigationBar/NavBar';
 import { productRequests } from '../../request';
 import { Instance } from '../../axios';
 import { isAuthenticated } from '../auth/AuthHelpers';
-import { arrayBufferToBase64 } from './ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/actions';
 import { toast } from 'react-toastify';
+import { arrayBufferToBase64 } from '../util';
 
 const MessageComponent = ({image}) => (
     <div>

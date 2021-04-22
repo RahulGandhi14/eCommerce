@@ -2,18 +2,24 @@ require('dotenv').config();
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
 const { successPattern } = require('../helpers/resPattern');
+const { ObjectId } = require('mongoose').Types;
 const Order = require('../models/order.model');
 const OrderItem = require('../models/orderItem.model');
 const Size = require('../models/size.model');
+
 
 const createOrder = async (req, res, next) => {
     try {
         let orderedItems = await OrderItem.insertMany(req.body.products);
         orderedItems = orderedItems.map((item)=>item._id);
 
-        let sizes = req.body.products.map((product)=>product.size);
+        let sizes = req.body.products.map((product)=>ObjectId(product.size));
         
-        // await Size.updateMany()
+        await Size.updateMany({
+            "_id": { $in: sizes}
+        },{
+            $inc: { "inventory": -1 }
+        });
 
         let order = {
             userId: req.user._id,
@@ -22,8 +28,9 @@ const createOrder = async (req, res, next) => {
             transactionId: req.body.transactionId
         }
 
-        let createdOrder = Order.create(order);
-        let obj = successPattern(httpStatus.OK, {data: createdOrder}, 'success');
+        let createdOrder = await Order.create(order);
+
+        let obj = successPattern(httpStatus.OK, createdOrder, 'success');
         return res.status(obj.code).json(obj);
 
     } catch (e) {
@@ -32,6 +39,31 @@ const createOrder = async (req, res, next) => {
     }
 }
 
+const getAllOrdersByUserId = async (req, res, next) => {
+    try {
+        let allOrders = await Order.find({
+                "userId": ObjectId(req.user._id)
+            }).populate({
+                path: 'products',
+                populate: {
+                    path: 'product',
+                },
+            }).populate({
+                path: 'products',
+                populate: {
+                    path: 'size',
+                },
+            });
+
+        let obj = successPattern(httpStatus.OK, allOrders, 'success');
+        return res.status(obj.code).json(obj);
+    } catch (e) {
+        console.log("getAllOrdersByUserId --->",e);
+        return next(new APIError(e.message, httpStatus.BAD_REQUEST, true));
+    }
+}
+
 module.exports = {
     createOrder,
+    getAllOrdersByUserId
 }
