@@ -1,8 +1,10 @@
 import { Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Instance } from '../../axios';
 import { userDetailRequests } from '../../request';
 import { isAuthenticated } from '../auth/AuthHelpers';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const Addresses = () => {
 
@@ -46,7 +48,7 @@ const Addresses = () => {
     }
 
     const getAllAddresses = async () => {
-        let result = await Instance.get(`${userDetailRequests.address}/${user._id}`,{
+        let result = await Instance.get(`${userDetailRequests.address}`,{
             headers: {
                 "Authorization": user.token,
             }
@@ -62,35 +64,54 @@ const Addresses = () => {
     }
 
     const addAddress = async () => {
-        setOpen(false);
         let result = await Instance.post(userDetailRequests.address, {
             ...address,
             userID: user._id,
         }).catch(error => {
             if(error.response){
-                console.log("--->Error",error)
+                toast.error(error.response.data.error.message);
             }
         });
-
+        
         if(result && result.data) {
-            setListOfAddresses([...listOfAddresses, address]);
+            setListOfAddresses([...result.data.data]);
             clearInputs();
+            setOpen(false);
+        }
+    }
+
+    const deleteAddress = async (addressId) => {
+        let result = await Instance.delete(`${userDetailRequests.address}/${addressId}`,{
+            headers: {
+                "Authorization": user.token,
+            }
+        }).catch(error => {
+            if(error.response){
+                toast.error(error.response.data.error.message);
+            }
+        });
+        
+        if(result && result.data) {
+            setListOfAddresses([...result.data.data]);
         }
     }
 
     return (
         <>
             <div className="justifiedFlex">
-                <h4>{window.location.hash.includes('cart') ? 'Select Delivery Address' : 'Saved Addresses'}</h4>
-                <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>
+                <h4>{window.location.hash === '#/checkout/cart' ? 'Delivery Address' : 'Saved Addresses'}</h4>
+                {window.location.hash === '#/account/address' && <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>}
             </div>
             {listOfAddresses.map((address, index)=>(
                 <>
-                    {(window.location.hash.includes('cart') && address.default) || window.location.hash.includes('account') ? (
+                    {(window.location.hash === '#/checkout/cart' && address.default) || window.location.hash === '#/account/address' ? (
                         <>
-                            {address.default && <h6>Default Address</h6>}
-                            <div id={index+"address"} className="cart-item address-card" style={{width:"100%"}}>
-                                <Box p={2}>
+                            {address.default && window.location.hash === '#/account/address' && <h6>Default Address</h6>}
+                            <div id={index+"address"} className="address-card mb20" style={{width:"100%"}}>
+                                <Box p={2} className="relative border">
+                                    {window.location.hash === '#/account/address' ? 
+                                        <DeleteOutlineIcon className="absolute trashIcon cursorPointer" onClick={()=>deleteAddress(address._id)}/> : null
+                                    }
                                     <p><strong>{address.name}</strong></p>
                                     <p>{address.address}</p>
                                     <p>{address.town}</p>

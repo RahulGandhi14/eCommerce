@@ -7,12 +7,16 @@ import {
 import { Instance } from "../../axios";
 import { paymentRequests, orderRequests } from "../../request";
 import { isAuthenticated } from "../auth/AuthHelpers";
-import { toast } from "react-toastify";
+import { Slide, toast } from "react-toastify";
 import { Grid } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { addProduct } from "../../redux/actions";
 const CheckoutForm = ({amount}) => {
 
     const user = isAuthenticated();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     //REDUX states
     const cartProducts = useSelector(state => state.cart.cartProducts);
@@ -80,7 +84,7 @@ const CheckoutForm = ({amount}) => {
         setProcessing(true);
         let selectedSizes = cartProducts.map((product)=>{
             let size = product.sizes.filter((size)=>size.size === product.selectedSize);
-            return ({ productID: product._id, size: size[0]._id, qty: product.qty })
+            return ({ product: product._id, size: size[0]._id, qty: product.qty })
         });
 
         const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -113,6 +117,15 @@ const CheckoutForm = ({amount}) => {
                 setError(null);
                 setProcessing(false);
                 setSucceeded(true);
+                toast(<h3>Order Placed</h3>, {
+                    position: 'top-center',
+                    transition: Slide
+                });
+                setTimeout(() => {
+                    dispatch(addProduct([]));
+                    history.push(`/account/orders`)
+                }, 2000);
+
             }
         }
     }

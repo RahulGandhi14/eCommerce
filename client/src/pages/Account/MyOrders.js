@@ -30,8 +30,12 @@ const MyOrders = () => {
             let orders = result.data.data.map((order)=>{
                 let productArr = order.products.map((product)=>{
                     [1,2,3,4,5].map((index)=>{
-                        product[`img${index}`] = arrayBufferToBase64(product[`img${index}`]?.data?.data);
+                        if(product.product[`img${index}`]) {
+                            product.product[`img${index}`] = arrayBufferToBase64(product.product[`img${index}`]?.data?.data);
+                        }
                     });
+                    product.product.qty = product.qty;
+                    product.product.selectedSize = product.size.size;
                     return product;
                 });
                 order.products = productArr;
@@ -45,10 +49,10 @@ const MyOrders = () => {
         <Box p={3}>
             <p>Showing <span className="fw500">All Orders</span></p>
             {allProducts.map((order)=>(
-                <div className="order-container">
+                <div className="order-container mb20">
                     <p>Order Id: {order._id}</p>
                     {order.products.map(product => (
-                        <CartProductCard data={product.product} displayFor='order'/>
+                        <CartProductCard data={product.product} product={product} status={order.status}/>
                     ))}
                 </div>
             ))}

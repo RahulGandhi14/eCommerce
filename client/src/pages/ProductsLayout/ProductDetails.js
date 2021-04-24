@@ -10,8 +10,9 @@ import { toast } from 'react-toastify';
 import { arrayBufferToBase64 } from '../util';
 
 const MessageComponent = ({image}) => (
-    <div>
+    <div className="justifiedFlex rowDir">
         <img style={{height:"60px"}} src={image} alt="notification"/>
+        <p style={{color:"white", marginLeft: "10px"}}>Added to cart</p>
     </div>
 )
 
@@ -75,7 +76,6 @@ const ProductDetails = ({match}) => {
 
     const addToCart = () => {
         if(!selectedSize) {
-            toast.dark(<MessageComponent image={productDetails.img1}/>, { position:'top-right' });
             setShowError(true);
             return;
         }
@@ -101,6 +101,7 @@ const ProductDetails = ({match}) => {
             ];
         }
         dispatch(addProduct(updatedArr));
+        toast.dark(<MessageComponent image={productDetails.img1}/>, { position:'top-right' });
     }
 
     return (

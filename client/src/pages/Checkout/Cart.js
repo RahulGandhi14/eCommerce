@@ -51,7 +51,7 @@ const Cart = () => {
             <div className="horizontalDivider"></div>
             <div className="justifiedFlex rowDir my10">
                 <h5>Total Amount</h5>
-                <p>&#8377; {totalSellingPrice}</p>
+                <h5>&#8377; {totalSellingPrice}</h5>
             </div>
             {currentTab !== 3 && (
                 <Button variant="contained" className={classes.btnStyle} onClick={placeOrder} fullWidth>

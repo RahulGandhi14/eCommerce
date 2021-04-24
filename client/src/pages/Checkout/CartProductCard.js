@@ -7,18 +7,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/actions';
 import { arrayBufferToBase64 } from '../util';
 
-export const CartProductCard = ({data, displayFor=''}) => {
+export const CartProductCard = ({data, product='', status=''}) => {
 
     const dispatch = useDispatch();
 
     //REACT states
-    const [ratings, setRatings] = useState(3);
-    const [tempRatings, setTempRatings] = useState(3);
+    const [ratings, setRatings] = useState(0);
+    const [tempRatings, setTempRatings] = useState(0);
     const [openQtyMenu, setOpenQtyMenu] = useState(false);
     const [openSizeMenu, setOpenSizeMenu] = useState(false);
 
     //REDUX states
     const cartProducts = useSelector(state => state.cart.cartProducts);
+
+    useEffect(() => {
+        setRatings(data.ratings)
+    }, [])
 
     const removeFromCart = () => {
         let updatedArr = cartProducts.filter((product)=>product._id !== data._id);
@@ -55,7 +59,7 @@ export const CartProductCard = ({data, displayFor=''}) => {
                             className="cartUtilityButtons"
                             onClick={e=>setOpenSizeMenu(e.currentTarget)}
                         >Size: {data.selectedSize}</Button>&nbsp;&nbsp;
-                        {window.location.hash.includes('cart') ? (
+                        {window.location.hash === '#/checkout/cart' ? (
                             <Menu
                                 anchorEl={openSizeMenu}
                                 open={Boolean(openSizeMenu)}
@@ -73,7 +77,7 @@ export const CartProductCard = ({data, displayFor=''}) => {
                             className="cartUtilityButtons" 
                             onClick={(e)=>setOpenQtyMenu(e.currentTarget)}
                         >Qty: {data.qty}</Button>
-                        {window.location.hash.includes('cart') ? (
+                        {window.location.hash === '#/checkout/cart' ? (
                             <Menu
                                 anchorEl={openQtyMenu}
                                 open={Boolean(openQtyMenu)}
@@ -87,9 +91,16 @@ export const CartProductCard = ({data, displayFor=''}) => {
                                 <MenuItem id='5' onClick={(e)=>updateCartDetails(e, 'qty')}>5</MenuItem>
                             </Menu>
                         ) : null}
+
+                        {window.location.hash === '#/account/orders' ? (
+                            <p className="my10">
+                                <span className="faded">Order Status:</span>&nbsp;
+                                <span className="fw500">{status}</span>
+                            </p>
+                        ) : null}
                     </div>
                 </div>
-                {window.location.hash.includes('cart') ? (
+                {window.location.hash === '#/checkout/cart' ? (
                     <div className="cart-action">
                         <Grid container className="btnGroup">
                             <div className="removeBtn">
@@ -116,7 +127,7 @@ export const CartProductCard = ({data, displayFor=''}) => {
                                         </div>
                                     ))}
                                 </div>
-                                <p className="fw500 cursorPointer">Write Review</p>
+                                {/* <p className="fw500 cursorPointer">Write Review</p> */}
                             </div>
                         </Grid>
                     </div>

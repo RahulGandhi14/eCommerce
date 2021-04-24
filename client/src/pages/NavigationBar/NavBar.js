@@ -64,7 +64,7 @@ const NavBar = () => {
                             </IconButton>
                         </Link>
                         {user ? (
-                            <Link to='/account' className="userName">
+                            <Link to='/account/profile' className="userName">
                                 <span>{user.name}</span>
                             </Link>
                         ) : (

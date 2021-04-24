@@ -1,5 +1,6 @@
 import { Container, Grid, Box } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import AddEditProduct from '../Admin/AddEditProduct';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import NavBar from '../NavigationBar/NavBar';
@@ -8,10 +9,15 @@ import Addresses from './Addresses'
 import MyOrders from './MyOrders'
 import Profile from './Profile'
 
-const Account = () => {
+const Account = ({match}) => {
 
     let user = isAuthenticated();
-    const [currentTab, setCurrentTab] = useState('profile');
+    let history = useHistory();
+    const [currentTab, setCurrentTab] = useState(match.params.stage);
+
+    useEffect(() => {
+        history.push(`/account/${currentTab}`)
+    }, [currentTab])
 
     return (
         <>
