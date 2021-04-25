@@ -10,6 +10,8 @@ import { useHistory } from 'react-router';
 import Bag from './Bag';
 import Addresses from  '../Account/Addresses'
 import Stripe from '../Stripe/Stripe';
+import emptyCart from '../../assets/emptyCartIcon.svg';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
     const classes = useStyles();
@@ -68,43 +70,57 @@ const Cart = () => {
     return (
         <>
             <NavBar />
-            <Grid container justify="center" className="my20">
-                <p style={{fontSize: "14px", "letterSpacing": "2px"}}>
-                    <span 
-                        className={`${currentTab===1 ? 'fw600' : ''} ${currentTab>1 ? 'cursorPointer' : ''}`} 
-                        onClick={()=>setCurrentTab(1)}
-                    >BAG</span>&nbsp;-------&nbsp; 
-                    <span 
-                        className={`${currentTab===2 ? 'fw600' : ''} ${currentTab>2 ? 'cursorPointer' : ''}`} 
-                        onClick={()=>setCurrentTab(2)}
-                    >ADDRESS</span>&nbsp;-------&nbsp; 
-                    <span 
-                        className={`${currentTab===3 ? 'fw600' : ''}`} 
-                        onClick={()=>setCurrentTab(3)}
-                    >PAYMENT</span>
-                </p>
-            </Grid>
-            <Container style={{overflow:"hidden"}}>
-                <Grid lg={10} xs={12} className="marginAuto">
-                    <Box mt={5}>
-                        {cartProducts.length ? (
-                            <Grid container spacing={6}>
-                                <Grid item lg={8} md={8} sm={7} xs={12}>
-                                    {
-                                        currentTab === 1 ? <Bag />
-                                            : currentTab === 2 ? <Addresses /> 
-                                            : currentTab === 3 ? <Stripe amount={totalSellingPrice}/> : null
-                                    }
-                                </Grid>
-                                <Grid item lg={4} md={4} sm={5} xs={12}>
-                                    <h4>Price Details:</h4>
-                                    {priceDetailsUI()}
-                                </Grid>
-                            </Grid>
-                        ) : null}
+            {cartProducts.length ? (
+                <>
+                    <Grid container justify="center" className="my20">
+                        <p style={{fontSize: "14px", "letterSpacing": "2px"}}>
+                            <span 
+                                className={`${currentTab===1 ? 'fw600' : ''} ${currentTab>1 ? 'cursorPointer' : ''}`} 
+                                onClick={()=>setCurrentTab(1)}
+                            >BAG</span>&nbsp;-------&nbsp; 
+                            <span 
+                                className={`${currentTab===2 ? 'fw600' : ''} ${currentTab>2 ? 'cursorPointer' : ''}`} 
+                                onClick={()=>setCurrentTab(2)}
+                            >ADDRESS</span>&nbsp;-------&nbsp; 
+                            <span 
+                                className={`${currentTab===3 ? 'fw600' : ''}`} 
+                                onClick={()=>setCurrentTab(3)}
+                            >PAYMENT</span>
+                        </p>
+                    </Grid>
+                    <Container style={{overflow:"hidden"}}>
+                        <Grid lg={10} xs={12} className="marginAuto">
+                            <Box mt={5}>
+                                {cartProducts.length ? (
+                                    <Grid container spacing={6}>
+                                        <Grid item lg={8} md={8} sm={7} xs={12}>
+                                            {
+                                                currentTab === 1 ? <Bag />
+                                                    : currentTab === 2 ? <Addresses /> 
+                                                    : currentTab === 3 ? <Stripe amount={totalSellingPrice}/> : null
+                                            }
+                                        </Grid>
+                                        <Grid item lg={4} md={4} sm={5} xs={12}>
+                                            <h4>Price Details:</h4>
+                                            {priceDetailsUI()}
+                                        </Grid>
+                                    </Grid>
+                                ) : null}
+                            </Box>
+                        </Grid>
+                    </Container>
+                </>
+            ) : (
+                <Grid container justify="center" alignItems="center" className="h100">
+                    <Box pt={8}>
+                        <div className="emptyCart">
+                            <img style={{width:"90%", height:"auto"}} src={emptyCart} alt="empty-cart"/>
+                            <p className="my10 faded">There is nothing in your bag.</p>
+                            <Link to="/"><Button variant="outlined">Let's add some items</Button></Link>
+                        </div>
                     </Box>
                 </Grid>
-            </Container>
+            )}
         </>
     )
 }

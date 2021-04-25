@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { arrayBufferToBase64 } from '../util';
 
 const MessageComponent = ({image}) => (
-    <div className="justifiedFlex rowDir">
+    <div className="justifiedFlex rowDir alignCenter">
         <img style={{height:"60px"}} src={image} alt="notification"/>
         <p style={{color:"white", marginLeft: "10px"}}>Added to cart</p>
     </div>

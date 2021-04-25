@@ -30,7 +30,7 @@ const Account = ({match}) => {
                             <p style={{fontSize:"14px"}}>{user.name}</p>
                         </div>
                         <Grid container className="accountSection">
-                            <Grid item lg={2} className="accountItems">
+                            <Grid item lg={2} md={2} sm={3} className="accountItems">
                                 <Box mt={3} className="items">
                                     <div>
                                         <p 
@@ -57,7 +57,7 @@ const Account = ({match}) => {
                                     </div>
                                 </Box>
                             </Grid>
-                            <Grid item lg={10}>
+                            <Grid item lg={10} md={10} sm={9}>
                                 <Box p={3}>
                                     {
                                         currentTab==='profile' ? <Profile /> :
