@@ -48,6 +48,10 @@ $complimentaryColor: #ff7d2de0;
     transition: height 0.3s;
 }
 
+.pagination {
+    color: #1D256E;
+}
+
 .order-container {
     border: 1px solid rgba(29, 37, 110, 0.3);
     padding: 18px;
@@ -57,4 +61,10 @@ $complimentaryColor: #ff7d2de0;
 .trashIcon {
     right: 16px;
     color: #1D256E;
+}
+
+@media (max-width: 600px) {
+    .removePadding {
+        padding: 20px 0 !important
+    }
 }

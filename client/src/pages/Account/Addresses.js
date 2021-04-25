@@ -124,7 +124,6 @@ const Addresses = () => {
                     ) : null}
                 </>
             ))}
-            <Box mt={3}></Box>
 
             <Dialog fullWidth open={open} onClose={()=>setOpen(false)}>
                 <DialogTitle className="bottomBorder">Add New Address</DialogTitle>

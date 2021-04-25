@@ -42,7 +42,8 @@ const createOrder = async (req, res, next) => {
 const getAllOrdersByUserId = async (req, res, next) => {
     try {
         let allOrders = await Order.find({
-                "userId": ObjectId(req.user._id)
+                "userId": ObjectId(req.user._id),
+                ...req.query.lastDocument ? req.query.param === 'NEXT' ? {"_id": { $lt: ObjectId(req.query.lastDocument)}} : {"_id": { $gt: ObjectId(req.query.lastDocument)}} : {}
             }).populate({
                 path: 'products',
                 populate: {
@@ -53,9 +54,13 @@ const getAllOrdersByUserId = async (req, res, next) => {
                 populate: {
                     path: 'size',
                 },
-            });
+            }).sort([['createdAt', -1]]).limit(parseInt(req.query.limit));
 
-        let obj = successPattern(httpStatus.OK, allOrders, 'success');
+        let count = await Order.countDocuments({
+            "userId": ObjectId(req.user._id)
+        })
+
+        let obj = successPattern(httpStatus.OK, {allOrders, count}, 'success');
         return res.status(obj.code).json(obj);
     } catch (e) {
         console.log("getAllOrdersByUserId --->",e);

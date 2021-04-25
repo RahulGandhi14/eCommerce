@@ -113,7 +113,7 @@ const Cart = () => {
             ) : (
                 <Grid container justify="center" alignItems="center" className="h100">
                     <Box pt={8}>
-                        <div className="emptyCart">
+                        <div className="text-center">
                             <img style={{width:"90%", height:"auto"}} src={emptyCart} alt="empty-cart"/>
                             <p className="my10 faded">There is nothing in your bag.</p>
                             <Link to="/"><Button variant="outlined">Let's add some items</Button></Link>
