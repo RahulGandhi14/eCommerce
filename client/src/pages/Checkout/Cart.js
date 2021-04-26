@@ -76,15 +76,15 @@ const Cart = () => {
                         <p style={{fontSize: "14px", "letterSpacing": "2px"}}>
                             <span 
                                 className={`${currentTab===1 ? 'fw600' : ''} ${currentTab>1 ? 'cursorPointer' : ''}`} 
-                                onClick={()=>setCurrentTab(1)}
+                                onClick={()=>{ if(currentTab > 1) setCurrentTab(1) }}
                             >BAG</span>&nbsp;-------&nbsp; 
                             <span 
                                 className={`${currentTab===2 ? 'fw600' : ''} ${currentTab>2 ? 'cursorPointer' : ''}`} 
-                                onClick={()=>setCurrentTab(2)}
+                                onClick={()=>{ if(currentTab > 2) setCurrentTab(2) }}
                             >ADDRESS</span>&nbsp;-------&nbsp; 
                             <span 
                                 className={`${currentTab===3 ? 'fw600' : ''}`} 
-                                onClick={()=>setCurrentTab(3)}
+                                onClick={()=>{ if(currentTab > 3) setCurrentTab(3) }}
                             >PAYMENT</span>
                         </p>
                     </Grid>

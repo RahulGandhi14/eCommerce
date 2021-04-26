@@ -79,6 +79,7 @@ const ProductDetails = ({match}) => {
             setShowError(true);
             return;
         }
+        setShowError(false);
         let updatedArr = [];
         let alreadyInCart = false;
         updatedArr = cartProducts.map((product)=>{

@@ -99,7 +99,9 @@ const Addresses = () => {
     return (
         <>
             <div className="justifiedFlex">
-                <h4>{window.location.hash === '#/checkout/cart' ? 'Delivery Address' : 'Saved Addresses'}</h4>
+                <h4 className={`${window.location.hash === '#/checkout/cart' && 'mb10'}`}>
+                    {window.location.hash === '#/checkout/cart' ? 'Delivery Address' : 'Saved Addresses'}
+                </h4>
                 {window.location.hash === '#/account/address' && <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>}
             </div>
             {listOfAddresses.map((address, index)=>(
