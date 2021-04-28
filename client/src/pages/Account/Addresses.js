@@ -5,11 +5,14 @@ import { Instance } from '../../axios';
 import { userDetailRequests } from '../../request';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Loader from '../Loader';
 
 const Addresses = () => {
 
     const user = isAuthenticated();
+
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [listOfAddresses, setListOfAddresses] = useState([]);
     const [address, setAddress] = useState({
         name: '',
@@ -48,12 +51,14 @@ const Addresses = () => {
     }
 
     const getAllAddresses = async () => {
+        setIsLoading(true);
         let result = await Instance.get(`${userDetailRequests.address}`,{
             headers: {
                 "Authorization": user.token,
             }
         }).catch(error => {
             if(error.response){
+                setIsLoading(false);
                 console.log("--->Error",error)
             }
         })
@@ -61,6 +66,7 @@ const Addresses = () => {
         if(result && result.data){
             setListOfAddresses(result.data.data);
         }
+        setIsLoading(false);
     }
 
     const addAddress = async () => {
@@ -98,34 +104,38 @@ const Addresses = () => {
 
     return (
         <>
-            <div className="justifiedFlex">
-                <h4 className={`${window.location.hash === '#/checkout/cart' && 'mb10'}`}>
-                    {window.location.hash === '#/checkout/cart' ? 'Delivery Address' : 'Saved Addresses'}
-                </h4>
-                {window.location.hash === '#/account/address' && <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>}
-            </div>
-            {listOfAddresses.map((address, index)=>(
+            {isLoading ? <Loader /> : (
                 <>
-                    {(window.location.hash === '#/checkout/cart' && address.default) || window.location.hash === '#/account/address' ? (
+                    <div className="justifiedFlex">
+                        <h4 className={`${window.location.hash === '#/checkout/cart' && 'mb10'}`}>
+                            {window.location.hash === '#/checkout/cart' ? 'Delivery Address' : 'Saved Addresses'}
+                        </h4>
+                        {window.location.hash === '#/account/address' && <Button variant="outlined" onClick={()=>setOpen(true)}>+ Add New Address</Button>}
+                    </div>
+                    {listOfAddresses.map((address, index)=>(
                         <>
-                            {address.default && window.location.hash === '#/account/address' && <h6>Default Address</h6>}
-                            <div id={index+"address"} className="address-card mb20" style={{width:"100%"}}>
-                                <Box p={2} className="relative border">
-                                    {window.location.hash === '#/account/address' ? 
-                                        <DeleteOutlineIcon className="absolute trashIcon cursorPointer" onClick={()=>deleteAddress(address._id)}/> : null
-                                    }
-                                    <p><strong>{address.name}</strong></p>
-                                    <p>{address.address}</p>
-                                    <p>{address.town}</p>
-                                    <p>{address.city} - {address.pinCode}</p>
-                                    <p>{address.state}</p>
-                                    <p>Mobile Number: {address.mobileNumber}</p>
-                                </Box>
-                            </div>
+                            {(window.location.hash === '#/checkout/cart' && address.default) || window.location.hash === '#/account/address' ? (
+                                <>
+                                    {address.default && window.location.hash === '#/account/address' && <h6>Default Address</h6>}
+                                    <div id={index+"address"} className="address-card mb20" style={{width:"100%"}}>
+                                        <Box p={2} className="relative border">
+                                            {window.location.hash === '#/account/address' ? 
+                                                <DeleteOutlineIcon className="absolute trashIcon cursorPointer" onClick={()=>deleteAddress(address._id)}/> : null
+                                            }
+                                            <p><strong>{address.name}</strong></p>
+                                            <p>{address.address}</p>
+                                            <p>{address.town}</p>
+                                            <p>{address.city} - {address.pinCode}</p>
+                                            <p>{address.state}</p>
+                                            <p>Mobile Number: {address.mobileNumber}</p>
+                                        </Box>
+                                    </div>
+                                </>
+                            ) : null}
                         </>
-                    ) : null}
+                    ))}
                 </>
-            ))}
+            )}
 
             <Dialog fullWidth open={open} onClose={()=>setOpen(false)}>
                 <DialogTitle className="bottomBorder">Add New Address</DialogTitle>

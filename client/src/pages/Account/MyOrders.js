@@ -1,9 +1,9 @@
-import { Box, CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Instance } from '../../axios';
 import { orderRequests } from '../../request';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import CartProductCard from '../Checkout/CartProductCard';
+import Loader from '../Loader';
 import { arrayBufferToBase64 } from '../util';
 
 const MyOrders = () => {
@@ -71,9 +71,7 @@ const MyOrders = () => {
         <>
             <p>Showing <span className="fw500">All Orders</span></p>
             {isLoading ? (
-                <Box p={8} className="w100 text-center">
-                    <CircularProgress />
-                </Box>
+                <Loader />
             ) : (
                 <>
                     {allProducts.map((order)=>(

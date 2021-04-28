@@ -84,7 +84,7 @@ const CheckoutForm = ({amount}) => {
         setProcessing(true);
         let selectedSizes = cartProducts.map((product)=>{
             let size = product.sizes.filter((size)=>size.size === product.selectedSize);
-            return ({ product: product._id, size: size[0]._id, qty: product.qty })
+            return ({ product: product._id, size: size[0]._id, qty: product.qty, price: product.sellingPrice })
         });
 
         const payload = await stripe.confirmCardPayment(clientSecret, {

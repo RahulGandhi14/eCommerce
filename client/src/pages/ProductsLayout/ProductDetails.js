@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/actions';
 import { toast } from 'react-toastify';
 import { arrayBufferToBase64 } from '../util';
+import Loader from '../Loader';
 
 const MessageComponent = ({image}) => (
     <div className="justifiedFlex rowDir alignCenter">
@@ -31,18 +32,21 @@ const ProductDetails = ({match}) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [productDetails, setProductDetails] = useState({});
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         getProduct();
     }, []);
 
     const getProduct = async () => {
+        setIsLoading(true);
         let result = await Instance.get(`${productRequests.product}/${productId}`,{
             headers: {
                 'Authorization': user.token
             }
         }).catch(error => {
             if(error.response){
+                setIsLoading(false);
                 console.log("--->Error",error)
             }
         });
@@ -59,6 +63,7 @@ const ProductDetails = ({match}) => {
             setProductDetails(result.data.data);
             setImages(arr);
         }
+        setIsLoading(false);
     }
 
     const productImageSection = () => (
@@ -110,52 +115,54 @@ const ProductDetails = ({match}) => {
             <NavBar />
             <Grid container xs={12}>
                 <Container>
-                    <Box my={5} className="marginButtonDisable">
-                        {Object.keys(productDetails).length ? (
-                            <Grid container xs={12}>
-                                <Grid item lg={6} md={6} sm={12} xs={12} container className="product-imgs">
-                                    {productImageSection()}
-                                </Grid>
-                                <Grid item lg={6} md={6} sm={12} xs={12}>
-                                    <div className="product-details">
-                                        <h1>{productDetails?.brandName}</h1>
-                                        <h3 className="faded">{productDetails?.productName}</h3>
-                                        <div className="horizontal-divider"></div>
-                                        <h2>Rs. {productDetails?.sellingPrice} &nbsp; 
-                                            <span className="originalPrice">(Rs. {productDetails?.mrp})</span> &nbsp; 
-                                            <span className="discount">
-                                                ({Math.round(((productDetails?.mrp-productDetails?.sellingPrice)/productDetails?.sellingPrice)*100)}% off)
-                                            </span>
-                                        </h2>
-                                        
-                                        <div className="sizes my20">
-                                            <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Select size</h4>
-                                            <div className="size-select">
-                                                {showError && <p className="mb8 text-red">Please select a size</p>}
-                                                {productDetails?.sizes?.map((size)=>(
-                                                    <input type="radio" id={size.size} checked={selectedSize === size.size} onChange={(e)=>{setSelectedSize(e.target.id)}}/>
-                                                ))}
-                                                <div className="size-buttons">
-                                                    {productDetails?.sizes.map((size)=>(
-                                                        <label className={selectedSize===size.size ? 'selected' : ''} htmlFor={size.size}>
-                                                            {size.size}
-                                                        </label>
+                    {isLoading ? <Loader /> : (
+                        <Box my={5} className="marginButtonDisable">
+                            {Object.keys(productDetails).length ? (
+                                <Grid container xs={12}>
+                                    <Grid item lg={6} md={6} sm={12} xs={12} container className="product-imgs">
+                                        {productImageSection()}
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div className="product-details">
+                                            <h1>{productDetails?.brandName}</h1>
+                                            <h3 className="faded">{productDetails?.productName}</h3>
+                                            <div className="horizontal-divider"></div>
+                                            <h2>Rs. {productDetails?.sellingPrice} &nbsp; 
+                                                <span className="originalPrice">(Rs. {productDetails?.mrp})</span> &nbsp; 
+                                                <span className="discount">
+                                                    ({Math.round(((productDetails?.mrp-productDetails?.sellingPrice)/productDetails?.sellingPrice)*100)}% off)
+                                                </span>
+                                            </h2>
+                                            
+                                            <div className="sizes my20">
+                                                <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Select size</h4>
+                                                <div className="size-select">
+                                                    {showError && <p className="mb8 text-red">Please select a size</p>}
+                                                    {productDetails?.sizes?.map((size)=>(
+                                                        <input type="radio" id={size.size} checked={selectedSize === size.size} onChange={(e)=>{setSelectedSize(e.target.id)}}/>
                                                     ))}
+                                                    <div className="size-buttons">
+                                                        {productDetails?.sizes.map((size)=>(
+                                                            <label className={selectedSize===size.size ? 'selected' : ''} htmlFor={size.size}>
+                                                                {size.size}
+                                                            </label>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Product Details</h4>
-                                        <p>{productDetails?.description}</p>
-                                    </div>
-                                    <div className="purchase-buttons">
-                                        <Button className="addToCart" variant="contained" onClick={addToCart}>Add to cart</Button>
-                                        <Button className="addToWishlist" variant="outlined">Wishlist</Button>
-                                    </div>
+                                            <h4 className="mb8" style={{fontWeight:"500",textTransform:"uppercase"}}>Product Details</h4>
+                                            <p>{productDetails?.description}</p>
+                                        </div>
+                                        <div className="purchase-buttons">
+                                            <Button className="addToCart" variant="contained" onClick={addToCart}>Add to cart</Button>
+                                            <Button className="addToWishlist" variant="outlined">Wishlist</Button>
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        ) : null}
-                    </Box>
+                            ) : null}
+                        </Box>
+                    )}
                 </Container>
             </Grid>
         </>

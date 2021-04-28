@@ -92,12 +92,12 @@ export const CartProductCard = ({data, product='', status=''}) => {
                             </Menu>
                         ) : null}
 
-                        {window.location.hash === '#/account/orders' ? (
+                        {/* {window.location.hash === '#/account/orders' ? (
                             <p className="my10">
                                 <span className="faded">Order Status:</span>&nbsp;
                                 <span className="fw500">{status}</span>
                             </p>
-                        ) : null}
+                        ) : null} */}
                     </div>
                 </div>
                 {window.location.hash === '#/checkout/cart' ? (

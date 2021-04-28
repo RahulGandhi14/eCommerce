@@ -44,10 +44,11 @@ const getAllOrdersByUserId = async (req, res, next) => {
         let allOrders = await Order.find({
                 "userId": ObjectId(req.user._id),
                 ...req.query.lastDocument ? req.query.param === 'NEXT' ? {"_id": { $lt: ObjectId(req.query.lastDocument)}} : {"_id": { $gt: ObjectId(req.query.lastDocument)}} : {}
-            }).populate({
+            }).select('-transactionId -userId').populate({
                 path: 'products',
                 populate: {
                     path: 'product',
+                    select: '-img2 -img3 -img4 -img5 -sizes -deleted'
                 },
             }).populate({
                 path: 'products',
