@@ -19,10 +19,15 @@ const orderRequests = {
     Order: "/order",
 }
 
+const wishlistRequests = {
+    wishlist: "/wishlist"
+}
+
 module.exports = {
     authRequests,
     userDetailRequests,
     productRequests,
     paymentRequests,
-    orderRequests
+    orderRequests,
+    wishlistRequests,
 }

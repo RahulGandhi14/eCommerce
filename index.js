@@ -15,7 +15,8 @@ dotenv.config();
 mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true,
 }, ()=>console.log("app connected to db!"));
 
 const app = express();

@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import NavBar from '../NavigationBar/NavBar';
-import { productRequests } from '../../request';
+import { productRequests, wishlistRequests } from '../../request';
 import { Instance } from '../../axios';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,10 +10,10 @@ import { toast } from 'react-toastify';
 import { arrayBufferToBase64 } from '../util';
 import Loader from '../Loader';
 
-const MessageComponent = ({image}) => (
+const MessageComponent = ({image, msg}) => (
     <div className="justifiedFlex rowDir alignCenter">
         <img style={{height:"60px"}} src={image} alt="notification"/>
-        <p style={{color:"white", marginLeft: "10px"}}>Added to cart</p>
+        <p style={{color:"white", marginLeft: "10px"}}>{msg}</p>
     </div>
 )
 
@@ -107,7 +107,23 @@ const ProductDetails = ({match}) => {
             ];
         }
         dispatch(addProduct(updatedArr));
-        toast.dark(<MessageComponent image={productDetails.img1}/>, { position:'top-right' });
+        toast.dark(<MessageComponent image={productDetails.img1} msg="Added to cart"/>, { position:'top-right' });
+    }
+
+    const addToWishlist = async () => {
+        let result = await Instance.post(wishlistRequests.wishlist, { productId: productDetails._id }, {
+            headers: {
+                'Authorization': user.token,
+            }
+        }).catch(error => {
+            if(error.response){
+                console.log("--->Error",error)
+            }
+        });
+
+        if(result && result.data) {
+            toast.dark(<MessageComponent image={productDetails.img1} msg="Added to wishlist"/>, { position:'top-right' });
+        }
     }
 
     return (
@@ -156,7 +172,7 @@ const ProductDetails = ({match}) => {
                                         </div>
                                         <div className="purchase-buttons">
                                             <Button className="addToCart" variant="contained" onClick={addToCart}>Add to cart</Button>
-                                            <Button className="addToWishlist" variant="outlined">Wishlist</Button>
+                                            <Button className="addToWishlist" variant="outlined" onClick={addToWishlist}>Wishlist</Button>
                                         </div>
                                     </Grid>
                                 </Grid>

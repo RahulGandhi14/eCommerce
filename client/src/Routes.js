@@ -39,6 +39,7 @@ const Routes = () => {
                 <Route path="/product/:productId" exact component={ProductDetails} />
                 <Route path="/checkout/cart" exact component={Cart} />
                 <PrivateRoute path="/account/:stage" exact component={Account} />
+                <PrivateRoute path="/wishlist" exact component={ProductsLayout} />
             </Switch>
         </HashRouter>
     )

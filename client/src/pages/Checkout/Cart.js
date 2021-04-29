@@ -3,15 +3,13 @@ import { Box, Button, Container, Grid } from '@material-ui/core';
 import NavBar from '../NavigationBar/NavBar';
 import "./Cart.scss";
 import { useStyles } from "../NavigationBar/NavBar";
-import CartProductCard from './CartProductCard';
 import { useSelector } from 'react-redux';
 import { isAuthenticated } from '../auth/AuthHelpers';
 import { useHistory } from 'react-router';
 import Bag from './Bag';
 import Addresses from  '../Account/Addresses'
 import Stripe from '../Stripe/Stripe';
-import emptyCart from '../../assets/emptyCartIcon.svg';
-import { Link } from 'react-router-dom';
+import EmptyCart from './EmptyCart';
 
 const Cart = () => {
     const classes = useStyles();
@@ -111,15 +109,7 @@ const Cart = () => {
                     </Container>
                 </>
             ) : (
-                <Grid container justify="center" alignItems="center" className="h100">
-                    <Box pt={8}>
-                        <div className="text-center">
-                            <img style={{width:"90%", height:"auto"}} src={emptyCart} alt="empty-cart"/>
-                            <p className="my10 faded">There is nothing in your bag.</p>
-                            <Link to="/"><Button variant="outlined">Let's add some items</Button></Link>
-                        </div>
-                    </Box>
-                </Grid>
+               <EmptyCart param="bag"/> 
             )}
         </>
     )
