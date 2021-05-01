@@ -15,15 +15,13 @@ export const ProductsLayout = () => {
     const user = isAuthenticated();
     let url = window.location.hash;
     
-    const [allProducts, setAllProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [allProducts, setAllProducts] = useState([]);
+    const [wishlistedProducts, setWishlistedProducts] = useState([]);
 
     useEffect(() => {
-        if(url === '#/wishlist') {
-            getAllWishlistProducts();
-        } else {
-            getAllProducts();
-        }
+        if(url === '#/') getAllProducts();
+        getAllWishlistProducts();
     }, []);
 
     const getAllProducts = async () => {
@@ -47,7 +45,9 @@ export const ProductsLayout = () => {
 
     const getAllWishlistProducts = async () => {
         setIsLoading(true);
-        let result = await Instance.get(wishlistRequests.wishlist, {
+        let requestURL = wishlistRequests.wishlist;
+        if(url !== '#/wishlist') requestURL += '?for=products'
+        let result = await Instance.get(requestURL, {
             headers: {
                 'Authorization': user.token,
             }
@@ -59,7 +59,11 @@ export const ProductsLayout = () => {
         });
 
         if(result && result.data) {
-            setAllProducts(result.data.data?.products ? result.data.data.products : []);
+            if(url === '#/wishlist') {
+                setAllProducts(result.data.data?.products ? result.data.data.products : []);
+            } else {
+                setWishlistedProducts(result.data.data);
+            }
         }
         setIsLoading(false);
     }
@@ -90,7 +94,14 @@ export const ProductsLayout = () => {
                         <Loader />
                     ) : allProducts.length ? (
                         <Grid className="products" container xs={12}>
-                            {allProducts.map((product)=><ProductCard productDetails={product} removeFromWishlist={removeFromWishlist}/>)}
+                            {allProducts.map((product)=>
+                                <ProductCard 
+                                    productDetails={product} 
+                                    removeFromWishlist={removeFromWishlist} 
+                                    wishlistedProducts={wishlistedProducts}
+                                    setWishlistedProducts={setWishlistedProducts}
+                                />
+                            )}
                         </Grid>
                     ) : (
                         <EmptyCart param="wishlist"/>

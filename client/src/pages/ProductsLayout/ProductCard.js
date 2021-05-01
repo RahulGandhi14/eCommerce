@@ -10,7 +10,7 @@ import { isAuthenticated } from '../auth/AuthHelpers';
 import CloseIcon from '@material-ui/icons/Close';
 import { toast } from 'react-toastify';
 
-const ProductCard = ({productDetails, removeFromWishlist}) => {
+const ProductCard = ({productDetails, removeFromWishlist, wishlistedProducts, setWishlistedProducts}) => {
 
     let user = isAuthenticated();
     let url = window.location.hash;
@@ -28,6 +28,7 @@ const ProductCard = ({productDetails, removeFromWishlist}) => {
 
         if(result && result.data) {
             toast.dark('Item added to wishlist');
+            setWishlistedProducts([...wishlistedProducts, productDetails._id]);
         }
     }
 
@@ -41,7 +42,9 @@ const ProductCard = ({productDetails, removeFromWishlist}) => {
                 {url !== '#/wishlist' && (
                     <div className="hide-div absolute">
                         <Box className="wishlist" mx={2} mt={1}>
-                            <Button variant="outlined" fullWidth onClick={addToWishlist}>Wishlist</Button>
+                            <Button variant="outlined" fullWidth onClick={addToWishlist} disabled={wishlistedProducts?.includes(productDetails._id)}>
+                                {wishlistedProducts?.includes(productDetails._id) ? 'Wishlisted' : 'Wishlist'}
+                            </Button>
                         </Box>
                     </div>
                 )}

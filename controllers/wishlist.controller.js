@@ -9,13 +9,15 @@ const addToWishlist = async (req, res, next) => {
     try {
         let userWishlist = await Wishlist.findOne({userId: req.user._id});
 
+        let wishlist;
+
         if(userWishlist) {
-            let alreadyInWishlist = await Wishlist.find({ userId: ObjectId(req.user._id) }).where({
+            wishlist = await Wishlist.find({ userId: ObjectId(req.user._id) }).where({
                 'products': {$elemMatch: {$in: [req.body.productId]}}
             });
 
-            if(!alreadyInWishlist.length) {
-                await Wishlist.findByIdAndUpdate(userWishlist._id, {
+            if(!wishlist.length) {
+                wishlist = await Wishlist.findByIdAndUpdate(userWishlist._id, {
                     $push: { products: req.body.productId }
                 })
             } else {
@@ -23,7 +25,7 @@ const addToWishlist = async (req, res, next) => {
             }
 
         } else {
-            let wishlist = await Wishlist.create({
+            wishlist = await Wishlist.create({
                 userId: req.user._id,
                 products: [req.body.productId]
             });
@@ -42,7 +44,7 @@ const getAllWishlistProductsByUserId = async (req, res, next) => {
     try {
         let allProducts = await Wishlist.findOne({
             userId: req.user._id
-        }).populate({
+        }).populate(req.query.for==='products' ? null : {
             path: 'products',
             populate: {
                 path: 'product',
@@ -50,7 +52,9 @@ const getAllWishlistProductsByUserId = async (req, res, next) => {
             },
         })
 
-        let obj = successPattern(httpStatus.OK, allProducts, 'success');
+        let products = req.query.for==='products' ? allProducts.products : allProducts
+
+        let obj = successPattern(httpStatus.OK, products, 'success');
         return res.status(obj.code).json(obj);
 
     } catch (e) {
