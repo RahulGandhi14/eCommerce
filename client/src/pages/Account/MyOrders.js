@@ -1,107 +1,133 @@
-import React, { useEffect, useState } from 'react';
-import { Instance } from '../../axios';
-import { orderRequests } from '../../request';
-import { isAuthenticated } from '../auth/AuthHelpers';
-import CartProductCard from '../Checkout/CartProductCard';
-import Loader from '../Loader';
-import { arrayBufferToBase64 } from '../util';
+import React, { useEffect, useState } from 'react'
+import { Instance } from '../../axios'
+import { orderRequests } from '../../request'
+import { isAuthenticated } from '../auth/AuthHelpers'
+import CartProductCard from '../Checkout/CartProductCard'
+import Loader from '../Loader'
+import { arrayBufferToBase64 } from '../util'
 
 const MyOrders = () => {
+    const user = isAuthenticated()
 
-    const user = isAuthenticated();
-    
-    const [allProducts, setAllProducts] = useState([]);
-    const [totalOrders, setTotalOrders] = useState(0);
-    const [pageNumber, setPageNumber] = useState(1);
-    const [pageLimit, setPageLimit] = useState(2);
-    const [isLoading, setIsLoading] = useState(false);
+    const [allProducts, setAllProducts] = useState([])
+    const [totalOrders, setTotalOrders] = useState(0)
+    const [currentPageNumber, setCurrentPageNumber] = useState(1)
+    const [pageNumber, setPageNumber] = useState(1)
+    const [pageLimit, setPageLimit] = useState(2)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        getAllOrders();
-    }, []);
+        getAllOrders()
+    }, [])
 
-    const getAllOrders = async (param='') => {
-        setIsLoading(true);
-        let reqUrl = `${orderRequests.Order}?limit=${pageLimit}`
+    const getAllOrders = async (param = '') => {
+        setIsLoading(true)
+        let reqUrl = `${orderRequests.Order}?`
 
-        if(allProducts.length) {
-            if(param === 'NEXT') {
-                let lastDocument = allProducts[allProducts.length-1]._id;
-                reqUrl += `&lastDocument=${lastDocument}&param=${param}`;
-                setPageNumber(prevPageNumber => prevPageNumber + pageLimit);
-            } else if(param === 'PREV'){
-                let lastDocument = allProducts[0]._id;
-                reqUrl += `&lastDocument=${lastDocument}&param=${param}`;
-                setPageNumber(prevPageNumber => prevPageNumber - pageLimit);
-            }
+        if (param === 'NEXT') {
+            reqUrl += `page=${currentPageNumber + 1}&limit=${pageLimit}`
+            setPageNumber((prevPageNumber) => prevPageNumber + pageLimit)
+            setCurrentPageNumber((prev) => prev + 1)
+        } else if (param === 'PREV') {
+            reqUrl += `page=${currentPageNumber - 1}&limit=${pageLimit}`
+            setPageNumber((prevPageNumber) => prevPageNumber - pageLimit)
+            setCurrentPageNumber((prev) => prev - 1)
         }
+
+        // if (allProducts.length) {
+        //     if (param === 'NEXT') {
+        //         let lastDocument = allProducts[allProducts.length - 1]._id
+        //         reqUrl += `&lastDocument=${lastDocument}&param=${param}`
+        //         setPageNumber((prevPageNumber) => prevPageNumber + pageLimit)
+        //     } else if (param === 'PREV') {
+        //         let lastDocument = allProducts[0]._id
+        //         reqUrl += `&lastDocument=${lastDocument}&param=${param}`
+        //         setPageNumber((prevPageNumber) => prevPageNumber - pageLimit)
+        //     }
+        // }
 
         let result = await Instance.get(reqUrl, {
             headers: {
-                'Authorization': user.token,
+                Authorization: user.token,
+            },
+        }).catch((error) => {
+            if (error.response) {
+                setIsLoading(false)
+                console.log('--->Error', error)
             }
-        }).catch(error => {
-            if(error.response){
-                setIsLoading(false);
-                console.log("--->Error",error)
-            }
-        });
-        if(result && result.data) {
+        })
+        if (result && result.data) {
             setTotalOrders(result.data.data.count)
-            let orders = result.data.data.allOrders.map((order)=>{
-                let productArr = order.products.map((product)=>{
-                    [1,2,3,4,5].map((index)=>{
-                        if(product.product[`img${index}`]) {
-                            product.product[`img${index}`] = arrayBufferToBase64(product.product[`img${index}`]?.data?.data);
+            let orders = result.data.data.allOrders.map((order) => {
+                let productArr = order.products.map((product) => {
+                    ;[1, 2, 3, 4, 5].map((index) => {
+                        if (product.product[`img${index}`]) {
+                            product.product[`img${index}`] =
+                                arrayBufferToBase64(
+                                    product.product[`img${index}`]?.data?.data
+                                )
                         }
-                    });
-                    product.product.qty = product.qty;
-                    product.product.selectedSize = product.size.size;
-                    return product;
-                });
-                order.products = productArr;
+                    })
+                    product.product.qty = product.qty
+                    product.product.selectedSize = product.size.size
+                    return product
+                })
+                order.products = productArr
                 return order
             })
-            setAllProducts(orders);
+            setAllProducts(orders)
         }
         setIsLoading(false)
     }
 
     return (
         <>
-            <p>Showing <span className="fw500">All Orders</span></p>
+            <p>
+                Showing <span className="fw500">All Orders</span>
+            </p>
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
-                    {allProducts.map((order)=>(
+                    {allProducts.map((order) => (
                         <div className="order-container mb20">
                             <p># {order._id}</p>
-                            {order.products.map(product => (
-                                <CartProductCard data={product.product} product={product} status={order.status}/>
+                            {order.products.map((product) => (
+                                <CartProductCard
+                                    data={product.product}
+                                    product={product}
+                                    status={order.status}
+                                />
                             ))}
                         </div>
                     ))}
                     <div className="text-center">
-                        {pageNumber>1 && (
+                        {pageNumber > 1 && (
                             <>
-                                <span 
+                                <span
                                     className="cursorPointer activeLink"
-                                    onClick={()=>getAllOrders('PREV')}
-                                >&lt;Prev</span>&nbsp;&nbsp;&nbsp;
+                                    onClick={() => getAllOrders('PREV')}
+                                >
+                                    &lt;Prev
+                                </span>
+                                &nbsp;&nbsp;&nbsp;
                             </>
                         )}
-
-                        <span 
-                            className="pagination"
-                        >Showing {pageNumber} - {pageNumber+(pageLimit-1)}&nbsp; of &nbsp;{totalOrders}
-                        </span>&nbsp;&nbsp;&nbsp;
-
-                        {pageNumber+pageLimit<totalOrders && (
-                            <span 
+                        <span className="pagination">
+                            Showing {pageNumber}
+                            {pageNumber + (pageLimit - 1) <= totalOrders
+                                ? ` - ${pageNumber + (pageLimit - 1)}`
+                                : null}
+                            &nbsp; of &nbsp;{totalOrders}
+                        </span>
+                        &nbsp;&nbsp;&nbsp;
+                        {pageNumber + (pageLimit - 1) < totalOrders && (
+                            <span
                                 className="cursorPointer activeLink"
-                                onClick={()=>getAllOrders('NEXT')}
-                            >Next&gt;</span>
+                                onClick={() => getAllOrders('NEXT')}
+                            >
+                                Next&gt;
+                            </span>
                         )}
                     </div>
                 </>

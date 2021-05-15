@@ -1,15 +1,17 @@
-const router = require('express').Router();
-const productCtrl = require('../controllers/product.controller');
-const { isAuthenticated } = require('../middlewares/auth');
+const router = require('express').Router()
+const productCtrl = require('../controllers/product.controller')
+const { isAuthenticated, isAdmin } = require('../middlewares/auth')
 
-router.route('/')
+router
+    .route('/')
     //POST /api/product
-    .post(isAuthenticated, productCtrl.saveProduct)
+    .post(isAuthenticated, isAdmin, productCtrl.saveProduct)
     //GET /api/product
     .get(productCtrl.getAllProducts)
 
-router.route('/:productId')
+router
+    .route('/:productId')
     //POST /api/product/:productId
     .get(productCtrl.getProductById)
 
-module.exports = router;
+module.exports = router
