@@ -18,7 +18,7 @@ const Account = ({ match }) => {
 
     useEffect(() => {
         history.push(`/account/${currentTab}`)
-    }, [currentTab])
+    }, [currentTab, match.params.stage])
 
     return (
         <>
@@ -154,7 +154,7 @@ const Account = ({ match }) => {
                                     ) : currentTab === 'orders' ? (
                                         <MyOrders />
                                     ) : currentTab === 'address' ? (
-                                        <Addresses />
+                                        <Addresses displayFor="account" />
                                     ) : currentTab === 'addProduct' ? (
                                         <AddEditProduct />
                                     ) : null}

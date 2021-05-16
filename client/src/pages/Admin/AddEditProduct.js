@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box, Button, Grid, TextField } from '@material-ui/core'
+import { Button, Grid, TextField } from '@material-ui/core'
 import './Admin.scss'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import CloseIcon from '@material-ui/icons/Close'
@@ -7,7 +7,7 @@ import { useStyles } from '../NavigationBar/NavBar'
 import { Instance } from '../../axios'
 import { productRequests } from '../../request'
 import { isAuthenticated } from '../auth/AuthHelpers'
-import { useHistory } from 'react-router'
+import { resError } from '../util'
 
 const AddEditProduct = () => {
     const classes = useStyles()
@@ -109,6 +109,7 @@ const AddEditProduct = () => {
             },
         }).catch((error) => {
             if (error.response) {
+                resError(error)
                 console.log('--->Error', error)
             }
         })

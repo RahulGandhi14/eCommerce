@@ -18,7 +18,7 @@ button {
 
 .relative {
     position: relative;
-} 
+}
 
 .absolute {
     position: absolute;
@@ -40,7 +40,7 @@ a {
     padding: 12px 8px;
     font-size: 14px;
     border: none;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     color: white;
     border-radius: 10px;
     letter-spacing: 1.5px;
@@ -50,14 +50,20 @@ a {
     outline: none !important;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin: 0;
-    color: #1D256E;
+    color: #1d256e;
     cursor: default;
 }
 
 li {
-    color: #1D256E !important;
+    color: #1d256e !important;
 }
 
 .displayFlex {
@@ -88,6 +94,10 @@ li {
     overflow: hidden;
 }
 
+.fontSize14 {
+    font-size: 14px;
+}
+
 .mb8 {
     margin-bottom: 8px !important;
 }
@@ -108,7 +118,9 @@ li {
     margin: 14px 0 !important;
 }
 
-.my20 { margin: 20px 0; }
+.my20 {
+    margin: 20px 0;
+}
 
 .horizontalDivider {
     border-top: 1px solid rgba(29, 37, 110, 0.3);
@@ -128,10 +140,12 @@ li {
     border-radius: 4px;
 }
 
-
 /**************** Input fields ****************/
-.MuiFormLabel-root, .MuiInputBase-input, .MuiTypography-body1, .MuiCheckbox-colorPrimary.Mui-checked {
-    color: #1D256E !important;
+.MuiFormLabel-root,
+.MuiInputBase-input,
+.MuiTypography-body1,
+.MuiCheckbox-colorPrimary.Mui-checked {
+    color: #1d256e !important;
 }
 
 .MuiInput-underline:hover:not(.Mui-disabled):before {
@@ -149,11 +163,11 @@ li {
 /**************** Buttons ****************/
 .MuiButton-outlined {
     border: 1px solid rgba(29, 37, 110, 0.3) !important;
-    color: #1D256E !important;
+    color: #1d256e !important;
 }
 
 .MuiButton-root {
-    color: #1D256E !important;
+    color: #1d256e !important;
 }
 
 .borderRadiusNone {
@@ -172,5 +186,9 @@ li {
 
     .rowDir {
         flex-direction: row !important;
+    }
+
+    .alignNormal {
+        align-items: normal !important;
     }
 }

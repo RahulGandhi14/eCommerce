@@ -42,31 +42,6 @@ const createOrder = async (req, res, next) => {
 
 const getAllOrdersByUserId = async (req, res, next) => {
     try {
-        // let allOrders = await Order.find({
-        //     userId: ObjectId(req.user._id),
-        //     ...(req.query.lastDocument
-        //         ? req.query.param === 'NEXT'
-        //             ? { _id: { $lt: ObjectId(req.query.lastDocument) } }
-        //             : { _id: { $gt: ObjectId(req.query.lastDocument) } }
-        //         : {}),
-        // })
-        //     .select('-transactionId -userId')
-        //     .populate({
-        //         path: 'products',
-        //         populate: {
-        //             path: 'product',
-        //             select: '-img2 -img3 -img4 -img5 -sizes -deleted',
-        //         },
-        //     })
-        //     .populate({
-        //         path: 'products',
-        //         populate: {
-        //             path: 'size',
-        //         },
-        //     })
-        //     .limit(parseInt(req.query.limit))
-        //     .sort([['createdAt', -1]])
-
         let { page = 1, limit = 2 } = req.query
         page = parseInt(page)
         limit = parseInt(limit)
@@ -104,7 +79,22 @@ const getAllOrdersByUserId = async (req, res, next) => {
     }
 }
 
+const rateProduct = async (req, res, next) => {
+    try {
+        await OrderItem.findByIdAndUpdate(req.body.orderItemId, {
+            ratings: req.body.ratings,
+        })
+
+        let obj = successPattern(httpStatus.OK, { message: 'Rated' }, 'success')
+        return res.status(obj.code).json(obj)
+    } catch (e) {
+        console.log('reviewProduct --->', e)
+        return next(new APIError(e.message, httpStatus.BAD_REQUEST, true))
+    }
+}
+
 module.exports = {
     createOrder,
     getAllOrdersByUserId,
+    rateProduct,
 }
