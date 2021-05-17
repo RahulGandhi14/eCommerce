@@ -4,7 +4,7 @@ import { orderRequests } from '../../request'
 import { isAuthenticated } from '../auth/AuthHelpers'
 import CartProductCard from '../Checkout/CartProductCard'
 import Loader from '../Loader'
-import { arrayBufferToBase64 } from '../util'
+import { arrayBufferToBase64, resError } from '../util'
 
 const MyOrders = () => {
     const user = isAuthenticated()
@@ -34,18 +34,6 @@ const MyOrders = () => {
             setCurrentPageNumber((prev) => prev - 1)
         }
 
-        // if (allProducts.length) {
-        //     if (param === 'NEXT') {
-        //         let lastDocument = allProducts[allProducts.length - 1]._id
-        //         reqUrl += `&lastDocument=${lastDocument}&param=${param}`
-        //         setPageNumber((prevPageNumber) => prevPageNumber + pageLimit)
-        //     } else if (param === 'PREV') {
-        //         let lastDocument = allProducts[0]._id
-        //         reqUrl += `&lastDocument=${lastDocument}&param=${param}`
-        //         setPageNumber((prevPageNumber) => prevPageNumber - pageLimit)
-        //     }
-        // }
-
         let result = await Instance.get(reqUrl, {
             headers: {
                 Authorization: user.token,
@@ -53,7 +41,7 @@ const MyOrders = () => {
         }).catch((error) => {
             if (error.response) {
                 setIsLoading(false)
-                console.log('--->Error', error)
+                resError(error)
             }
         })
         if (result && result.data) {
@@ -70,6 +58,8 @@ const MyOrders = () => {
                     })
                     product.product.qty = product.qty
                     product.product.selectedSize = product.size.size
+                    product.product.ratings = product.ratings
+                    product.product.orderItemId = product._id
                     return product
                 })
                 order.products = productArr
@@ -78,6 +68,32 @@ const MyOrders = () => {
             setAllProducts(orders)
         }
         setIsLoading(false)
+    }
+
+    const rateOrder = async (orderItemId, ratings, indices) => {
+        let result = await Instance.post(
+            `${orderRequests.Order}/rate`,
+            {
+                orderItemId,
+                ratings,
+            },
+            {
+                headers: {
+                    Authorization: user.token,
+                },
+            }
+        ).catch((error) => {
+            resError(error)
+        })
+
+        if (result && result.data) {
+            setAllProducts([])
+            let updatedProducts = [...allProducts]
+            updatedProducts[indices.orderIdx]['products'][indices.productIdx][
+                'ratings'
+            ] = ratings
+            setAllProducts([...updatedProducts])
+        }
     }
 
     return (
@@ -89,14 +105,16 @@ const MyOrders = () => {
                 <Loader />
             ) : (
                 <>
-                    {allProducts.map((order) => (
+                    {allProducts.map((order, orderIdx) => (
                         <div className="order-container mb20">
                             <p># {order._id}</p>
-                            {order.products.map((product) => (
+                            {order.products.map((product, productIdx) => (
                                 <CartProductCard
-                                    data={product.product}
                                     product={product}
                                     status={order.status}
+                                    rateOrder={rateOrder}
+                                    other={{ orderIdx, productIdx }}
+                                    productRatings={product.ratings}
                                 />
                             ))}
                         </div>

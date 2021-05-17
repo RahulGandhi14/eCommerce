@@ -1,6 +1,7 @@
 import { Container, Grid, Box } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import useWindowSize from '../../hooks/useWindowSize'
 import AddEditProduct from '../Admin/AddEditProduct'
 import { isAuthenticated } from '../auth/AuthHelpers'
@@ -80,6 +81,23 @@ const Account = ({ match }) => {
                                                     }
                                                 >
                                                     Addresses
+                                                </p>
+                                                <p
+                                                    className={`cursorPointer ${
+                                                        currentTab ===
+                                                        'wishlist'
+                                                            ? 'activeLink'
+                                                            : ''
+                                                    }`}
+                                                    onClick={() =>
+                                                        setCurrentTab(
+                                                            'wishlist'
+                                                        )
+                                                    }
+                                                >
+                                                    <Link to="/wishlist">
+                                                        Wishlist
+                                                    </Link>
                                                 </p>
                                                 {user?.role === 1 && (
                                                     <p

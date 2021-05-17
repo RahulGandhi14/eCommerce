@@ -66,6 +66,9 @@ export const ProductsLayout = () => {
                 setAllProducts(
                     result.data.data?.products ? result.data.data.products : []
                 )
+                if (!result?.data?.data?.length) {
+                    setIsEmpty(true)
+                }
             } else {
                 setWishlistedProducts(result.data.data)
             }

@@ -5,15 +5,17 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProduct, deliveryAddress } from '../../redux/actions'
-import { arrayBufferToBase64 } from '../util'
 
 export const CartProductCard = ({
-    data,
-    product = '',
+    other = {},
     status = '',
+    product = {},
     rateOrder = (f) => f,
+    productRatings = 0,
 }) => {
     const dispatch = useDispatch()
+
+    const data = product.product
 
     //REACT states
     const [ratings, setRatings] = useState(0)
@@ -25,8 +27,9 @@ export const CartProductCard = ({
     const cartProducts = useSelector((state) => state.cart.cartProducts)
 
     useEffect(() => {
-        setRatings(data.ratings)
-    }, [])
+        setTempRatings(productRatings)
+        setRatings(productRatings)
+    }, [productRatings])
 
     const removeFromCart = () => {
         let updatedArr = cartProducts.filter(
@@ -175,7 +178,8 @@ export const CartProductCard = ({
                                             onClick={() =>
                                                 rateOrder(
                                                     data.orderItemId,
-                                                    totalStars
+                                                    totalStars,
+                                                    other
                                                 )
                                             }
                                         >
