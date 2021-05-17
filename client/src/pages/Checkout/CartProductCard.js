@@ -5,8 +5,14 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProduct, deliveryAddress } from '../../redux/actions'
+import { wishlistRequests } from '../../request'
+import { resError } from '../util'
+import { Instance } from '../../axios'
+import { isAuthenticated } from '../auth/AuthHelpers'
+import { toast } from 'react-toastify'
 
 export const CartProductCard = ({
+    data = {},
     other = {},
     status = '',
     product = {},
@@ -14,8 +20,7 @@ export const CartProductCard = ({
     productRatings = 0,
 }) => {
     const dispatch = useDispatch()
-
-    const data = product.product
+    const user = isAuthenticated()
 
     //REACT states
     const [ratings, setRatings] = useState(0)
@@ -48,6 +53,27 @@ export const CartProductCard = ({
         dispatch(addProduct(updatedProductArr))
         if (param === 'qty') setOpenQtyMenu(false)
         if (param === 'selectedSize') setOpenSizeMenu(false)
+    }
+
+    const moveToWishlist = async () => {
+        let result = await Instance.post(
+            wishlistRequests.wishlist,
+            { productId: data._id },
+            {
+                headers: {
+                    Authorization: user.token,
+                },
+            }
+        ).catch((error) => {
+            if (error.response) {
+                resError(error)
+            }
+        })
+
+        if (result && result.data) {
+            toast.dark('Item added to wishlist')
+            removeFromCart()
+        }
     }
 
     return (
@@ -152,7 +178,10 @@ export const CartProductCard = ({
                                 <Button onClick={removeFromCart}>Remove</Button>
                             </div>
                             <div className="divider"></div>
-                            <div className="wishlistBtn">
+                            <div
+                                className="wishlistBtn"
+                                onClick={moveToWishlist}
+                            >
                                 <Button>Move to wishlist</Button>
                             </div>
                         </Grid>

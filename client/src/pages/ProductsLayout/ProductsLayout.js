@@ -9,6 +9,7 @@ import { isAuthenticated } from '../auth/AuthHelpers'
 import Loader from '../Loader'
 import EmptyCart from '../Checkout/EmptyCart'
 import { toast } from 'react-toastify'
+import { resError } from '../util'
 
 export const ProductsLayout = () => {
     const user = isAuthenticated()
@@ -86,7 +87,7 @@ export const ProductsLayout = () => {
             }
         ).catch((error) => {
             if (error.response) {
-                console.log('--->Error', error)
+                resError(error)
             }
         })
 

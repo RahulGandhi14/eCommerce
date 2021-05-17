@@ -95,7 +95,12 @@ const Account = ({ match }) => {
                                                         )
                                                     }
                                                 >
-                                                    <Link to="/wishlist">
+                                                    <Link
+                                                        to="/wishlist"
+                                                        style={{
+                                                            color: '#1d256e',
+                                                        }}
+                                                    >
                                                         Wishlist
                                                     </Link>
                                                 </p>

@@ -110,6 +110,7 @@ const MyOrders = () => {
                             <p># {order._id}</p>
                             {order.products.map((product, productIdx) => (
                                 <CartProductCard
+                                    data={product.product}
                                     product={product}
                                     status={order.status}
                                     rateOrder={rateOrder}
