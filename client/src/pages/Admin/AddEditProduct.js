@@ -101,13 +101,14 @@ const AddEditProduct = () => {
         Object.keys(productDetails).map((key) =>
             formData.set(key, productDetails[key])
         )
-        Object.keys(images).map((key) => formData.set(key, images[key]))
+        Object.keys(images).map((key) => formData.append('img', images[key]))
         formData.set('sizes', JSON.stringify(availableSizes))
         let result = await Instance.post(productRequests.product, formData, {
             headers: {
                 Authorization: user.token,
             },
         }).catch((error) => {
+            formData.delete('img')
             if (error.response) {
                 resError(error)
                 console.log('--->Error', error)
@@ -115,7 +116,7 @@ const AddEditProduct = () => {
         })
 
         if (result && result.data) {
-            //
+            formData.delete('img')
         }
     }
 

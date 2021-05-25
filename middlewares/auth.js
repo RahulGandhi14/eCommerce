@@ -12,7 +12,7 @@ const isAuthenticated = (req, res, next) => {
     try {
         const verifyToken = jwt.verify(token, process.env.JWT_SECRET)
         req.user = verifyToken
-        if (verifyToken) next()
+        if (verifyToken) return next()
     } catch (e) {
         console.log('isAuthenticated -->', e)
         return next(new APIError('ACCESS DENIED!', httpStatus.FORBIDDEN, true))
@@ -22,7 +22,7 @@ const isAuthenticated = (req, res, next) => {
 const isAdmin = (req, res, next) => {
     try {
         if (req.user.role === 1) {
-            next()
+            return next()
         }
         return next(new APIError('ACCESS DENIED!', httpStatus.FORBIDDEN, true))
     } catch (e) {
