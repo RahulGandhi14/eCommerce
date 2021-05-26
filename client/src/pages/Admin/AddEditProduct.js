@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Grid, TextField } from '@material-ui/core'
+import { Button, CircularProgress, Grid, TextField } from '@material-ui/core'
 import './Admin.scss'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import CloseIcon from '@material-ui/icons/Close'
@@ -8,10 +8,15 @@ import { Instance } from '../../axios'
 import { productRequests } from '../../request'
 import { isAuthenticated } from '../auth/AuthHelpers'
 import { resError } from '../util'
+import Compressor from 'compressorjs'
+import { toast } from 'react-toastify'
 
 const AddEditProduct = () => {
     const classes = useStyles()
     const user = isAuthenticated()
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [loadingPercentage, setLoadingPercentage] = useState(0)
 
     useEffect(() => {
         if (user?.role !== 1) {
@@ -62,15 +67,23 @@ const AddEditProduct = () => {
     }
 
     const loadFiles = (e) => {
+        if (!e?.target?.files?.length) return
+
         setImagesUrls({
             ...imageUrls,
             [e.target.id]: URL.createObjectURL(
                 e.target.files[0] ? e.target.files[0] : ''
             ),
         })
-        setImages({
-            ...images,
-            [e.target.id]: e.target.files[0],
+
+        new Compressor(e.target.files[0], {
+            quality: 0.5,
+            success: (result) => {
+                setImages({
+                    ...images,
+                    [e.target.id]: result,
+                })
+            },
         })
     }
 
@@ -96,7 +109,14 @@ const AddEditProduct = () => {
         setAvailableSizes(arr)
     }
 
+    const measureUploadedData = (progress) => {
+        let { total, loaded } = progress
+        let inPercentage = Math.ceil((loaded * 100) / total)
+        setLoadingPercentage(inPercentage)
+    }
+
     const submitProductDetails = async () => {
+        setIsLoading(true)
         let formData = new FormData()
         Object.keys(productDetails).map((key) =>
             formData.set(key, productDetails[key])
@@ -107,7 +127,10 @@ const AddEditProduct = () => {
             headers: {
                 Authorization: user.token,
             },
+            onUploadProgress: (ProgressEvent) =>
+                measureUploadedData(ProgressEvent),
         }).catch((error) => {
+            setIsLoading(false)
             formData.delete('img')
             if (error.response) {
                 resError(error)
@@ -116,7 +139,10 @@ const AddEditProduct = () => {
         })
 
         if (result && result.data) {
+            setIsLoading(false)
+            setLoadingPercentage(0)
             formData.delete('img')
+            toast.dark('New product has been listed successfully')
         }
     }
 
@@ -164,6 +190,7 @@ const AddEditProduct = () => {
                         type="file"
                         accept="image/"
                         onChange={loadFiles}
+                        onClick={(e) => (e.target.value = '')}
                         ref={img1}
                     />
                     <input
@@ -172,6 +199,7 @@ const AddEditProduct = () => {
                         type="file"
                         accept="image/"
                         onChange={loadFiles}
+                        onClick={(e) => (e.target.value = '')}
                         ref={img2}
                     />
                     <input
@@ -180,6 +208,7 @@ const AddEditProduct = () => {
                         type="file"
                         accept="image/"
                         onChange={loadFiles}
+                        onClick={(e) => (e.target.value = '')}
                         ref={img3}
                     />
                     <input
@@ -188,6 +217,7 @@ const AddEditProduct = () => {
                         type="file"
                         accept="image/"
                         onChange={loadFiles}
+                        onClick={(e) => (e.target.value = '')}
                         ref={img4}
                     />
                     <input
@@ -196,6 +226,7 @@ const AddEditProduct = () => {
                         type="file"
                         accept="image/"
                         onChange={loadFiles}
+                        onClick={(e) => (e.target.value = '')}
                         ref={img5}
                     />
                     <div className="addImage cursorPointer">
@@ -370,8 +401,20 @@ const AddEditProduct = () => {
                             variant="contained"
                             className={classes.btnStyle}
                             onClick={submitProductDetails}
+                            disabled={isLoading}
                         >
-                            SUBMIT
+                            {isLoading && (
+                                <CircularProgress
+                                    className="loader-btn"
+                                    variant={
+                                        loadingPercentage === 100
+                                            ? 'indeterminate'
+                                            : 'determinate'
+                                    }
+                                    value={loadingPercentage}
+                                />
+                            )}
+                            {!isLoading ? 'SAVE' : 'Saving...'}
                         </Button>
                     </Grid>
                 </div>

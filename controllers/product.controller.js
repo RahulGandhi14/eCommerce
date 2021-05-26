@@ -12,9 +12,35 @@ const parse = (el) => JSON.parse(el)
 
 const saveProduct = async (req, res, next) => {
     try {
-        uploads(req.files[0].path).then((res) => console.log('--> RES', res))
+        let product = new Product(req.body)
 
-        return res.status(200).json({ msg: 'success' })
+        let i = 1
+        for (const file of req.files) {
+            await uploads(file.path).then((res) => {
+                product[`img${i}`] = res.fileName.replace('eCommerce/', '')
+            })
+            i += 1
+        }
+
+        product.seller = req.user._id
+
+        let productSizes = parse(req.body.sizes)
+        let savedSizes = []
+        for (let i = 0; i < productSizes.length; i++) {
+            let size = await Size.create(productSizes[i])
+            savedSizes = [...savedSizes, size._id]
+        }
+        product.sizes = savedSizes
+        await product.save()
+
+        for (const file of req.files) {
+            fs.unlink(file.path, (err) => {
+                if (err) console.log(err)
+            })
+        }
+
+        let obj = successPattern(httpStatus.OK, product, 'success')
+        return res.status(obj.code).json(obj)
     } catch (e) {
         console.log('save product --->', e)
         return next(new APIError(e.message, httpStatus.BAD_REQUEST, true))
@@ -26,6 +52,15 @@ const getAllProducts = async (req, res, next) => {
         let allProducts = await Product.find({ deleted: false }).populate(
             'sizes'
         )
+
+        allProducts.map((product) => {
+            for (let i = 1; i <= 5; i++) {
+                if (product[`img${i}`])
+                    product[`img${i}`] =
+                        process.env.CLOUD_URL + product[`img${i}`]
+            }
+        })
+
         let obj = successPattern(httpStatus.OK, allProducts, 'success')
         return res.status(obj.code).json(obj)
     } catch (e) {
@@ -39,6 +74,12 @@ const getProductById = async (req, res, next) => {
         let product = await Product.findById(req.params.productId).populate(
             'sizes'
         )
+
+        for (let i = 1; i <= 5; i++) {
+            if (product[`img${i}`])
+                product[`img${i}`] = process.env.CLOUD_URL + product[`img${i}`]
+        }
+
         let obj = successPattern(httpStatus.OK, product, 'success')
         return res.status(obj.code).json(obj)
     } catch (e) {

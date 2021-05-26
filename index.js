@@ -38,6 +38,8 @@ app.use(bodyParser.json())
 // set cors
 app.use(cors())
 
+app.use(express.static(__dirname))
+
 // api routes
 app.use('/api', routes)
 
@@ -65,6 +67,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+    console.log('--> ERROR', err)
     res.status(err.status).json({
         error: {
             message: err.isPublic ? err.message : httpStatus[err.status],

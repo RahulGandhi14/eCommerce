@@ -4,7 +4,7 @@ import { orderRequests } from '../../request'
 import { isAuthenticated } from '../auth/AuthHelpers'
 import CartProductCard from '../Checkout/CartProductCard'
 import Loader from '../Loader'
-import { arrayBufferToBase64, resError } from '../util'
+import { resError } from '../util'
 
 const MyOrders = () => {
     const user = isAuthenticated()
@@ -51,9 +51,7 @@ const MyOrders = () => {
                     ;[1, 2, 3, 4, 5].map((index) => {
                         if (product.product[`img${index}`]) {
                             product.product[`img${index}`] =
-                                arrayBufferToBase64(
-                                    product.product[`img${index}`]?.data?.data
-                                )
+                                product.product[`img${index}`]
                         }
                     })
                     product.product.qty = product.qty

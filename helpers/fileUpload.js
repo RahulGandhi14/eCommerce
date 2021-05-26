@@ -12,8 +12,7 @@ const uploads = (file, folder = 'eCommerce') => {
             file,
             (result) => {
                 resolve({
-                    url: result.url,
-                    id: result.public_id,
+                    fileName: result.public_id,
                 })
             },
             {
