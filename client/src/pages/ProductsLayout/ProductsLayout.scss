@@ -1,16 +1,24 @@
-$primaryColor: #1D256E;
+$primaryColor: #1d256e;
 $complimentaryColor: #ff7d2de0;
 
 .products {
     display: grid !important;
     margin: 24px 0;
-    grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 2rem;
 }
 
 /********************* PRODUCT CARD *********************/
+
+.hide-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .product-card {
     // border: 1px solid red;
+    width: inherit;
     height: 370px;
     max-width: 220px;
     margin: auto;
@@ -25,12 +33,10 @@ $complimentaryColor: #ff7d2de0;
 // 0 100px 80px rgba(0, 0, 0, 0.12)
 
 .product-card:hover {
-    box-shadow:
-    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-    0 12.5px 10px rgba(0, 0, 0, 0.06),
-    // 0 22.3px 20.9px rgba(0, 0, 0, 0.072),
-    0 22.8px 22.7px rgba(0, 0, 0, 0.086);
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+        // 0 22.3px 20.9px rgba(0, 0, 0, 0.072),
+        0 22.8px 22.7px rgba(0, 0, 0, 0.086);
 }
 
 .product-info {
@@ -48,7 +54,7 @@ $complimentaryColor: #ff7d2de0;
     overflow: hidden;
 }
 
-.img-container img{
+.img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -78,7 +84,8 @@ $complimentaryColor: #ff7d2de0;
     margin-top: 6px;
 }
 
-.price-info h4,h6 {
+.price-info h4,
+h6 {
     margin: 0;
     display: inline;
 }
@@ -152,20 +159,20 @@ $complimentaryColor: #ff7d2de0;
     margin-right: 2% !important;
     padding: 14px !important;
     font-size: 18px !important;
-    background: #FF7F2D !important;
-    color: #1D256E !important;
+    background: #ff7f2d !important;
+    color: #1d256e !important;
     font-weight: 600 !important;
 }
 .addToWishlist {
     width: 40% !important;
     padding: 14px !important;
     font-size: 18px !important;
-    color: #1D256E !important;
+    color: #1d256e !important;
     border: 1px solid rgba(29, 37, 110, 0.3) !important;
 }
 
 /********************* RADIO BUTTON *********************/
-.size-select input[type="radio"] {
+.size-select input[type='radio'] {
     display: none;
 }
 
@@ -201,7 +208,7 @@ $complimentaryColor: #ff7d2de0;
     width: 100%;
     bottom: -41px;
     background-color: white;
-    transition: all .2s ease-out;
+    transition: all 0.2s ease-out;
 }
 
 .hide-div .MuiButton-outlined {
@@ -219,9 +226,9 @@ $complimentaryColor: #ff7d2de0;
 }
 
 /********************* Break Points *********************/
-@media(max-width: 772px){
+@media (max-width: 772px) {
     .products {
-        grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 2rem;
     }
 
@@ -234,9 +241,9 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media(max-width: 712px){
+@media (max-width: 712px) {
     .products {
-        grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
     .product-card {
@@ -244,14 +251,16 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media(max-width: 652px){
+@media (max-width: 652px) {
     .products {
-        grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
 }
 
-@media(max-width: 640px) {
-    .product-imgs,.otherImgs,.mainImg-container {
+@media (max-width: 640px) {
+    .product-imgs,
+    .otherImgs,
+    .mainImg-container {
         max-height: 380px;
     }
 
@@ -276,13 +285,13 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media(max-width: 576px) {
+@media (max-width: 576px) {
     .products {
-        grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 }
 
-@media(max-width: 516px) {
+@media (max-width: 516px) {
     .product-card {
         max-height: 370px;
     }
@@ -292,7 +301,7 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media(max-width: 446px) {
+@media (max-width: 446px) {
     .products {
         gap: 1rem;
     }
@@ -302,7 +311,7 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media(max-width: 410px) {
+@media (max-width: 410px) {
     .product-card {
         max-height: 318px;
     }
@@ -311,9 +320,6 @@ $complimentaryColor: #ff7d2de0;
         height: 72%;
     }
 }
-
-
-
 
 /********************* SLIDE UP DIV *********************/
 // @media(max-width:1276px){

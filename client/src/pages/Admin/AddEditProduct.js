@@ -77,7 +77,7 @@ const AddEditProduct = () => {
         })
 
         new Compressor(e.target.files[0], {
-            quality: 0.5,
+            quality: 0.4,
             success: (result) => {
                 setImages({
                     ...images,

@@ -74,7 +74,7 @@ const ProductCard = ({
             </div>
             <Link to={`/product/${productDetails._id}`}>
                 <div className="product-info">
-                    <div className="brand-info">
+                    <div className="brand-info hide-overflow">
                         <h4>
                             {productDetails.brandName}
                             {/* <span>4.5&#9733;</span> */}
