@@ -73,7 +73,8 @@ const getAllOrdersByUserId = async (req, res, next) => {
 
         allOrders.map((order) => {
             order.products.map((product) => {
-                product.product.img1 += process.env.CLOUD_URL
+                product.product.img1 =
+                    process.env.CLOUD_URL + product.product.img1
             })
         })
 
