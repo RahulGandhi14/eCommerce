@@ -71,6 +71,12 @@ const getAllOrdersByUserId = async (req, res, next) => {
             userId: ObjectId(req.user._id),
         })
 
+        allOrders.map((order) => {
+            order.products.map((product) => {
+                product.product.img1 += process.env.CLOUD_URL
+            })
+        })
+
         let obj = successPattern(httpStatus.OK, { allOrders, count }, 'success')
         return res.status(obj.code).json(obj)
     } catch (e) {
