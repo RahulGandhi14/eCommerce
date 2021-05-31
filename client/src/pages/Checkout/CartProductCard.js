@@ -89,80 +89,105 @@ export const CartProductCard = ({
                             <h4>&#8377; {data.sellingPrice}</h4>
                         </div>
                         <p>{data.productName}</p>
-                        <p className="faded">Sold by: RetailNet</p>
-                        <Button
-                            variant="outlined"
-                            className="cartUtilityButtons"
-                            onClick={(e) => setOpenSizeMenu(e.currentTarget)}
-                        >
-                            Size: {data.selectedSize}
-                        </Button>
-                        &nbsp;&nbsp;
                         {window.location.hash === '#/checkout/cart' ? (
-                            <Menu
-                                anchorEl={openSizeMenu}
-                                open={Boolean(openSizeMenu)}
-                                keepMounted
-                                onClose={() => setOpenSizeMenu(false)}
-                            >
-                                {data.sizes.map((size) => (
-                                    <MenuItem
-                                        id={size.size}
-                                        onClick={(e) =>
-                                            updateCartDetails(e, 'selectedSize')
-                                        }
+                            <>
+                                <Button
+                                    variant="outlined"
+                                    className="cartUtilityButtons"
+                                    onClick={(e) =>
+                                        setOpenSizeMenu(e.currentTarget)
+                                    }
+                                >
+                                    Size: {data.selectedSize}
+                                </Button>
+                                &nbsp;&nbsp;
+                                {window.location.hash === '#/checkout/cart' ? (
+                                    <Menu
+                                        anchorEl={openSizeMenu}
+                                        open={Boolean(openSizeMenu)}
+                                        keepMounted
+                                        onClose={() => setOpenSizeMenu(false)}
                                     >
-                                        {size.size}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        ) : null}
-                        <Button
-                            variant="outlined"
-                            className="cartUtilityButtons"
-                            onClick={(e) => setOpenQtyMenu(e.currentTarget)}
-                        >
-                            Qty: {data.qty}
-                        </Button>
-                        {window.location.hash === '#/checkout/cart' ? (
-                            <Menu
-                                anchorEl={openQtyMenu}
-                                open={Boolean(openQtyMenu)}
-                                keepMounted
-                                onClose={() => setOpenQtyMenu(false)}
-                            >
-                                <MenuItem
-                                    id="1"
-                                    onClick={(e) => updateCartDetails(e, 'qty')}
+                                        {data.sizes.map((size) => (
+                                            <MenuItem
+                                                id={size.size}
+                                                onClick={(e) =>
+                                                    updateCartDetails(
+                                                        e,
+                                                        'selectedSize'
+                                                    )
+                                                }
+                                            >
+                                                {size.size}
+                                            </MenuItem>
+                                        ))}
+                                    </Menu>
+                                ) : null}
+                                <Button
+                                    variant="outlined"
+                                    className="cartUtilityButtons"
+                                    onClick={(e) =>
+                                        setOpenQtyMenu(e.currentTarget)
+                                    }
                                 >
-                                    1
-                                </MenuItem>
-                                <MenuItem
-                                    id="2"
-                                    onClick={(e) => updateCartDetails(e, 'qty')}
-                                >
-                                    2
-                                </MenuItem>
-                                <MenuItem
-                                    id="3"
-                                    onClick={(e) => updateCartDetails(e, 'qty')}
-                                >
-                                    3
-                                </MenuItem>
-                                <MenuItem
-                                    id="4"
-                                    onClick={(e) => updateCartDetails(e, 'qty')}
-                                >
-                                    4
-                                </MenuItem>
-                                <MenuItem
-                                    id="5"
-                                    onClick={(e) => updateCartDetails(e, 'qty')}
-                                >
-                                    5
-                                </MenuItem>
-                            </Menu>
-                        ) : null}
+                                    Qty: {data.qty}
+                                </Button>
+                                {window.location.hash === '#/checkout/cart' ? (
+                                    <Menu
+                                        anchorEl={openQtyMenu}
+                                        open={Boolean(openQtyMenu)}
+                                        keepMounted
+                                        onClose={() => setOpenQtyMenu(false)}
+                                    >
+                                        <MenuItem
+                                            id="1"
+                                            onClick={(e) =>
+                                                updateCartDetails(e, 'qty')
+                                            }
+                                        >
+                                            1
+                                        </MenuItem>
+                                        <MenuItem
+                                            id="2"
+                                            onClick={(e) =>
+                                                updateCartDetails(e, 'qty')
+                                            }
+                                        >
+                                            2
+                                        </MenuItem>
+                                        <MenuItem
+                                            id="3"
+                                            onClick={(e) =>
+                                                updateCartDetails(e, 'qty')
+                                            }
+                                        >
+                                            3
+                                        </MenuItem>
+                                        <MenuItem
+                                            id="4"
+                                            onClick={(e) =>
+                                                updateCartDetails(e, 'qty')
+                                            }
+                                        >
+                                            4
+                                        </MenuItem>
+                                        <MenuItem
+                                            id="5"
+                                            onClick={(e) =>
+                                                updateCartDetails(e, 'qty')
+                                            }
+                                        >
+                                            5
+                                        </MenuItem>
+                                    </Menu>
+                                ) : null}
+                            </>
+                        ) : (
+                            <>
+                                <p>Size: {data.selectedSize}</p>
+                                <p>Qty: {data.qty}</p>
+                            </>
+                        )}
                         {/* {window.location.hash === '#/account/orders' ? (
                             <p className="my10">
                                 <span className="faded">Order Status:</span>&nbsp;

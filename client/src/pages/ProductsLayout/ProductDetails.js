@@ -85,9 +85,41 @@ const ProductDetails = ({ match }) => {
         </>
     )
 
+    useEffect(() => {
+        if (showError) {
+            let element = document.getElementById('select-size-msg')
+            if (element) {
+                if (element.classList.contains('shake-horizontal')) {
+                    element.classList.remove('shake-horizontal')
+                }
+                element.scrollIntoView({ behavior: 'smooth' })
+                element.classList.add('shake-horizontal')
+            }
+        }
+    }, [showError])
+
     const addToCart = () => {
         if (!selectedSize) {
+            document
+                .getElementById('size-buttons')
+                .classList.remove('shake-horizontal')
             setShowError(true)
+            setShowError((prevState) => {
+                if (prevState) {
+                    let element = document.getElementById('select-size-msg')
+                    if (element) {
+                        if (element.classList.contains('shake-horizontal')) {
+                            element.classList.remove('shake-horizontal')
+                        }
+                        element.scrollIntoView({ behavior: 'smooth' })
+                        element.classList.add('shake-horizontal')
+                    }
+                }
+                return prevState
+            })
+            document
+                .getElementById('size-buttons')
+                .classList.add('shake-horizontal')
             return
         }
         setShowError(false)
@@ -210,7 +242,10 @@ const ProductDetails = ({ match }) => {
                                                 </h4>
                                                 <div className="size-select">
                                                     {showError && (
-                                                        <p className="mb8 text-red">
+                                                        <p
+                                                            className="mb8 text-red"
+                                                            id="select-size-msg"
+                                                        >
                                                             Please select a size
                                                         </p>
                                                     )}
@@ -234,7 +269,10 @@ const ProductDetails = ({ match }) => {
                                                             />
                                                         )
                                                     )}
-                                                    <div className="size-buttons">
+                                                    <div
+                                                        className="size-buttons"
+                                                        id="size-buttons"
+                                                    >
                                                         {productDetails?.sizes.map(
                                                             (size) => (
                                                                 <label
