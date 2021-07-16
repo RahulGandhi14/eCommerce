@@ -1,5 +1,5 @@
 $secondaryColor: #c4c4c4;
-$primaryColor: #1D256E;
+$primaryColor: #1d256e;
 $complimentaryColor: #ff7d2de0;
 
 .mb14 {
@@ -8,15 +8,16 @@ $complimentaryColor: #ff7d2de0;
 
 .mainDiv {
     background-color: $primaryColor;
-    color: #F2F2F2;
+    color: #f2f2f2;
     min-height: 100vh;
 }
 
 .signUpDiv {
     height: 80vh;
+    min-height: 512px;
     border-radius: 20px;
     padding: 56px 96px;
-    background-color: rgba(76,177,255,0.1);
+    background-color: rgba(76, 177, 255, 0.1);
 }
 
 .auth-titles {
@@ -35,21 +36,25 @@ $complimentaryColor: #ff7d2de0;
     position: relative;
 }
 
-#signup-div,#login-div {
+#signup-div,
+#login-div {
     width: 100%;
     position: absolute;
-    transition: transform 0.8s;   
+    transition: transform 0.8s;
 }
 
 #login-div {
     transform: translateX(-110%);
 }
 
-#logIn, #signIn {
+#logIn,
+#signIn {
     transition: opacity 0.3s;
 }
 
-#logIn { opacity: 0.5; }
+#logIn {
+    opacity: 0.5;
+}
 
 .checkIcon {
     position: absolute;
@@ -93,7 +98,7 @@ $complimentaryColor: #ff7d2de0;
     background-color: $complimentaryColor !important;
 }
 
-@media (max-width:700px){
+@media (max-width: 700px) {
     .hideContent {
         display: none !important;
         border: 1px solid red;
@@ -104,7 +109,7 @@ $complimentaryColor: #ff7d2de0;
     }
 }
 
-@media (max-width:500px){
+@media (max-width: 500px) {
     .signUpDiv {
         padding: 56px 32px;
     }
