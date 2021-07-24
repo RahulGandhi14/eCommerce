@@ -1,65 +1,49 @@
 import React from 'react'
 import { useTable } from 'react-table'
-import classes from './Table.module.css'
+import './Table.css'
 
-const Table = () => {
-    const data = React.useMemo(
-        () => [
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-        ],
-        []
-    )
-
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Column 1',
-                accessor: 'col1', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Column 2',
-                accessor: 'col2',
-            },
-        ],
-        []
-    )
-
+const Table = ({ data, columns, tdClasses = 'px-6 py-4', ...props }) => {
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
         useTable({ columns, data })
 
     return (
-        <table {...getTableProps()} className="table-auto">
-            <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
+        <table {...getTableProps()} className="min-w-full border-collapse">
+            {props.param !== 'topProducts' && (
+                <thead className="bg-primary text-light">
+                    {headerGroups.map((headerGroup) => (
+                        <tr
+                            {...headerGroup.getHeaderGroupProps()}
+                            className="rounded-t-md"
+                        >
+                            {headerGroup.headers.map((column) => (
+                                <th
+                                    {...column.getHeaderProps()}
+                                    className="px-6 py-4 text-left font-medium tracking-wider"
+                                >
+                                    {column.render('Header')}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+            )}
+            <tbody {...getTableBodyProps()} className="bg-white ">
                 {rows.map((row) => {
                     prepareRow(row)
                     return (
                         <tr {...row.getRowProps()}>
                             {row.cells.map((cell) => {
                                 return (
-                                    <td {...cell.getCellProps()}>
+                                    <td
+                                        {...cell.getCellProps()}
+                                        className={`${tdClasses} whitespace-nowrap`}
+                                        style={{
+                                            width: cell.column.cellWidth,
+                                            textAlign: cell.column.textAlign,
+                                        }}
+                                    >
                                         {cell.render('Cell')}
+                                        {console.log('-->CELL', cell.column)}
                                     </td>
                                 )
                             })}

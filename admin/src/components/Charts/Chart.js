@@ -1,15 +1,11 @@
 import React from 'react'
 import {
-    AreaChart,
-    Area,
     XAxis,
     YAxis,
     Line,
-    CartesianGrid,
     Tooltip,
-    ResponsiveContainer,
     ComposedChart,
-    LineChart,
+    CartesianGrid,
 } from 'recharts'
 
 const data = [
@@ -46,47 +42,56 @@ const data = [
         uv: 30,
     },
 ]
-
 const Chart = () => {
     return (
         <ComposedChart
-            width={800}
+            width={765}
             height={300}
             data={data}
-            margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-            }}
+            // margin={{
+            //     top: 10,
+            //     right: 30,
+            //     left: 0,
+            //     bottom: 0,
+            // }}
+            className="width-auto"
         >
             <defs>
                 <filter id="shadow">
-                    <feDropShadow dx="0" dy="10" stdDeviation="11" />
+                    <feDropShadow
+                        dx="0"
+                        dy="18"
+                        stdDeviation="11"
+                        floodColor="#f8dd72"
+                    />
                 </filter>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#129a74" stopOpacity={0.5} />
-                    <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
-                </linearGradient>
+                {/* <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="10%" stopColor="#f3cf3f" stopOpacity={0.1} />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.4} />
+                </linearGradient> */}
             </defs>
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-            <XAxis dataKey="name" />
-            <YAxis />
-            {/* <Tooltip /> */}
+            <XAxis
+                dataKey="name"
+                axisLine={false}
+                tickLine={false}
+                fontSize="0.75rem"
+                height={18}
+            />
+            <YAxis
+                axisLine={false}
+                tickLine={false}
+                fontSize="0.75rem"
+                width={34}
+            />
+            <CartesianGrid vertical={false} />
+            <Tooltip />
             <Line
                 dataKey="uv"
                 type="monotone"
-                fill="black"
-                color="black"
-                stroke="black"
+                dot={false}
+                stroke="#ffd322"
                 strokeWidth={2}
                 filter="url(#shadow)"
-            />
-            <Area
-                dataKey="uv"
-                type="monotone"
-                fill="url(#colorUv)"
-                fillOpacity={1}
             />
         </ComposedChart>
     )

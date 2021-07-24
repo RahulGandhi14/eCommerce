@@ -1,0 +1,26 @@
+tr th:first-child {
+    border-bottom-left-radius: 0.75rem;
+}
+
+tr th:last-child {
+    border-bottom-right-radius: 0.75rem;
+}
+
+tbody {
+    border-radius: 0.75rem;
+}
+
+.Pending {
+    background-color: #fff2e0;
+    color: #ff9500;
+}
+
+.Delivered {
+    background-color: #e5f9f7;
+    color: #49d4c4;
+}
+
+.Canceled {
+    background-color: #fee9ea;
+    color: #ff9da5;
+}
