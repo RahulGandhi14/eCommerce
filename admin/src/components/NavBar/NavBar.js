@@ -1,9 +1,11 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import H1 from '../utils/H1'
 
-const NavBar = () => {
+const NavBar = (props) => {
     return (
         <div className="flex justify-between items-center mb-7">
-            <h1 className="font-bold text-2xl">Dashboard</h1>
+            <H1>Dashboard</H1>
             <div className="bg-white flex p-2 rounded-md cursor-default shadow-sm">
                 <img
                     src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100"
@@ -20,4 +22,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+export default withRouter(NavBar)

@@ -3,7 +3,6 @@ import Card from '../utils/Card'
 import Trend from '../utils/Trend'
 
 const StatisticsCard = (props) => {
-    console.log('--> PROPS', props)
     return (
         <Card className={`${props.className}`}>
             <div className="flex justify-between">

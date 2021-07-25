@@ -13,6 +13,7 @@ module.exports = {
             'white' : 'white',
             'primary': '#4980ff',
             'primary-light': '#e4e4ff',
+            'bgLight': '#f5f6fa'
         }
     },
     variants: {

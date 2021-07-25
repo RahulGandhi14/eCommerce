@@ -18,7 +18,10 @@ const Table = ({ data, columns, tdClasses = 'px-6 py-4', ...props }) => {
                             {headerGroup.headers.map((column) => (
                                 <th
                                     {...column.getHeaderProps()}
-                                    className="px-6 py-4 text-left font-medium tracking-wider"
+                                    className={`px-6 py-4 text-left font-medium tracking-wider ${
+                                        column.thAlign &&
+                                        'text-' + column.thAlign
+                                    }`}
                                 >
                                     {column.render('Header')}
                                 </th>
