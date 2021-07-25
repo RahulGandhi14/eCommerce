@@ -3,22 +3,27 @@ import Card from '../utils/Card'
 import Trend from '../utils/Trend'
 
 const StatisticsCard = (props) => {
+    console.log('--> PROPS', props)
     return (
         <Card className={`${props.className}`}>
             <div className="flex justify-between">
                 <div>
                     <h3 className="text-light-secondary text-xs font-bold">
-                        Total Revenue
+                        {props.title}
                     </h3>
-                    <p className="text-2xl font-bold mt-3 mb-6">$8,521</p>
+                    <p className="text-2xl font-bold mt-3 mb-6">{props.data}</p>
                 </div>
-                <div className="bg-primary-light ml-5 p-3 h-14 w-14 rounded-2xl flex justify-center items-center">
-                    <i className="ri-group-fill text-2xl"></i>
+                <div
+                    className="ml-5 p-3 h-14 w-14 rounded-2xl flex justify-center items-center"
+                    style={{ backgroundColor: props.bgColor }}
+                >
+                    {props.icon}
                 </div>
             </div>
-            <p className="text-xs flex items-center">
-                <Trend />
-                &nbsp;8.5% Up from yesterday
+            <p className="text-xs flex items-center font-semibold">
+                <Trend className={props.difference < 0 && 'rotateX180'} />
+                &nbsp;{Math.abs(props.difference)} %{' '}
+                {props.difference < 0 ? 'Down' : 'Up'} from yesterday
             </p>
         </Card>
     )

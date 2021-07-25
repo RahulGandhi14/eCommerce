@@ -11,16 +11,16 @@ tbody {
 }
 
 .Pending {
-    background-color: #fff2e0;
-    color: #ff9500;
+    background-color: #ded3fc;
+    color: #906cea;
 }
 
 .Delivered {
-    background-color: #e5f9f7;
-    color: #49d4c4;
+    background-color: #cbf5ec;
+    color: #66d4c0;
 }
 
 .Canceled {
-    background-color: #fee9ea;
-    color: #ff9da5;
+    background-color: #fcd7d5;
+    color: #ed7970;
 }

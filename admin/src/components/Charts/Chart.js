@@ -48,12 +48,6 @@ const Chart = () => {
             width={765}
             height={300}
             data={data}
-            // margin={{
-            //     top: 10,
-            //     right: 30,
-            //     left: 0,
-            //     bottom: 0,
-            // }}
             className="width-auto"
         >
             <defs>
@@ -62,13 +56,9 @@ const Chart = () => {
                         dx="0"
                         dy="18"
                         stdDeviation="11"
-                        floodColor="#f8dd72"
+                        floodColor="#8ce7ba"
                     />
                 </filter>
-                {/* <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="10%" stopColor="#f3cf3f" stopOpacity={0.1} />
-                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.4} />
-                </linearGradient> */}
             </defs>
             <XAxis
                 dataKey="name"
@@ -89,7 +79,7 @@ const Chart = () => {
                 dataKey="uv"
                 type="monotone"
                 dot={false}
-                stroke="#ffd322"
+                stroke="#52da95"
                 strokeWidth={2}
                 filter="url(#shadow)"
             />

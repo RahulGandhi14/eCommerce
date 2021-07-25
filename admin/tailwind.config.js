@@ -11,8 +11,8 @@ module.exports = {
         },
         colors: {
             'white' : 'white',
-            'primary': 'hsl(211, 100%, 50%)',
-            'primary-light': 'rgba(0, 123, 255, 0.1)',
+            'primary': '#4980ff',
+            'primary-light': '#e4e4ff',
         }
     },
     variants: {

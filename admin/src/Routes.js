@@ -1,14 +1,14 @@
 import React from 'react'
 import { HashRouter, Switch, Route } from 'react-router-dom'
-import Table from './components/Table'
 import Dashboard from './pages/Dashboard/Dashboard'
+import Orders from './pages/Orders/Orders'
 
 const Routes = () => {
     return (
         <HashRouter>
             <Switch>
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/demo" component={Table} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/orders" exact component={Orders} />
             </Switch>
         </HashRouter>
     )

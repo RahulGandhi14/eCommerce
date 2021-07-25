@@ -3,9 +3,9 @@ import { PieChart, Pie, Legend, Cell, Sector } from 'recharts'
 import './Chart.scss'
 
 const data = [
-    { name: 'Delivered', value: 400, color: '#24cbb7' },
-    { name: 'Pending', value: 250, color: '#ffd322' },
-    { name: 'Canceled', value: 100, color: '#ff5967' },
+    { name: 'Delivered', value: 400, color: '#66d4c0' },
+    { name: 'Pending', value: 250, color: '#fec53a' },
+    { name: 'Canceled', value: 100, color: '#ed7970' },
 ]
 
 const renderActiveShape = (props) => {

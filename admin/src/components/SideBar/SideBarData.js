@@ -3,7 +3,7 @@ import React from 'react'
 export const SideBarData = [
     {
         title: 'Dashboard',
-        icon: <i className="pr-2 text-xl ri-home-3-line"></i>,
+        icon: <i className="pr-2 text-xl ri-dashboard-3-line"></i>,
         href: '',
     },
     {

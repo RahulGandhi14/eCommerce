@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import Card from '../utils/Card'
-import Revenue from './Revenue'
 import StatisticsCard from './StatisticsCard'
 import Chart from '../Charts/Chart'
 import Pie_Chart from '../Charts/PieChart'
 import RecentOrders from './RecentOrders'
 import TopProducts from './TopProducts'
+import { statisticsData } from './StatisticsData'
 
 const Statistics = () => {
     return (
         <>
             <div className="grid grid-cols-4 gap-7">
-                <StatisticsCard />
-                <StatisticsCard />
-                <StatisticsCard />
-                <StatisticsCard />
+                {statisticsData.map((item) => (
+                    <StatisticsCard {...item} />
+                ))}
             </div>
             <div className="mt-7 grid grid-cols-3 gap-7 h-96 overflow-hidden">
                 <Card className="col-span-2">
