@@ -11,11 +11,11 @@ const AddProduct = () => {
                 <H1>Add Product</H1>
                 <div className="grid grid-cols-2 gap-4 mt-4">
                     <CardOutline>
-                        <h3 className="text-md font-semibold mb-4">
+                        <p className="text-md font-semibold opacity-80 mb-4">
                             Add Images
-                        </h3>
-                        <div className="border-2 border-dashed border-primary rounded-lg w-full h-72">
-                            Hello
+                        </p>
+                        <div className="flex justify-center items-center border-2 border-dashed border-primary rounded-lg w-full h-72">
+                            <i className="ri-image-add-line text-9xl cursor-pointer"></i>
                         </div>
                         <div className="mt-4">
                             <div className="border-2 p-2 rounded-lg border-bgLight flex justify-between items-center mb-2">
@@ -42,7 +42,50 @@ const AddProduct = () => {
                             </div>
                         </div>
                     </CardOutline>
-                    <CardOutline>Hello</CardOutline>
+                    <CardOutline>
+                        <div>
+                            <label
+                                for="productName"
+                                className="text-md font-semibold opacity-80"
+                            >
+                                Product Name
+                            </label>
+                            <input
+                                type="text"
+                                name="productName"
+                                id="productName"
+                                className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                for="productName"
+                                className="text-md font-semibold opacity-80"
+                            >
+                                Description
+                            </label>
+                            <textarea
+                                type="text"
+                                name="productName"
+                                id="productName"
+                                className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                for="productName"
+                                className="text-md font-semibold opacity-80"
+                            >
+                                Price
+                            </label>
+                            <input
+                                type="number"
+                                name="productName"
+                                id="productName"
+                                className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
+                            />
+                        </div>
+                    </CardOutline>
                 </div>
             </Card>
         </App>

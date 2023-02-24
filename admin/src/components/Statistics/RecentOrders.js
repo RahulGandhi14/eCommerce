@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from '../Table'
+import StatusCell from '../utils/StatusCell'
 
 const RecentOrders = () => {
     const data = React.useMemo(
@@ -50,13 +51,7 @@ const RecentOrders = () => {
             {
                 Header: 'Status',
                 accessor: 'status',
-                Cell: (props) => (
-                    <div
-                        className={`${props.value} px-2 py-1 text-center font-semibold rounded-md`}
-                    >
-                        {props.value}
-                    </div>
-                ),
+                Cell: (props) => <StatusCell value={props.value} />,
             },
         ],
         []

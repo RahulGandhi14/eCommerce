@@ -46,7 +46,6 @@ const Table = ({ data, columns, tdClasses = 'px-6 py-4', ...props }) => {
                                         }}
                                     >
                                         {cell.render('Cell')}
-                                        {console.log('-->CELL', cell.column)}
                                     </td>
                                 )
                             })}

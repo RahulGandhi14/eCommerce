@@ -100,7 +100,6 @@ const Products = () => {
                 </Link>
             </Card>
             <Card className="mb-7">
-                <H1 className="mb-2">Products</H1>
                 <Table data={data} columns={columns} />
             </Card>
         </App>
