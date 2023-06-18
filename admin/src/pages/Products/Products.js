@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import App from '../../App'
 import Table from '../../components/Table'
 import Card from '../../components/utils/Card'
-import H1 from '../../components/utils/H1'
 
 const Products = () => {
     const columns = useMemo(

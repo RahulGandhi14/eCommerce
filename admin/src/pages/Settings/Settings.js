@@ -2,7 +2,6 @@ import React from 'react'
 import App from '../../App'
 import Card from '../../components/utils/Card'
 import CardOutline from '../../components/utils/CardOutline'
-import H1 from '../../components/utils/H1'
 
 const Settings = () => {
     return (

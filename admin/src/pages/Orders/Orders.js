@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import App from '../../App'
 import Table from '../../components/Table'
 import Card from '../../components/utils/Card'
-import H1 from '../../components/utils/H1'
 import StatusCell from '../../components/utils/StatusCell'
 
 const Orders = () => {

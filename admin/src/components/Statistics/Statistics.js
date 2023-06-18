@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Card from '../utils/Card'
 import StatisticsCard from './StatisticsCard'
 import Chart from '../Charts/Chart'
+// eslint-disable-next-line
 import Pie_Chart from '../Charts/PieChart'
 import RecentOrders from './RecentOrders'
 import TopProducts from './TopProducts'
