@@ -6,6 +6,7 @@ import {
     Tooltip,
     ComposedChart,
     CartesianGrid,
+    ResponsiveContainer,
 } from 'recharts'
 
 const data = [

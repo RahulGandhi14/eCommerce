@@ -59,31 +59,51 @@ const AddProduct = () => {
                         </div>
                         <div>
                             <label
-                                for="productName"
+                                for="productDescription"
                                 className="text-md font-semibold opacity-80"
                             >
                                 Description
                             </label>
                             <textarea
                                 type="text"
-                                name="productName"
-                                id="productName"
+                                name="productDescription"
+                                id="productDescription"
                                 className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
                             />
                         </div>
                         <div>
                             <label
-                                for="productName"
+                                for="productPrice"
                                 className="text-md font-semibold opacity-80"
                             >
                                 Price
                             </label>
                             <input
                                 type="number"
-                                name="productName"
-                                id="productName"
+                                name="productPrice"
+                                id="productPrice"
                                 className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
                             />
+                        </div>
+                        <div>
+                            <label
+                                for="productPrice"
+                                className="text-md font-semibold opacity-80"
+                            >
+                                Sizes
+                            </label>
+                            <div className="flex gap-3">
+                                <input
+                                    type="text"
+                                    placeholder="size"
+                                    className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="quantity"
+                                    className="border-2 p-3 rounded-lg mt-2 mb-5 block w-full border-bgLight focus-within:outline-none"
+                                />
+                            </div>
                         </div>
                     </CardOutline>
                 </div>

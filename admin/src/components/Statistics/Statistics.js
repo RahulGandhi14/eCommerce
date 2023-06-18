@@ -7,6 +7,7 @@ import Pie_Chart from '../Charts/PieChart'
 import RecentOrders from './RecentOrders'
 import TopProducts from './TopProducts'
 import { statisticsData } from './StatisticsData'
+import { Link } from 'react-router-dom'
 
 const Statistics = () => {
     return (
@@ -24,7 +25,9 @@ const Statistics = () => {
                 <Card>
                     <div className="flex justify-between items-end mb-4">
                         <h3 className="font-semibold text-lg">Top Products</h3>
-                        <p className="cursor-pointer">See all</p>
+                        <Link to="/products" className="cursor-pointer">
+                            See all
+                        </Link>
                     </div>
                     <TopProducts />
                 </Card>
@@ -39,7 +42,9 @@ const Statistics = () => {
                 <Card className="col-span-2">
                     <div className="flex justify-between items-end mb-4">
                         <h3 className="font-semibold text-lg">Recent Orders</h3>
-                        <p className="cursor-pointer">See all</p>
+                        <Link to="/orders" className="cursor-pointer">
+                            See all
+                        </Link>
                     </div>
                     <RecentOrders />
                 </Card>
