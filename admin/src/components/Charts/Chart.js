@@ -45,46 +45,45 @@ const data = [
 ]
 const Chart = () => {
     return (
-        <ComposedChart
-            width={765}
-            height={300}
-            data={data}
-            className="width-auto"
-        >
-            <defs>
-                <filter id="shadow">
-                    <feDropShadow
-                        dx="0"
-                        dy="18"
-                        stdDeviation="11"
-                        floodColor="#8ce7ba"
+        <div style={{ width: '100%', height: 300 }}>
+            <ResponsiveContainer>
+                <ComposedChart data={data}>
+                    <defs>
+                        <filter id="shadow">
+                            <feDropShadow
+                                dx="0"
+                                dy="18"
+                                stdDeviation="11"
+                                floodColor="#8ce7ba"
+                            />
+                        </filter>
+                    </defs>
+                    <XAxis
+                        dataKey="name"
+                        axisLine={false}
+                        tickLine={false}
+                        fontSize="0.75rem"
+                        height={18}
                     />
-                </filter>
-            </defs>
-            <XAxis
-                dataKey="name"
-                axisLine={false}
-                tickLine={false}
-                fontSize="0.75rem"
-                height={18}
-            />
-            <YAxis
-                axisLine={false}
-                tickLine={false}
-                fontSize="0.75rem"
-                width={34}
-            />
-            <CartesianGrid vertical={false} />
-            <Tooltip />
-            <Line
-                dataKey="uv"
-                type="monotone"
-                dot={false}
-                stroke="#52da95"
-                strokeWidth={2}
-                filter="url(#shadow)"
-            />
-        </ComposedChart>
+                    <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        fontSize="0.75rem"
+                        width={34}
+                    />
+                    <CartesianGrid vertical={false} />
+                    <Tooltip />
+                    <Line
+                        dataKey="uv"
+                        type="monotone"
+                        dot={false}
+                        stroke="#52da95"
+                        strokeWidth={2}
+                        filter="url(#shadow)"
+                    />
+                </ComposedChart>
+            </ResponsiveContainer>
+        </div>
     )
 }
 

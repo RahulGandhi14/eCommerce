@@ -1,13 +1,12 @@
 import React, { Suspense } from 'react'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import PageLoader from './components/utils/Loader/PageLoader'
-
-const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
-const Orders = React.lazy(() => import('./pages/Orders/Orders'))
-const AddProduct = React.lazy(() => import('./pages/Products/AddProduct'))
-const Products = React.lazy(() => import('./pages/Products/Products'))
-const Customers = React.lazy(() => import('./pages/Customers/Customers'))
-const Settings = React.lazy(() => import('./pages/Settings/Settings'))
+import Customers from './pages/Customers/Customers'
+import Dashboard from './pages/Dashboard/Dashboard'
+import Orders from './pages/Orders/Orders'
+import AddProduct from './pages/Products/AddProduct'
+import Products from './pages/Products/Products'
+import Settings from './pages/Settings/Settings'
 
 const Routes = () => {
     return (
