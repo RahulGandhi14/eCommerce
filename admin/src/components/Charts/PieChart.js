@@ -1,5 +1,12 @@
 import React, { PureComponent } from 'react'
-import { PieChart, Pie, Legend, Cell, Sector } from 'recharts'
+import {
+    PieChart,
+    Pie,
+    Legend,
+    Cell,
+    Sector,
+    ResponsiveContainer,
+} from 'recharts'
 import './Chart.scss'
 
 const data = [
@@ -104,29 +111,31 @@ export default class Pie_Chart extends PureComponent {
 
     render() {
         return (
-            <PieChart
-                width={250}
-                height={250}
-                className={`flex justify-center width-auto`}
-            >
-                <Pie
-                    activeIndex={this.state.activeIndex}
-                    activeShape={renderActiveShape}
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={50}
-                    outerRadius={80}
-                    dataKey="value"
-                    onMouseEnter={this.onPieEnter}
-                >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                </Pie>
-                {/* <Tooltip cursor={{ stroke: 'red', strokeWidth: 2 }} /> */}
-                <Legend content={this.renderLegend} />
-            </PieChart>
+            <div style={{ width: '100%', height: 300 }}>
+                <ResponsiveContainer>
+                    <PieChart className={`flex justify-center width-auto`}>
+                        <Pie
+                            activeIndex={this.state.activeIndex}
+                            activeShape={renderActiveShape}
+                            data={data}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={50}
+                            outerRadius={80}
+                            dataKey="value"
+                            onMouseEnter={this.onPieEnter}
+                        >
+                            {data.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={entry.color}
+                                />
+                            ))}
+                        </Pie>
+                        <Legend content={this.renderLegend} />
+                    </PieChart>
+                </ResponsiveContainer>
+            </div>
         )
     }
 }
