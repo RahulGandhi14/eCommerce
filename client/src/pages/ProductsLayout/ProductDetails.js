@@ -220,10 +220,10 @@ const ProductDetails = ({ match }) => {
                                                 <span className="discount">
                                                     (
                                                     {Math.round(
-                                                        ((productDetails?.mrp -
-                                                            productDetails?.sellingPrice) /
-                                                            productDetails?.sellingPrice) *
-                                                            100
+                                                        100 -
+                                                            (productDetails?.sellingPrice /
+                                                                productDetails?.mrp) *
+                                                                100
                                                     )}
                                                     % off)
                                                 </span>
