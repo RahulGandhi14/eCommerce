@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axios from 'axios'
 
-let API = 'https://fierce-peak-87716.herokuapp.com/api';
+let API = 'https://ecom-app-rahul-gandhi.onrender.com/api'
 
 export const Instance = axios.create({
-    baseURL: 'http://localhost:3001/api',
-    // baseURL: API
-});
+    baseURL: API,
+})
 
-Instance.defaults.headers.get['Accept'] = 'application/json';
-Instance.defaults.headers.post['Accept'] = 'application/json';
+Instance.defaults.headers.get['Accept'] = 'application/json'
+Instance.defaults.headers.post['Accept'] = 'application/json'
