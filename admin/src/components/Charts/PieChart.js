@@ -80,7 +80,7 @@ const renderActiveShape = (props) => {
     )
 }
 
-export default class Pie_Chart extends PureComponent {
+export default class CustomPieChart extends PureComponent {
     state = {
         activeIndex: 0,
     }

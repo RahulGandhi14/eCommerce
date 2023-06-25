@@ -2,8 +2,7 @@ import React from 'react'
 import Card from '../utils/Card'
 import StatisticsCard from './StatisticsCard'
 import Chart from '../Charts/Chart'
-// eslint-disable-next-line
-import Pie_Chart from '../Charts/PieChart'
+import CustomPieChart from '../Charts/PieChart'
 import RecentOrders from './RecentOrders'
 import TopProducts from './TopProducts'
 import { statisticsData } from './StatisticsData'
@@ -37,9 +36,9 @@ const Statistics = () => {
                     <h3 className="font-semibold text-lg mb-4">
                         Product Status
                     </h3>
-                    <Pie_Chart />
+                    <CustomPieChart />
                 </Card>
-                <Card className="col-span-2">
+                <Card className="col-span-2 overflow-auto">
                     <div className="flex justify-between items-end mb-4">
                         <h3 className="font-semibold text-lg">Recent Orders</h3>
                         <Link to="/orders" className="cursor-pointer">

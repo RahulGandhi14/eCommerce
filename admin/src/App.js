@@ -1,5 +1,7 @@
 import NavBar from './components/NavBar/NavBar'
 import SideBar from './components/SideBar/SideBar'
+import { ToastContainer, Zoom } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App(props) {
     return (
@@ -9,6 +11,14 @@ function App(props) {
                 <NavBar />
                 {props.children}
             </div>
+            <ToastContainer
+                transition={Zoom}
+                autoClose={3000}
+                closeButton={true}
+                hideProgressBar={true}
+                pauseOnHover={true}
+                position="bottom-center"
+            />
         </div>
     )
 }
