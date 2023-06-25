@@ -23,6 +23,15 @@ const uploads = (file, folder = 'eCommerce') => {
     })
 }
 
+const destroy = (fileName) => {
+    return new Promise((resolve) => {
+        cloudinary.uploader.destroy(fileName, (result) => {
+            console.log(result)
+            resolve(result)
+        })
+    })
+}
+
 module.exports = {
     uploads,
 }
