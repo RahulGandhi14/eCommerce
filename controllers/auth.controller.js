@@ -69,7 +69,7 @@ const login = async (req, res, next) => {
         if (!validPassword)
             return next(
                 new APIError(
-                    'Password is incorrect',
+                    'You have entered an invalid username or password',
                     httpStatus.BAD_REQUEST,
                     true
                 )
