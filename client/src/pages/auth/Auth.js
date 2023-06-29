@@ -9,13 +9,13 @@ import { authRequests } from '../../request'
 import CryptoJS from 'crypto-js'
 import dotEnv from 'dotenv'
 import { useHistory } from 'react-router'
-import { toast, ToastContainer, Zoom } from 'react-toastify'
+import { ToastContainer, Zoom } from 'react-toastify'
 import { isAuthenticated } from './AuthHelpers'
 import { resError } from '../util'
 
 dotEnv.config()
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
     createStyles({
         container: {
             minHeight: '100vh',
@@ -218,7 +218,7 @@ const Auth = () => {
             setLoading(true)
             let encryptedPassword = CryptoJS.AES.encrypt(
                 signupInputs.password,
-                process.env.REACT_APP_SECRET
+                process.env.REACT_APP_PASS_SECRET
             ).toString()
             let result = await Instance.post(authRequests.loginUser, {
                 email: signupInputs.email,
@@ -443,10 +443,10 @@ const Auth = () => {
                                     justify="center"
                                 >
                                     <Button
+                                        fullWidth
                                         variant="contained"
                                         disabled={loading}
                                         className={classes.btnHeight}
-                                        fullWidth
                                         onClick={loginUser}
                                     >
                                         Login

@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-let API = 'https://ecom-app-rahul-gandhi.onrender.com/api'
+let API =
+    process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_API_URL
+        : 'http://localhost:3001/api'
 
 export const Instance = axios.create({
     baseURL: API,

@@ -3,7 +3,7 @@ import { isAuthenticated } from './auth/AuthHelper'
 
 export const axiosInstance = axios.create({
     baseURL:
-        process.env.REACT_APP_ENV === 'development'
+        process.env.NODE_ENV !== 'production'
             ? 'http://localhost:3001/api'
             : process.env.REACT_APP_API_URL,
 })
