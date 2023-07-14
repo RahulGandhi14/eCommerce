@@ -1,29 +1,40 @@
+import { useAuth0 } from '@auth0/auth0-react'
 import React from 'react'
-import { useLocation, withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import H1 from '../utils/H1'
 
-const NavBar = (props) => {
-    let currentPage = useLocation().pathname.split('/')[1]
-    currentPage =
-        currentPage[0].toUpperCase() + currentPage.slice(1, currentPage.length)
+const NavBar = () => {
+    const { isAuthenticated, user } = useAuth0()
+
+    let currentPage = useLocation().pathname.split('/')[1] || ''
+    if (currentPage) {
+        currentPage =
+            currentPage[0].toUpperCase() +
+            currentPage.slice(1, currentPage.length)
+    }
 
     return (
         <div className="flex justify-between items-center mb-7">
             <H1>{currentPage}</H1>
-            <div className="bg-white flex p-2 rounded-md cursor-default shadow-sm">
-                <img
-                    src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100"
-                    alt="Profile"
-                    className="rounded-md w-8 h-8 object-cover"
-                />
-                <div className="leading-none flex flex-col justify-between ml-2">
-                    <span>Rahul Gandhi</span>
-                    <span className="font-thin text-xs">Seller account</span>
+            {isAuthenticated ? (
+                <div className="bg-white flex p-2 rounded-md cursor-default shadow-sm">
+                    {console.log({ user })}
+                    <img
+                        alt="Profile"
+                        className="rounded-md w-8 h-8 object-cover"
+                        src={user.picture}
+                    />
+                    <div className="leading-none flex flex-col justify-between ml-2">
+                        <span>{user.nickname}</span>
+                        <span className="font-thin text-xs">
+                            Seller account
+                        </span>
+                    </div>
+                    <i className="ri-arrow-down-s-line ml-4 self-center cursor-pointer"></i>
                 </div>
-                <i className="ri-arrow-down-s-line ml-4 self-center cursor-pointer"></i>
-            </div>
+            ) : null}
         </div>
     )
 }
 
-export default withRouter(NavBar)
+export default NavBar

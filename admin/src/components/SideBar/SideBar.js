@@ -4,7 +4,7 @@ import './SideBar.scss'
 import { SideBarData } from './SideBarData'
 
 const SideBar = () => {
-    let location = useLocation()
+    const location = useLocation()
 
     return (
         <div className="h-screen sticky top-0 left-0 w-2/12 bg-white">

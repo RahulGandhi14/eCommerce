@@ -3,8 +3,10 @@ import SideBar from './components/SideBar/SideBar'
 import { ToastContainer, Zoom } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Routes from './Routes'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
+import PageLoader from './components/utils/Loader/PageLoader'
 
-function App(props) {
+function App() {
     return (
         <div className="flex">
             <SideBar />
@@ -24,4 +26,6 @@ function App(props) {
     )
 }
 
-export default App
+export default withAuthenticationRequired(App, {
+    onRedirecting: () => <PageLoader />,
+})
