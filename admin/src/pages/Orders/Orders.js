@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import App from '../../App'
 import Table from '../../components/Table'
 import Card from '../../components/utils/Card'
 import StatusCell from '../../components/utils/StatusCell'
@@ -67,12 +66,12 @@ const Orders = () => {
     )
 
     return (
-        <App>
+        <>
             <Card className="mb-7 flex justify-end"></Card>
             <Card className="mb-7">
                 <Table data={data} columns={columns} />
             </Card>
-        </App>
+        </>
     )
 }
 

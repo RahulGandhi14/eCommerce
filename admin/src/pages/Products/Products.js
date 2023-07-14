@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import App from '../../App'
 import Table from '../../components/Table'
 import Card from '../../components/utils/Card'
 
@@ -90,7 +89,7 @@ const Products = () => {
     )
 
     return (
-        <App>
+        <>
             <Card className="mb-7 flex justify-end">
                 <Link to="/products/add">
                     <button className="bg-primary text-light px-5 py-2 flex items-center rounded-lg">
@@ -101,7 +100,7 @@ const Products = () => {
             <Card className="mb-7">
                 <Table data={data} columns={columns} />
             </Card>
-        </App>
+        </>
     )
 }
 

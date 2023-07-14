@@ -2,6 +2,7 @@ import NavBar from './components/NavBar/NavBar'
 import SideBar from './components/SideBar/SideBar'
 import { ToastContainer, Zoom } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Routes from './Routes'
 
 function App(props) {
     return (
@@ -9,7 +10,7 @@ function App(props) {
             <SideBar />
             <div className="flex-grow p-7">
                 <NavBar />
-                {props.children}
+                <Routes />
             </div>
             <ToastContainer
                 transition={Zoom}

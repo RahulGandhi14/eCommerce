@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import App from '../../App'
 import Table from '../../components/Table'
 import Card from '../../components/utils/Card'
 
@@ -64,11 +63,9 @@ const Customers = () => {
         []
     )
     return (
-        <App>
-            <Card className="mb-7">
-                <Table columns={columns} data={data} />
-            </Card>
-        </App>
+        <Card className="mb-7">
+            <Table columns={columns} data={data} />
+        </Card>
     )
 }
 
