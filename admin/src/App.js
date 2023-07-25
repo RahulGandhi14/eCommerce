@@ -10,7 +10,7 @@ function App() {
     return (
         <div className="flex">
             <SideBar />
-            <div className="flex-grow p-7">
+            <div className="flex-grow sm:p-7 p-5">
                 <NavBar />
                 <Routes />
             </div>

@@ -7,7 +7,7 @@ const SideBar = () => {
     const location = useLocation()
 
     return (
-        <div className="h-screen sticky top-0 left-0 w-2/12 bg-white">
+        <div className="h-screen sticky sm:block hidden top-0 left-0 lg:w-2/12 w-3/12 bg-white">
             <h1 className="text-2xl text-center pt-7">Ecom</h1>
 
             <ul className="p-7">

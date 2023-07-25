@@ -18,7 +18,6 @@ const NavBar = () => {
             <H1>{currentPage}</H1>
             {isAuthenticated ? (
                 <div className="bg-white flex p-2 rounded-md cursor-default shadow-sm">
-                    {console.log({ user })}
                     <img
                         alt="Profile"
                         className="rounded-md w-8 h-8 object-cover"
