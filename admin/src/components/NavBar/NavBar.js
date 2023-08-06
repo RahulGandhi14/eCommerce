@@ -32,7 +32,13 @@ const NavBar = () => {
                     <i
                         title="Logout"
                         className="ri-logout-box-r-line ml-4 self-center cursor-pointer"
-                        onClick={() => logout()}
+                        onClick={() =>
+                            logout({
+                                logoutParams: {
+                                    returnTo: window.location.origin,
+                                },
+                            })
+                        }
                     ></i>
                 </div>
             ) : null}
