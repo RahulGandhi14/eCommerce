@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { isAuthenticated } from './auth/AuthHelper'
 
 export const axiosInstance = axios.create({
     baseURL:
@@ -10,9 +9,3 @@ export const axiosInstance = axios.create({
 
 axiosInstance.defaults.headers.get['Accept'] = 'application/json'
 axiosInstance.defaults.headers.post['Accept'] = 'application/json'
-
-const token = isAuthenticated()
-if (token) {
-    axiosInstance.defaults.headers.get['Authorization'] = token
-    axiosInstance.defaults.headers.post['Authorization'] = token
-}

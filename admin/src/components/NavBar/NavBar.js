@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import H1 from '../utils/H1'
 
 const NavBar = () => {
-    const { isAuthenticated, user } = useAuth0()
+    const { isAuthenticated, user, logout } = useAuth0()
 
     let currentPage = useLocation().pathname.split('/')[1] || ''
     if (currentPage) {
@@ -29,7 +29,11 @@ const NavBar = () => {
                             Seller account
                         </span>
                     </div>
-                    <i className="ri-arrow-down-s-line ml-4 self-center cursor-pointer"></i>
+                    <i
+                        title="Logout"
+                        className="ri-logout-box-r-line ml-4 self-center cursor-pointer"
+                        onClick={() => logout()}
+                    ></i>
                 </div>
             ) : null}
         </div>
